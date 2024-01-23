@@ -1,10 +1,24 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { StatusBar } from 'expo-status-bar';
 
-import { useColorScheme } from 'react-native';
+import { useColorScheme, Platform } from 'react-native';
+import { PaperProvider, adaptNavigationTheme, MD3LightTheme, MD3DarkTheme } from 'react-native-paper';
+
+import store from '../redux/store';
+import { Provider } from 'react-redux';
+
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from '@react-navigation/native';
+
+export const { LightTheme, DarkTheme } = adaptNavigationTheme({
+  reactNavigationLight: NavigationDefaultTheme,
+  reactNavigationDark: NavigationDarkTheme,
+});
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -41,13 +55,42 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const navTheme = colorScheme === 'dark' ? DarkTheme : LightTheme;
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="profile" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <PaperProvider theme={colorScheme === 'dark'? theme.dark : theme.light} >
+      <Provider store={store}>
+        <Stack initialRouteName={unstable_settings.initialRouteName} screenOptions={{
+          headerStyle: {
+            backgroundColor: navTheme.colors.card,
+          },
+          headerTintColor: navTheme.colors.text,
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerTitle: "Profile",
+        }}>
+          <Stack.Screen name="(tabs)" options={{
+            headerShown: false
+          }} />
+          <Stack.Screen name="profile" />
+        </Stack>
+      </Provider>
+    </PaperProvider>
   );
 }
+
+export const theme = {
+  light: {
+    ...MD3LightTheme,
+    colors: {
+      ...MD3LightTheme.colors,
+    },
+  },
+  dark: {
+    ...MD3DarkTheme,
+    colors: {
+      ...MD3DarkTheme.colors,
+    },
+  },
+};
