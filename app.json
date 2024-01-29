@@ -16,20 +16,93 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "requireFullScreen": true
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "tech.turcotte.resumeio"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
+    "description": "A dynamic resume constructor built with React Native and Expo. This application is built to help users to easily customize the design of their resume while storing multiple profiles to optimize for different job positions. Ad-free and fully offline, ResumeIO makes resume construction as quick and painless as possible, with seemless navigation and a simple and intuitive interface to craft your ticket to your next job position with its selection of professional and modern template designs.",
+    "runtimeVersion": {
+      "policy": "nativeVersion"
+    },
+    "githubUrl": "https://github.com/Altagrave-Git/ResumeIO",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "primaryColor": "#6750A4",
     "plugins": [
       "expo-router",
-      "expo-secure-store"
-    ]
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Orbitron/Orbitron-Regular.ttf",
+            "./assets/fonts/Orbitron/Orbitron-Medium.ttf",
+            "./assets/fonts/Orbitron/Orbitron-SemiBold.ttf",
+            "./assets/fonts/CrimsonPro/CrimsonPro-Regular.ttf",
+            "./assets/fonts/CrimsonPro/CrimsonPro-Italic.ttf",
+            "./assets/fonts/CrimsonPro/CrimsonPro-Medium.ttf",
+            "./assets/fonts/CrimsonPro/CrimsonPro-MediumItalic.ttf",
+            "./assets/fonts/CrimsonPro/CrimsonPro-SemiBold.ttf",
+            "./assets/fonts/CrimsonPro/CrimsonPro-SemiBoldItalic.ttf",
+            "./assets/fonts/DMSans/DMSans-Regular.ttf",
+            "./assets/fonts/DMSans/DMSans-Italic.ttf",
+            "./assets/fonts/DMSans/DMSans-Medium.ttf",
+            "./assets/fonts/DMSans/DMSans-MediumItalic.ttf",
+            "./assets/fonts/DMSans/DMSans-SemiBold.ttf",
+            "./assets/fonts/DMSans/DMSans-SemiBoldItalic.ttf",
+            "./assets/fonts/Genos/Genos-Regular.ttf",
+            "./assets/fonts/Genos/Genos-Italic.ttf",
+            "./assets/fonts/Genos/Genos-Medium.ttf",
+            "./assets/fonts/Genos/Genos-MediumItalic.ttf",
+            "./assets/fonts/Genos/Genos-SemiBold.ttf",
+            "./assets/fonts/Genos/Genos-SemiBoldItalic.ttf",
+            "./assets/fonts/JetBrainsMono/JetBrainsMono-Regular.ttf",
+            "./assets/fonts/JetBrainsMono/JetBrainsMono-Italic.ttf",
+            "./assets/fonts/JetBrainsMono/JetBrainsMono-Medium.ttf",
+            "./assets/fonts/JetBrainsMono/JetBrainsMono-MediumItalic.ttf",
+            "./assets/fonts/JetBrainsMono/JetBrainsMono-SemiBold.ttf",
+            "./assets/fonts/JetBrainsMono/JetBrainsMono-SemiBoldItalic.ttf",
+            "./assets/fonts/NotoSans/NotoSans-Regular.ttf",
+            "./assets/fonts/NotoSans/NotoSans-Italic.ttf",
+            "./assets/fonts/NotoSans/NotoSans-Medium.ttf",
+            "./assets/fonts/NotoSans/NotoSans-MediumItalic.ttf",
+            "./assets/fonts/NotoSans/NotoSans-SemiBold.ttf",
+            "./assets/fonts/NotoSans/NotoSans-SemiBoldItalic.ttf",
+            "./assets/fonts/RedHat/RedHatText-Regular.ttf",
+            "./assets/fonts/RedHat/RedHatText-Italic.ttf",
+            "./assets/fonts/RedHat/RedHatText-Medium.ttf",
+            "./assets/fonts/RedHat/RedHatText-MediumItalic.ttf",
+            "./assets/fonts/RedHat/RedHatText-SemiBold.ttf",
+            "./assets/fonts/RedHat/RedHatText-SemiBoldItalic.ttf",
+            "./assets/fonts/Saira/Saira-Regular.ttf",
+            "./assets/fonts/Saira/Saira-Italic.ttf",
+            "./assets/fonts/Saira/Saira-Medium.ttf",
+            "./assets/fonts/Saira/Saira-MediumItalic.ttf",
+            "./assets/fonts/Saira/Saira-SemiBold.ttf",
+            "./assets/fonts/Saira/Saira-SemiBoldItalic.ttf"
+          ]
+        }
+      ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "eb44f659-8260-431f-864a-7b5345da55d2"
+      }
+    }
   }
 }
