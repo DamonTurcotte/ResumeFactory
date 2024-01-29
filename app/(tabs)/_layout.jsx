@@ -4,9 +4,8 @@ import { Link, Tabs, Redirect } from 'expo-router';
 import { Pressable } from 'react-native';
 
 import { useColorScheme } from 'react-native';
-import { useSession } from '../../global';
 
-import { LightTheme, DarkTheme } from '../_layout';
+import { useTheme } from 'react-native-paper';
 
 function TabBarIcon(props) {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
@@ -14,29 +13,23 @@ function TabBarIcon(props) {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
-  const navTheme = colorScheme === 'dark' ? DarkTheme : LightTheme;
+  const theme = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        headerShown: true,
-        headerStyle: {
-          backgroundColor: navTheme.colors.card,
-        },
+        headerShown: false,
+        tabBarActiveTintColor: theme.colors.onBackgroundVariant,
+        tabBarInactiveTintColor: theme.colors.onBackground,
+        tabBarActiveBackgroundColor: theme.colors.onPrimary,
+        tabBarInactiveBackgroundColor: theme.colors.onPrimary,
         tabBarStyle: {
-          backgroundColor: navTheme.colors.card,
-          borderColor: navTheme.colors.card,
-          paddingBottom: 5,
+          borderTopColor: theme.colors.onPrimary,
+          backgroundColor: theme.colors.onPrimary,
         },
-        tabBarActiveTintColor: navTheme.colors.primary,
-        headerTitleStyle: {
-          color: navTheme.colors.text,
-        },
-        tabBarInactiveTintColor: navTheme.colors.text,
       }}>
       <Tabs.Screen
-        name="index"
+        name="profile"
         options={{
           title: 'Profile',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
@@ -56,7 +49,7 @@ export default function TabLayout() {
 
 function headerBtnRight() {
   return () => (
-    <Link href="/profile">
+    <Link href="/personal">
       <Pressable>
         {({ pressed }) => (
           <FontAwesome
