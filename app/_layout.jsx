@@ -1,40 +1,24 @@
 import { useFonts } from 'expo-font';
-import { Stack, Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { StatusBar } from 'expo-status-bar';
 
-import { useColorScheme, Platform } from 'react-native';
-import { PaperProvider, adaptNavigationTheme, MD3LightTheme, MD3DarkTheme } from 'react-native-paper';
+import { StatusBar, useColorScheme } from 'react-native';
+import { PaperProvider, ActivityIndicator } from 'react-native-paper';
 
-import store from '../redux/store';
+import { store, persistor } from '../redux/store';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import {
-  DarkTheme as NavigationDarkTheme,
-  DefaultTheme as NavigationDefaultTheme,
-} from '@react-navigation/native';
-
-export const { LightTheme, DarkTheme } = adaptNavigationTheme({
-  reactNavigationLight: NavigationDefaultTheme,
-  reactNavigationDark: NavigationDarkTheme,
-});
+import { FontConfig, CombinedDefaultTheme, CombinedDarkTheme } from '../configs';
+import { FONT } from '../constants';
 
 export { ErrorBoundary } from 'expo-router';
-
-export const unstable_settings = {
-  initialRouteName: '(tabs)',
-};
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    Regular: require('../assets/fonts/DMSans-Regular.ttf'),
-    Medium: require('../assets/fonts/DMSans-Medium.ttf'),
-    Bold: require('../assets/fonts/DMSans-Bold.ttf'),
-  });
+  const [loaded, error] = useFonts(FontConfig);
 
   useEffect(() => {
     if (error) throw error;
@@ -55,42 +39,36 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
-  const navTheme = colorScheme === 'dark' ? DarkTheme : LightTheme;
+  const theme = colorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
 
   return (
-    <PaperProvider theme={colorScheme === 'dark'? theme.dark : theme.light} >
+    <PaperProvider theme={colorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme}>
       <Provider store={store}>
-        <Stack initialRouteName={unstable_settings.initialRouteName} screenOptions={{
-          headerStyle: {
-            backgroundColor: navTheme.colors.card,
-          },
-          headerTintColor: navTheme.colors.text,
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-          headerTitle: "Profile",
-        }}>
-          <Stack.Screen name="(tabs)" options={{
-            headerShown: false
-          }} />
-          <Stack.Screen name="profile" />
-        </Stack>
+        <PersistGate persistor={persistor} loading={<ActivityIndicator animating={true} color={theme.colors.error} size='large' />}>
+          <StatusBar barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} backgroundColor={theme.colors.onPrimary} />
+          <Stack screenOptions={{
+            contentStyle: { backgroundColor: theme.colors.inverseOnSurface },
+            headerStyle: { backgroundColor: theme.colors.onPrimary},
+            headerTintColor: theme.colors.onBackgroundVariant,
+            headerTitleStyle: { color: theme.colors.onBackground, fontFamily: FONT.OrbitronB },
+            animation: "fade_from_bottom",
+          }}>
+            <Stack.Screen name="index" options={{title: "ResumeIO", headerShown: false, contentStyle: {backgroundColor: theme.colors.background}}} />
+            <Stack.Screen 
+              name="(tabs)" 
+              options={({ route }) => {
+                const routeName = route.params?.screen;
+                let title = routeName[0].toUpperCase() + routeName.slice(1);
+                return { title };
+              }}
+            />
+            <Stack.Screen 
+              name="personal"
+              options={{title: "Personal"}}
+            />
+          </Stack>
+        </PersistGate>
       </Provider>
     </PaperProvider>
   );
 }
-
-export const theme = {
-  light: {
-    ...MD3LightTheme,
-    colors: {
-      ...MD3LightTheme.colors,
-    },
-  },
-  dark: {
-    ...MD3DarkTheme,
-    colors: {
-      ...MD3DarkTheme.colors,
-    },
-  },
-};
