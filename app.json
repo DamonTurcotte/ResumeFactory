@@ -17,7 +17,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "requireFullScreen": true
+      "requireFullScreen": true,
+      "bundleIdentifier": "tech.turcotte.resumeio"
     },
     "android": {
       "versionCode": 1,
@@ -31,9 +32,6 @@
       "favicon": "./assets/images/favicon.png"
     },
     "description": "A dynamic resume constructor built with React Native and Expo. This application is built to help users to easily customize the design of their resume while storing multiple profiles to optimize for different job positions. Ad-free and fully offline, ResumeIO makes resume construction as quick and painless as possible, with seemless navigation and a simple and intuitive interface to craft your ticket to your next job position with its selection of professional and modern template designs.",
-    "runtimeVersion": {
-      "policy": "nativeVersion"
-    },
     "githubUrl": "https://github.com/Altagrave-Git/ResumeIO",
     "privacy": "public",
     "platforms": [
