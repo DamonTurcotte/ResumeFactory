@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const personalSlice = createSlice({
+export const personalSlice = createSlice({
   name: 'personal',
   initialState: {
+    active: 'N/A',
     Name: '',
     Email: '',
     Phone: '',
@@ -20,7 +21,7 @@ const personalSlice = createSlice({
       state.Website = action.payload.Website;
       state.LinkedIn = action.payload.LinkedIn;
       state.GitHub = action.payload.GitHub;
-    }
+    },
   }
 });
 
