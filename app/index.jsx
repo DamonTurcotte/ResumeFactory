@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addProfile, removeProfile, setCurrentProfile } from '../redux/profileSlice';
 import { FontAwesome } from '@expo/vector-icons';
-import { Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { FONT } from "../constants";
@@ -56,7 +55,7 @@ export default App = () => {
           </Button>
         ))}
 
-        { newProfile ?(
+        { newProfile ? (
           <TextInput
             value={profileID}
             onChangeText={(text) => setProfileID(text)}
