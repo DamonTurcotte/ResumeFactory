@@ -1,20 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import personalSlice from "./extraReducers/personalSlice";
 import personalReducer, { setPersonal } from "./extraReducers/personalSlice";
+import experienceReducer, { addJob, removeJob, editJob, setActive as activateExperience } from "./extraReducers/experienceSlice";
+import { extraReducers } from "./extraReducers";
 
 const profileSlice = createSlice({
   name: 'profile',
   initialState: {
     currentProfile: null,
-    profiles: {},
+    profiles: {}
   },
   reducers: {
     addProfile: (state, action) => {
-      if (Object.keys(state.profiles).includes(action.payload)) {
-        return;
-      } else {
+      if (!state.profiles.hasOwnProperty(action.payload)) {
         state.profiles[action.payload] = {
-          personal: personalSlice(undefined, {}),
+          personal: personalReducer(undefined, {}),
+          experience: experienceReducer(undefined, {}),
         }
       }
     },
@@ -28,11 +28,7 @@ const profileSlice = createSlice({
       state.currentProfile = action.payload;
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(setPersonal, (state, action) => {
-      state.profiles[state.currentProfile].personal = personalReducer(state.profiles[state.currentProfile].personal, action);
-    });
-  }
+  extraReducers: extraReducers
 });
 
 export const { addProfile, removeProfile, setCurrentProfile } = profileSlice.actions;
