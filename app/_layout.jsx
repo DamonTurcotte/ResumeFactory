@@ -23,7 +23,7 @@ export default function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
   NavigationBar.setBackgroundColorAsync(theme.colors.navbar, true);
-  NavigationBar.setBarStyleAsync("dark-content", true);
+  NavigationBar.setButtonStyleAsync("light")
 
   SplashScreen.hideAsync();
 
