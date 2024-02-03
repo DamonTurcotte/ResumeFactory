@@ -16,8 +16,8 @@
     "@expo/vector-icons": "^14.0.0",
     "@react-navigation/native": "^6.0.2",
     "@reduxjs/toolkit": "^2.0.1",
-    "expo": "~50.0.4",
-    "expo-dev-client": "~3.3.7",
+    "expo": "~50.0.5",
+    "expo-dev-client": "~3.3.8",
     "expo-font": "~11.10.2",
     "expo-linking": "~6.2.2",
     "expo-router": "~3.4.6",
@@ -36,7 +36,8 @@
     "react-native-web": "~0.19.6",
     "react-redux": "^9.1.0",
     "redux-persist": "^6.0.0",
-    "redux-persist-expo-filesystem": "^2.0.1"
+    "redux-persist-expo-filesystem": "^2.0.1",
+    "expo-navigation-bar": "~2.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
