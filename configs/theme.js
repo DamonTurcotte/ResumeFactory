@@ -96,6 +96,9 @@ export const CombinedDefaultTheme = {
     background: '#F5F5F5',
     onBackground: '#381e72',
     onBackgroundVariant: '#FFA855',
+    navbar: '#4F378B',
+    onNavbar: '#FFFFFF',
+    onNavbarVariant: '#FFA855',
   },
   fonts: ThemeFonts,
 };
@@ -107,42 +110,47 @@ export const CombinedDarkTheme = {
     ...DarkTheme.colors,
     ...MD3DarkTheme.colors,
     background: '#4F378B',
-    onBackground: '#FFF',
+    onBackground: '#FFFFFF',
     onBackgroundVariant: '#FFD835',
+    navbar: '#381E72',
+    onNavbar: '#FFFFFF',
+    onNavbarVariant: '#FFC855',
   },
   fonts: ThemeFonts,
 };
 
-// LOG  ["primary", "rgba(208, 188, 255, 1)"]
-// LOG  ["background", "rgba(28, 27, 31, 1)"]
-// LOG  ["card", "rgb(18, 18, 18)"]
-// LOG  ["text", "rgb(229, 229, 231)"]
-// LOG  ["border", "rgb(39, 39, 41)"]
-// LOG  ["notification", "rgb(255, 69, 58)"]
-// LOG  ["primaryContainer", "rgba(79, 55, 139, 1)"]
-// LOG  ["secondary", "rgba(204, 194, 220, 1)"]
-// LOG  ["secondaryContainer", "rgba(74, 68, 88, 1)"]
-// LOG  ["tertiary", "rgba(239, 184, 200, 1)"]
-// LOG  ["tertiaryContainer", "rgba(99, 59, 72, 1)"]
-// LOG  ["surface", "rgba(28, 27, 31, 1)"]
-// LOG  ["surfaceVariant", "rgba(73, 69, 79, 1)"]
-// LOG  ["surfaceDisabled", "rgba(230, 225, 229, 0.12)"]
-// LOG  ["error", "rgba(242, 184, 181, 1)"]
-// LOG  ["errorContainer", "rgba(140, 29, 24, 1)"]
-// LOG  ["onPrimary", "rgba(56, 30, 114, 1)"]
-// LOG  ["onPrimaryContainer", "rgba(234, 221, 255, 1)"]
-// LOG  ["onSecondary", "rgba(51, 45, 65, 1)"]
-// LOG  ["onSecondaryContainer", "rgba(232, 222, 248, 1)"]
-// LOG  ["onTertiary", "rgba(73, 37, 50, 1)"]
-// LOG  ["onTertiaryContainer", "rgba(255, 216, 228, 1)"]
-// LOG  ["onSurface", "rgba(230, 225, 229, 1)"]
-// LOG  ["onSurfaceVariant", "rgba(202, 196, 208, 1)"]
-// LOG  ["onSurfaceDisabled", "rgba(230, 225, 229, 0.38)"]
-// LOG  ["onError", "rgba(96, 20, 16, 1)"]
-// LOG  ["onErrorContainer", "rgba(242, 184, 181, 1)"]
-// LOG  ["onBackground", "rgba(230, 225, 229, 1)"]
-// LOG  ["outline", "rgba(147, 143, 153, 1)"]
-// LOG  ["outlineVariant", "rgba(73, 69, 79, 1)"]
-// LOG  ["inverseSurface", "rgba(230, 225, 229, 1)"]
-// LOG  ["inverseOnSurface", "rgba(49, 48, 51, 1)"]
-// LOG  ["inversePrimary", "rgba(103, 80, 164, 1)"]
+
+// THEME COLORS AS HEX
+// LOG  ["primary", "#D0BCFF"]
+// LOG  ["background", "#1C1B1F"]
+// LOG  ["card", "#121212"]
+// LOG  ["text", "#E5E5E7"]
+// LOG  ["border", "#272729"]
+// LOG  ["notification", "#FF453A"]
+// LOG  ["primaryContainer", "#4F378B"]
+// LOG  ["secondary", "#CCC2DC"]
+// LOG  ["secondaryContainer", "#4A4458"]
+// LOG  ["tertiary", "#EFB8C8"]
+// LOG  ["tertiaryContainer", "#633B48"]
+// LOG  ["surface", "#1C1B1F"]
+// LOG  ["surfaceVariant", "#49454F"]
+// LOG  ["surfaceDisabled", "#E6E1E533"]
+// LOG  ["error", "#F2B8B5"]
+// LOG  ["errorContainer", "#8C1D18"]
+// LOG  ["onPrimary", "#381E72"]
+// LOG  ["onPrimaryContainer", "#EADDFF"]
+// LOG  ["onSecondary", "#332D41"]
+// LOG  ["onSecondaryContainer", "#E8DEF8"]
+// LOG  ["onTertiary", "#492532"]
+// LOG  ["onTertiaryContainer", "#FFD8E4"]
+// LOG  ["onSurface", "#E6E1E5"]
+// LOG  ["onSurfaceVariant", "#CAC4D0"]
+// LOG  ["onSurfaceDisabled", "#E6E1E548"]
+// LOG  ["onError", "#601410"]
+// LOG  ["onErrorContainer", "#F2B8B5"]
+// LOG  ["onBackground", "#E6E1E5"]
+// LOG  ["outline", "#938F99"]
+// LOG  ["outlineVariant", "#49454F"]
+// LOG  ["inverseSurface", "#E6E1E5"]
+// LOG  ["inverseOnSurface", "#313033"]
+// LOG  ["inversePrimary", "#6750A4"]
