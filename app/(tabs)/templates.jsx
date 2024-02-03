@@ -9,9 +9,7 @@ export default function TabTwoScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <Text style={styles.title}>Tab Two</Text>
-      </View>
+
     </SafeAreaView>
   );
 }
