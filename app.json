@@ -22,7 +22,11 @@
     },
     "android": {
       "versionCode": 1,
-      "package": "tech.turcotte.resumeio"
+      "package": "tech.turcotte.resumeio",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/ResumeIO.png",
+        "backgroundColor": "#4F378B"
+      }
     },
     "web": {
       "favicon": "./assets/images/ResumeIO.png"
