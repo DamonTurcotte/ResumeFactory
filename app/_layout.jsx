@@ -22,7 +22,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
-  NavigationBar.setBackgroundColorAsync(theme.colors.navbar, true);
+  NavigationBar.setBackgroundColorAsync("#000", true);
   NavigationBar.setButtonStyleAsync("light")
 
   SplashScreen.hideAsync();
