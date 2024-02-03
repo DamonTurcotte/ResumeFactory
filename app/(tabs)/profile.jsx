@@ -1,14 +1,13 @@
 import { Text, Modal, useTheme, Button, TextInput } from 'react-native-paper';
 import { View, StyleSheet, SafeAreaView, Pressable } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useRouter, Stack } from 'expo-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState, useRef } from 'react';
 
-import PressableDragAndDrop from '../../components/draggable';
-
 import { sliceActivators } from '../../redux/extraReducers';
+import { PressableDragAndDrop } from '../../components';
 
-export default function TabOneScreen() {
+export default ProfileScreen = () => {
   const theme = useTheme().colors;
   const styles = getStyles(theme);
   const router = useRouter();
@@ -23,13 +22,14 @@ export default function TabOneScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
+
       <View style={styles.container}>
         <View style={styles.subcontainer}>
           <Text style={styles.title} variant='titleLarge'>Active</Text>
           <View style={styles.categories} ref={activeRef}>
             <Pressable onPress={() => router.navigate('/profile/personal')}>
               <View style={{backgroundColor: theme.primary}}>
-                <Text variant='bodyLarge'>Profile</Text>
+                <Text variant='bodyLarge'>Personal</Text>
               </View>
             </Pressable>
             { activeCategories.map((category) => (
