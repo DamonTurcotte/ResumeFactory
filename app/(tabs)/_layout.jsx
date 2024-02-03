@@ -1,65 +1,44 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs, Redirect } from 'expo-router';
-import { Pressable } from 'react-native';
-
-import { useColorScheme } from 'react-native';
+import { Tabs, Stack } from 'expo-router';
 
 import { useTheme } from 'react-native-paper';
-
-function TabBarIcon(props) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+import { HeaderBackButton } from '../../components';
+import { Icon } from 'react-native-paper';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const theme = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: theme.colors.onBackgroundVariant,
-        tabBarInactiveTintColor: theme.colors.onBackground,
-        tabBarActiveBackgroundColor: theme.colors.onPrimary,
-        tabBarInactiveBackgroundColor: theme.colors.onPrimary,
         tabBarStyle: {
-          borderTopColor: theme.colors.onPrimary,
-          backgroundColor: theme.colors.onPrimary,
+          backgroundColor: theme.colors.navbar,
         },
+        tabBarActiveTintColor: theme.colors.onNavbarVariant,
+        headerShown: false,
       }}>
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: headerBtnRight(),
+          tabBarIcon: ({ color, focused }) => {
+            const name = focused ? "account-circle" : "account-circle-outline";
+            return <MaterialCommunityIcons name={name} color={color} size={26} />;
+          },
+          headerLeft: () => <HeaderBackButton path="/" theme={theme} />,
         }}
       />
       <Tabs.Screen
         name="templates"
         options={{
           title: 'Templates',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color, focused }) => {
+            const name = focused ? "file-document" : "file-document-outline";
+            return <MaterialCommunityIcons name={name} color={color} size={26} />;
+          },
+          headerLeft: () => <HeaderBackButton path="/" theme={theme} />,
         }}
       />
     </Tabs>
   );
 }
-
-function headerBtnRight() {
-  return () => (
-    <Link href="/personal">
-      <Pressable>
-        {({ pressed }) => (
-          <FontAwesome
-            name="info-circle"
-            size={25}
-            color={"#FFFF00"}
-            style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }} />
-        )}
-      </Pressable>
-    </Link>
-  );
-}
-
