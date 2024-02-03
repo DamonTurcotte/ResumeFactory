@@ -2,6 +2,7 @@ import { Stack, useRouter } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { getFocusedRouteNameFromRoute, useNavigation, useRoute } from '@react-navigation/native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as NavigationBar from 'expo-navigation-bar';
 
 import { StatusBar, useColorScheme } from 'react-native';
 import { PaperProvider, ActivityIndicator } from 'react-native-paper';
@@ -21,6 +22,8 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const theme = colorScheme === "dark" ? CombinedDarkTheme : CombinedDefaultTheme;
+  NavigationBar.setBackgroundColorAsync(theme.colors.navbar, true);
+  NavigationBar.setBarStyleAsync("dark-content", true);
 
   SplashScreen.hideAsync();
 
@@ -29,33 +32,23 @@ export default function RootLayoutNav() {
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={<ActivityIndicator animating={true} color={theme.colors.error} size='large' />}>
           <GestureHandlerRootView style={{flex: 1}}>
-            <StatusBar barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} backgroundColor={theme.colors.onPrimary} />
+            <StatusBar barStyle={colorScheme === "dark" ? "light-content" : "dark-content"} backgroundColor={theme.colors.navbar} />
             <Stack screenOptions={{
               contentStyle: { backgroundColor: theme.colors.inverseOnSurface },
-              headerStyle: { backgroundColor: theme.colors.onPrimary},
-              headerTintColor: theme.colors.onBackgroundVariant,
-              headerTitleStyle: { color: theme.colors.onBackground, fontFamily: FONT.OrbitronB },
+              headerStyle: { backgroundColor: theme.colors.navbar},
+              headerTintColor: theme.colors.onNavbarVariant,
+              headerTitleStyle: { color: theme.colors.onNavbar, fontFamily: FONT.OrbitronB },
               animation: "fade_from_bottom",
             }}>
-              <Stack.Screen name="index" options={{title: "ResumeIO", headerShown: false, contentStyle: {backgroundColor: theme.colors.background}}} />
+              <Stack.Screen name="index" options={{title: "ResumeIO", headerShown: false, contentStyle: {backgroundColor: "#D0BCFF"}}} />
               <Stack.Screen 
                 name="(tabs)" 
+                headerLeft={() => <HeaderBackButton path="/" theme={theme} />}
                 options={({ route }) => {
                   const routeName = getFocusedRouteNameFromRoute(route) ?? 'default';
                   let title = routeName[0].toUpperCase() + routeName.slice(1);
                   return { title };
                 }}
-                headerLeft={() => <HeaderBackButton path="index" theme={theme} />}
-              />
-              <Stack.Screen 
-                name="profile/personal"
-                options={{title: "Personal"}}
-                headerLeft={() => <HeaderBackButton path="profile" theme={theme} />}
-              />
-              <Stack.Screen 
-                name="profile/experience"
-                options={{title: "Experience"}}
-                headerLeft={() => <HeaderBackButton path="profile" theme={theme} />}
               />
             </Stack>
           </GestureHandlerRootView>
@@ -63,18 +56,4 @@ export default function RootLayoutNav() {
       </Provider>
     </PaperProvider>
   );
-}
-
-const HeaderBackButton = ({path, theme}) => {
-  const router = useRouter();
-  return (
-    <Icon 
-      name='arrow-left'
-      color={theme.colors.onBackgroundVariant}
-      size={30}
-      onPress={() => {
-        router.navigate(path);
-      }}
-    />
-  )
 }
