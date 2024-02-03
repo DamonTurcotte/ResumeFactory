@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Animated, PanResponder } from 'react-native';
 
-const PressableDragAndDrop = ({ children, onPress, onRelease, targetRef }) => {
+export const PressableDragAndDrop = ({ children, onPress, onRelease, targetRef }) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const initialPos = useRef({x: 0, y: 0});
 
@@ -70,5 +70,3 @@ const PressableDragAndDrop = ({ children, onPress, onRelease, targetRef }) => {
     </Animated.View>
   );
 };
-
-export default PressableDragAndDrop;
