@@ -2,7 +2,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { Button, TextInput } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "react-native-paper";
-import { useRouter } from "expo-router";
+import { useRouter, Stack } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { setPersonal } from '../../redux/extraReducers/personalSlice';
@@ -27,6 +27,11 @@ const PersonalScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
+      <Stack.Screen 
+        options={{title: "Personal"}}
+        headerLeft={() => <HeaderBackButton path="profile" theme={theme} />}
+      />
+      
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
         <TextInput
           style={styles.textInput}

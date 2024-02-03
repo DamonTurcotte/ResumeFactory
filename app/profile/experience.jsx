@@ -5,7 +5,7 @@ import { useTheme } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Button, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
+import { useRouter, Stack } from 'expo-router';
 
 const ExperienceScreen = () => {
   const dispatch = useDispatch();
@@ -17,6 +17,10 @@ const ExperienceScreen = () => {
   
   return (
     <SafeAreaView style={getStyles(theme).safe}>
+      <Stack.Screen 
+        options={{title: "Experience"}}
+        headerLeft={() => <HeaderBackButton path="profile" theme={theme} />}
+      />
       <KeyboardAwareScrollView style={getStyles(theme).container}>
 
 
