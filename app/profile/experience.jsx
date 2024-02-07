@@ -7,7 +7,7 @@ import { Button, TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, Stack } from 'expo-router';
 
-const ExperienceScreen = () => {
+export default ExperienceScreen = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const router = useRouter();
@@ -41,5 +41,3 @@ const getStyles = (theme) => ({
     backgroundColor: theme.colors.background,
   },
 });
-
-export default ExperienceScreen;
