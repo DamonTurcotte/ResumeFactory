@@ -99,6 +99,7 @@ export const CombinedDefaultTheme = {
     navbar: '#4F378B',
     onNavbar: '#FFFFFF',
     onNavbarVariant: '#FFA855',
+    surface: '#FFFFFF',
   },
   fonts: ThemeFonts,
 };
@@ -115,6 +116,8 @@ export const CombinedDarkTheme = {
     navbar: '#381E72',
     onNavbar: '#FFFFFF',
     onNavbarVariant: '#FFC855',
+    surface: '#6750A4',
+    primaryContainer: "#4F378B",
   },
   fonts: ThemeFonts,
 };
