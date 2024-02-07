@@ -1,5 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export const jobObj = {
+  Title: "",
+  Company: "",
+  Location: "",
+  Start: "",
+  End: "",
+  Description: "",
+};
+
 export const experienceSlice = createSlice({
   name: 'experience',
   initialState: {
@@ -11,9 +20,10 @@ export const experienceSlice = createSlice({
       state.Jobs.push(action.payload);
     },
     removeJob: (state, action) => {
-      state.Jobs.splice(action.payload, 1);
+      const index = action.payload;
+      state.Jobs.splice(index, 1);
     },
-    editJob: (state, action) => {
+    setJob: (state, action) => {
       state.Jobs[action.payload.index] = action.payload.job;
     },
     setActive: (state, action) => {
@@ -22,6 +32,6 @@ export const experienceSlice = createSlice({
   }
 });
 
-export const { addJob, removeJob, editJob, setActive } = experienceSlice.actions;
+export const { addJob, removeJob, setJob, setActive } = experienceSlice.actions;
 
 export default experienceSlice.reducer;
