@@ -1,7 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import personalReducer, { setPersonal } from "./extraReducers/personalSlice";
-import experienceReducer, { addJob, removeJob, editJob, setActive as activateExperience } from "./extraReducers/experienceSlice";
 import { extraReducers } from "./extraReducers";
+import {
+  personalSlice,
+  objectiveSlice,
+  summarySlice,
+  experienceSlice,
+  educationSlice,
+  skillSlice,
+  certificateSlice,
+  projectSlice,
+  publicationSlice,
+  languageSlice,
+  referenceSlice,
+} from './extraReducers';
 
 const profileSlice = createSlice({
   name: 'profile',
@@ -13,8 +24,17 @@ const profileSlice = createSlice({
     addProfile: (state, action) => {
       if (!state.profiles.hasOwnProperty(action.payload)) {
         state.profiles[action.payload] = {
-          personal: personalReducer(undefined, {}),
-          experience: experienceReducer(undefined, {}),
+          personal: personalSlice.reducer(undefined, {}),
+          objective: objectiveSlice.reducer(undefined, {}),
+          summary: summarySlice.reducer(undefined, {}),
+          experience: experienceSlice.reducer(undefined, {}),
+          education: educationSlice.reducer(undefined, {}),
+          skills: skillSlice.reducer(undefined, {}),
+          certificates: certificateSlice.reducer(undefined, {}),
+          projects: projectSlice.reducer(undefined, {}),
+          publications: publicationSlice.reducer(undefined, {}),
+          languages: languageSlice.reducer(undefined, {}),
+          references: referenceSlice.reducer(undefined, {}),
         }
       }
     },
