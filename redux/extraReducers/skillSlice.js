@@ -9,18 +9,19 @@ export const skillSlice = createSlice({
   name: "skills",
   initialState: {
     active: false,
-    skills: []
+    data: []
   },
   reducers: {
     addSkill: (state, action) => {
-      state.skills.push(action.payload);
+      state.data.push(action.payload.data);
     },
     removeSkill: (state, action) => {
-      state.skills = state.skills.filter((skill) => skill.Name !== action.payload);
+      const index = action.payload.index;
+      state.data.splice(index, 1);
     },
     setSkill: (state, action) => {
       const index = action.payload.index;
-      state.skills[index] = action.payload.skill;
+      state.data[index] = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;
