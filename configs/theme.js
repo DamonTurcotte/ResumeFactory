@@ -118,6 +118,7 @@ export const CombinedDarkTheme = {
     onNavbarVariant: '#FFC855',
     surface: '#6750A4',
     primaryContainer: "#4F378B",
+    overlay: "#00000080",
   },
   fonts: ThemeFonts,
 };
