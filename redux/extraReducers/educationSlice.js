@@ -13,18 +13,18 @@ export const educationSlice = createSlice({
   name: "education",
   initialState: {
     active: false,
-    education: [],
+    data: [],
   },
   reducers: {
     addEducation: (state, action) => {
-      state.education.push(action.payload);
+      state.data.push(action.payload.data);
     },
     removeEducation: (state, action) => {
-      const index = action.payload;
-      state.education.splice(index, 1);
+      const index = action.payload.index;
+      state.data.splice(index, 1);
     },
     setEducation: (state, action) => {
-      state.education[action.payload.index] = action.payload.education;
+      state.data[action.payload.index] = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;

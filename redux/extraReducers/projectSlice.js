@@ -12,18 +12,18 @@ export const projectSlice = createSlice({
   name: "projects",
   initialState: {
     active: false,
-    projects: []
+    data: []
   },
   reducers: {
     addProject: (state, action) => {
-      state.projects.push(action.payload);
+      state.data.push(action.payload.data);
     },
     removeProject: (state, action) => {
-      const index = action.payload;
-      state.projects.splice(index, 1);
+      const index = action.payload.index;
+      state.data.splice(index, 1);
     },
     setProject: (state, action) => {
-      state.projects[action.payload.index] = action.payload.project;
+      state.data[action.payload.index] = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;

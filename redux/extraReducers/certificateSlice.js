@@ -13,18 +13,18 @@ export const certificateSlice = createSlice({
   name: "certificates",
   initialState: {
     active: false,
-    certificates: [],
+    data: [],
   },
   reducers: {
     addCertificate: (state, action) => {
-      state.certificates.push(certificateObj);
+      state.data.push(action.payload.data);
     },
     removeCertificate: (state, action) => {
-      const index = action.payload;
-      state.certificates.splice(index, 1);
+      const index = action.payload.index;
+      state.data.splice(index, 1);
     },
     setCertificate: (state, action) => {
-      state.certificates[action.payload.index] = action.payload.certificate;
+      state.data[action.payload.index] = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;

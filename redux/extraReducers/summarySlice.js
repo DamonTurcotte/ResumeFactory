@@ -4,11 +4,11 @@ export const summarySlice = createSlice({
   name: "summary",
   initialState: {
     active: false,
-    Summary: "",
+    data: "",
   },
   reducers: {
     setSummary: (state, action) => {
-      state.Summary = action.payload;
+      state.data = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;

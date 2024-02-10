@@ -12,18 +12,18 @@ export const referenceSlice = createSlice({
   name: "references",
   initialState: {
     active: false,
-    references: [],
+    data: [],
   },
   reducers: {
     addReference: (state, action) => {
-      state.references.push(action.payload);
+      state.data.push(action.payload.data);
     },
     removeReference: (state, action) => {
-      const index = action.payload;
-      state.references.splice(index, 1);
+      const index = action.payload.index;
+      state.data.splice(index, 1);
     },
     setReference: (state, action) => {
-      state.references[action.payload.index] = action.payload.reference;
+      state.data[action.payload.index] = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;

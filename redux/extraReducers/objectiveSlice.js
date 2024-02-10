@@ -4,11 +4,11 @@ export const objectiveSlice = createSlice({
   name: "objective",
   initialState: {
     active: false,
-    Objective: "",
+    data: "",
   },
   reducers: {
     setObjective: (state, action) => {
-      state.Objective = action.payload;
+      state.data = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;

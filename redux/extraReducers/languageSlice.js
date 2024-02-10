@@ -9,18 +9,18 @@ export const languageSlice = createSlice({
   name: "languages",
   initialState: {
     active: false,
-    languages: [],
+    data: [],
   },
   reducers: {
     addLanguage: (state, action) => {
-      state.languages.push(languageObj);
+      state.data.push(action.payload.data);
     },
     removeLanguage: (state, action) => {
-      const index = action.payload;
-      state.languages.splice(index, 1);
+      const index = action.payload.index;
+      state.data.splice(index, 1);
     },
     setLanguage: (state, action) => {
-      state.languages[action.payload.index] = action.payload.language;
+      state.data[action.payload.index] = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;

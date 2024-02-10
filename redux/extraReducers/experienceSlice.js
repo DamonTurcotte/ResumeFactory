@@ -6,25 +6,25 @@ export const jobObj = {
   Location: "",
   Start: "",
   End: "",
-  Description: "",
+  Duties: [],
 };
 
 export const experienceSlice = createSlice({
   name: 'experience',
   initialState: {
     active: false,
-    Jobs: []
+    data: []
   },
   reducers: {
     addJob: (state, action) => {
-      state.Jobs.push(action.payload);
+      state.data.push(action.payload.data);
     },
     removeJob: (state, action) => {
-      const index = action.payload;
-      state.Jobs.splice(index, 1);
+      const index = action.payload.index;
+      state.data.splice(index, 1);
     },
     setJob: (state, action) => {
-      state.Jobs[action.payload.index] = action.payload.job;
+      state.data[action.payload.index] = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;

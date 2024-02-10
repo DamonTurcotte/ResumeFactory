@@ -12,18 +12,18 @@ export const publicationSlice = createSlice({
   name: "publications",
   initialState: {
     active: false,
-    publications: []
+    data: []
   },
   reducers: {
     addPublication: (state, action) => {
-      state.publications.push(action.payload);
+      state.data.push(action.payload.data);
     },
     removePublication: (state, action) => {
-      const index = action.payload;
-      state.publications.splice(index, 1);
+      const index = action.payload.index;
+      state.data.splice(index, 1);
     },
     setPublication: (state, action) => {
-      state.publications[action.payload.index] = action.payload.publication;
+      state.data[action.payload.index] = action.payload.data;
     },
     setActive: (state, action) => {
       state.active = action.payload;
