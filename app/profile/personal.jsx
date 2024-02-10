@@ -13,13 +13,13 @@ export default PersonalScreen = () => {
 
   const profileid = useSelector((state) => state.currentProfile);
 
-  const [nameInput, setNameInput] = useState(personal.Name);
-  const [emailInput, setEmailInput] = useState(personal.Email);
-  const [phoneInput, setPhoneInput] = useState(personal.Phone);
-  const [locationInput, setLocationInput] = useState(personal.Location);
-  const [websiteInput, setWebsiteInput] = useState(personal.Website);
-  const [linkedInInput, setLinkedInInput] = useState(personal.LinkedIn);
-  const [gitHubInput, setGitHubInput] = useState(personal.GitHub);
+  const [nameInput, setNameInput] = useState(personal.data.Name);
+  const [emailInput, setEmailInput] = useState(personal.data.Email);
+  const [phoneInput, setPhoneInput] = useState(personal.data.Phone);
+  const [locationInput, setLocationInput] = useState(personal.data.Location);
+  const [websiteInput, setWebsiteInput] = useState(personal.data.Website);
+  const [linkedInInput, setLinkedInInput] = useState(personal.data.LinkedIn);
+  const [gitHubInput, setGitHubInput] = useState(personal.data.GitHub);
 
   const theme = useTheme().colors;
   const styles = getStyles(theme);
@@ -85,8 +85,7 @@ export default PersonalScreen = () => {
         <Button
           mode='contained'
           onPress={() => {
-            dispatch(setPersonal({
-              profileid,
+            dispatch(setPersonal({profileid, data: {
               Name: nameInput,
               Email: emailInput,
               Phone: phoneInput,
@@ -94,7 +93,7 @@ export default PersonalScreen = () => {
               Website: websiteInput,
               LinkedIn: linkedInInput,
               GitHub: gitHubInput,
-            }));
+            }}));
             router.navigate('/profile');
           }}
         >
