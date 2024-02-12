@@ -1,17 +1,16 @@
-import { addJob, removeJob, setJob } from '../../redux/extraReducers/experienceSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import { useTheme } from 'react-native-paper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Button, TextInput, Text } from 'react-native-paper';
 import { Stack } from 'expo-router';
-import { JobCard } from '../../components/jobCard';
-import { SafeAreaView } from 'react-native';
+import { useState } from 'react';
+import { SafeAreaView, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, TextInput, Text, useTheme } from 'react-native-paper';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import { addJob, removeJob, setJob } from '../../redux/extraReducers/experienceSlice';
+import { JobCard } from '../../components/cards/jobCard';
 import { HeaderBackButton } from '../../components/headerBackButton';
-import { View } from 'react-native';
 import { DeleteModal } from '../../components/deleteModal';
 
-export default ExperienceScreen = () => {
+const ExperienceScreen = () => {
   const [jobEditor, setJobEditor] = useState(false);
   const [index, setIndex] = useState(-1);
 
@@ -156,7 +155,7 @@ export default ExperienceScreen = () => {
           { experience.map((job, i) => (
             <JobCard
               key={i}
-              job={job}
+              data={job}
               style={styles.card}
             >
               <Button
@@ -253,3 +252,5 @@ const getStyles = (theme) => ({
     borderRadius: 10
   },
 });
+
+export default ExperienceScreen;

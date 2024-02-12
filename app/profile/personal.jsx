@@ -7,7 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { setPersonal } from '../../redux/extraReducers/personalSlice';
 
-export default PersonalScreen = () => {
+import { HeaderBackButton } from '../../components/headerBackButton';
+
+const PersonalScreen = () => {
   const personal = useSelector((state) => state.profiles[state.currentProfile].personal);
   const dispatch = useDispatch();
 
@@ -116,3 +118,5 @@ const getStyles = (theme) => ({
     marginBottom: 10,
   }
 });
+
+export default PersonalScreen;

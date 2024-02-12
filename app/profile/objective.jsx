@@ -6,8 +6,10 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setObjective } from '../../redux/extraReducers/objectiveSlice';
 
+import { HeaderBackButton } from '../../components/headerBackButton';
 
-export default ObjectiveScreen = () => {
+
+const ObjectiveScreen = () => {
   const objective = useSelector((state) => state.profiles[state.currentProfile].objective);
   const [objectiveInput, setObjectiveInput] = useState(objective.data);
 
@@ -63,3 +65,5 @@ const getStyles = (theme) => ({
     marginBottom: 20,
   }
 });
+
+export default ObjectiveScreen;

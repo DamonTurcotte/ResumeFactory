@@ -1,10 +1,15 @@
-import { useTheme } from 'react-native-paper';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack } from 'expo-router';
+import { useState } from 'react';
+import { View, SafeAreaView } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Text, TextInput, Button, useTheme } from 'react-native-paper';
+
+import { HeaderBackButton } from '../../components/headerBackButton';
+import { DeleteModal } from '../../components/deleteModal';
 
 
-export default PublicationsScreen = () => {
+const PublicationScreen = () => {
   const theme = useTheme();
   const styles = getStyles(theme);
   
@@ -34,3 +39,5 @@ const getStyles = (theme) => ({
     backgroundColor: theme.colors.background,
   },
 });
+
+export default PublicationScreen;

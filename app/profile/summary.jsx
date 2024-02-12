@@ -6,8 +6,10 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSummary } from '../../redux/extraReducers/summarySlice';
 
+import { HeaderBackButton } from '../../components/headerBackButton';
 
-export default SummaryScreen = () => {
+
+const SummaryScreen = () => {
   const summary = useSelector((state) => state.profiles[state.currentProfile].summary);
   const [summaryInput, setSummaryInput] = useState(summary.data);
 
@@ -63,3 +65,5 @@ const getStyles = (theme) => ({
     marginBottom: 20,
   }
 });
+
+export default SummaryScreen;
