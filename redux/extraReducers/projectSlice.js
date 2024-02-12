@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const projectObj = {
   Title: "",
+  Category: "",
   Start: "",
   End: "",
   Description: "",
-  Link: "",
+  Achievements: [],
+  Links: [],
 };
 
 export const projectSlice = createSlice({
