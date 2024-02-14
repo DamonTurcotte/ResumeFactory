@@ -2,13 +2,11 @@ import { Stack } from 'expo-router';
 import { useState } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, TextInput, Text, useTheme } from 'react-native-paper';
+import { Button, Text, useTheme, Divider } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { addJob, removeJob, setJob } from '../../redux/extraReducers/experienceSlice';
-import { JobCard } from '../../components/cards/jobCard';
-import { HeaderBackButton } from '../../components/headerBackButton';
-import { DeleteModal } from '../../components/deleteModal';
+import { JobCard, HeaderBackButton, DeleteModal, TextBox } from '../../components';
 
 const ExperienceScreen = () => {
   const [jobEditor, setJobEditor] = useState(false);
@@ -28,7 +26,6 @@ const ExperienceScreen = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const styles = getStyles(theme);
-
 
   const handleJobEditor = () => {
     setJobEditor(!jobEditor);
@@ -67,65 +64,60 @@ const ExperienceScreen = () => {
       <KeyboardAwareScrollView style={styles.container}>
         { jobEditor ? (
         <>
-          <Text variant='headlineMedium'>
-            Job Details
+          <Text style={styles.title} variant='headlineMedium'>
+            { index === -1 ? "Add" : "Edit" } Job
           </Text>
-          <TextInput
+          <Divider style={{marginBottom: 5, backgroundColor: theme.colors.outline}} />
+          <TextBox
             label="Title"
             value={title}
             onChangeText={(text) => setTitle(text)}
-            mode='outlined'
           />
-          <TextInput
+          <TextBox
             label="Company"
             value={company}
             onChangeText={(text) => setCompany(text)}
-            mode='outlined'
           />
-          <TextInput
+          <TextBox
             label="Location"
             value={location}
             onChangeText={(text) => setLocation(text)}
-            mode='outlined'
           />
-          <TextInput
+          <TextBox
             label="Start Date"
             value={startDate}
             onChangeText={(text) => setStartDate(text)}
-            mode='outlined'
           />
-          <TextInput
+          <TextBox
             label="End Date"
             value={endDate}
             onChangeText={(text) => setEndDate(text)}
-            mode='outlined'
           />
 
           <Text
             style={styles.text}
           >Duties</Text>
 
-          <View style={{flexDirection: 'row'}}>
+          <View style={styles.listRow}>
               <View style={styles.listDecoration}>
 
               </View>
               <View style={{flex: 1}}>
                 { duties.map((duty, i) => (
-                  <TextInput
+                  <TextBox
                     key={i}
                     label={`Duty ${i + 1}`}
                     value={duty}
-                    right={<TextInput.Icon icon="close" style={{margin: 0, padding: 0}} size={20} onPress={() => {
+                    close={() => {
                       let temp = [...duties];
                       temp.splice(i, 1);
                       setDuties(temp);
-                    }} />}
+                    }}
                     onChangeText={(text) => {
                       let temp = [...duties];
                       temp[i] = text;
                       setDuties(temp);
                     }}
-                    mode='outlined'
                   />
                 ))}
                 <Button
@@ -146,8 +138,18 @@ const ExperienceScreen = () => {
             mode="contained"
             onPress={saveJobData}
             style={styles.button}
+            disabled={title === "" || company === ""}
           >
             Save
+          </Button>
+          <Button
+            mode="text"
+            onPress={handleJobEditor}
+            style={styles.button}
+            textColor={theme.colors.onError}
+            buttonColor={theme.colors.error}
+          >
+            Cancel
           </Button>
         </>
         ) : (
@@ -156,7 +158,7 @@ const ExperienceScreen = () => {
             <JobCard
               key={i}
               data={job}
-              style={styles.card}
+              style={i === 0 ? styles.initialCard : styles.card}
             >
               <Button
                 mode="text"
@@ -183,19 +185,28 @@ const ExperienceScreen = () => {
               </Button>
             </JobCard>
           ))}
-          <Button
-            mode="contained"
-            style={styles.button}
-            onPress={() => {
-              setIndex(-1);
-              handleJobEditor();
-            }}
-          >
-            Add Job
-          </Button>
         </>
         )}
       </KeyboardAwareScrollView>
+      { !jobEditor && (
+        <Button
+          mode="contained"
+          style={styles.addButton}
+          contentStyle={styles.addButtonContent}
+          onPress={() => {
+            setTitle("");
+            setCompany("");
+            setLocation("");
+            setStartDate("");
+            setEndDate("");
+            setDuties([]);
+            setIndex(-1);
+            handleJobEditor();
+          }}
+        >
+          Add Job
+        </Button>
+      )}
 
       { deleteIndex !== -1 && (
         <DeleteModal
@@ -221,11 +232,14 @@ const getStyles = (theme) => ({
     paddingHorizontal: 20,
     backgroundColor: theme.colors.background,
   },
-  card: {
+  initialCard: {
     marginVertical: 10,
   },
+  card: {
+    marginBottom: 10,
+  },
   title: {
-    fontSize: 24,
+    marginTop: 10
   },
   paragraph: {
     fontSize: 16,
@@ -244,12 +258,23 @@ const getStyles = (theme) => ({
   input: {
     marginVertical: 10,
   },
+  listRow: {
+    flexDirection: 'row'
+  },
   listDecoration: {
     width: 3,
     backgroundColor: theme.colors.outline,
     marginHorizontal: 10,
     marginTop: 5,
     borderRadius: 10
+  },
+  addButton: {
+    borderRadius: 0,
+  },
+  addButtonContent: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 

@@ -3,13 +3,10 @@ import { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, TextInput, Button, useTheme } from 'react-native-paper';
+import { Text, Button, useTheme, Divider } from 'react-native-paper';
 
-import { HeaderBackButton } from '../../components/headerBackButton';
-import { DeleteModal } from '../../components/deleteModal';
+import { HeaderBackButton, DeleteModal, SchoolCard, TextArea, TextBox } from '../../components';
 import { addEducation, removeEducation, setEducation } from '../../redux/extraReducers/educationSlice';
-import { SchoolCard } from '../../components/cards/schoolCard';
-
 
 const EducationScreen = () => {
   const [schoolEditor, setSchoolEditor] = useState(false);
@@ -64,53 +61,61 @@ const EducationScreen = () => {
       <KeyboardAwareScrollView style={styles.container}>
         { schoolEditor ? (
           <>
-            <Text variant='headlineMedium'>
-              Education Details
+            <Text
+              variant='headlineMedium'
+              style={styles.title}
+            >
+              { index === -1 ? "Add" : "Edit" } School
             </Text>
-            <TextInput
-              mode='outlined'
+            <Divider
+              style={styles.divider}
+            />
+            <TextBox
               label="School"
               value={school}
               onChangeText={setSchool}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="Credential"
               value={credential}
               onChangeText={setCredential}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="Start Date"
               value={start}
               onChangeText={setStart}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="End Date"
               value={end}
               onChangeText={setEnd}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="GPA"
               value={gpa}
               onChangeText={setGPA}
             />
-            <TextInput
-              mode='outlined'
+            <TextArea
               label="Description"
               value={description}
               onChangeText={setDescription}
-              numberOfLines={3}
-              multiline
             />
             <Button
               mode="contained"
               onPress={saveSchoolData}
               style={styles.button}
+              disabled={school === "" || credential === ""}
             >
               Save
+            </Button>
+            <Button
+              mode="text"
+              onPress={handleSchoolEditor}
+              style={styles.button}
+              textColor={theme.colors.onError}
+              buttonColor={theme.colors.error}
+            >
+              Cancel
             </Button>
           </>
         ) : (
@@ -119,7 +124,7 @@ const EducationScreen = () => {
             <SchoolCard
               key={i}
               data={school}
-              style={styles.card}
+              style={i === 0 ? styles.initialCard : styles.card}
             >
               <Button
                 mode='text'
@@ -146,15 +151,20 @@ const EducationScreen = () => {
               </Button>
             </SchoolCard>
           ))}
-          <Button
-            mode="contained"
-            onPress={handleSchoolEditor}
-          >
-            Add School
-          </Button>
           </>
         )}
       </KeyboardAwareScrollView>
+        { !schoolEditor && (
+          <Button
+            mode="contained"
+            onPress={handleSchoolEditor}
+            style={styles.addButton}
+            contentStyle={styles.addButtonContent}
+          >
+            Add School
+          </Button>
+        )}
+
       { deleteIndex !== -1 && (
         <DeleteModal
           visible={deleteIndex !== -1}
@@ -176,14 +186,32 @@ const getStyles = (theme) => ({
   },
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: theme.colors.background,
+  },
+  title: {
+    marginTop: 10,
+  },
+  divider: {
+    marginBottom: 10,
+    backgroundColor: theme.colors.outline,
   },
   button: {
     marginTop: 10,
   },
+  initialCard: {
+    marginVertical: 10,
+  },
   card: {
     marginBottom: 10,
+  },
+  addButton: {
+    borderRadius: 0,
+  },
+  addButtonContent: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 

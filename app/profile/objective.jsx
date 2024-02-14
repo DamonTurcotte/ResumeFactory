@@ -1,13 +1,12 @@
-import { useTheme, TextInput, Button } from 'react-native-paper';
+import { useTheme, Button } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { SafeAreaView } from 'react-native';
+
 import { setObjective } from '../../redux/extraReducers/objectiveSlice';
-
-import { HeaderBackButton } from '../../components/headerBackButton';
-
+import { HeaderBackButton, TextArea } from '../../components';
 
 const ObjectiveScreen = () => {
   const objective = useSelector((state) => state.profiles[state.currentProfile].objective);
@@ -27,18 +26,16 @@ const ObjectiveScreen = () => {
         headerLeft={() => <HeaderBackButton path="profile" theme={theme} />}
       />
       <KeyboardAwareScrollView style={styles.container}>
-        <TextInput
+        <TextArea
           style={styles.textInput}
           label='Objective'
           value={objectiveInput}
           onChangeText={setObjectiveInput}
-          mode="outlined"
-          multiline={true}
-          numberOfLines={5}
-          placeholder='Enter your objective here.'
+          placeholder='Enter your employment objective.'
         />
         <Button
           mode="contained"
+          disabled={objectiveInput === objective.data}
           onPress={() => {
             dispatch(setObjective({profileid, data: objectiveInput}));
             router.navigate('profile');
@@ -58,11 +55,11 @@ const getStyles = (theme) => ({
   },
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: theme.colors.background,
   },
   textInput: {
-    marginBottom: 20,
+    marginVertical: 10,
   }
 });
 

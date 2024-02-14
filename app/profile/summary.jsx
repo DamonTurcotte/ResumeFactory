@@ -1,13 +1,12 @@
 import { useTheme, TextInput, Button } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { SafeAreaView } from 'react-native';
+
 import { setSummary } from '../../redux/extraReducers/summarySlice';
-
-import { HeaderBackButton } from '../../components/headerBackButton';
-
+import { HeaderBackButton, TextArea } from '../../components';
 
 const SummaryScreen = () => {
   const summary = useSelector((state) => state.profiles[state.currentProfile].summary);
@@ -27,17 +26,15 @@ const SummaryScreen = () => {
         headerLeft={() => <HeaderBackButton path="profile" theme={theme} />}
       />
       <KeyboardAwareScrollView style={styles.container}>
-        <TextInput
+        <TextArea
           style={styles.textInput}
           label='Summary'
           value={summaryInput}
           onChangeText={setSummaryInput}
-          mode="outlined"
-          multiline={true}
-          numberOfLines={5}
-          placeholder='Enter your professional summary here.'
+          placeholder='Enter your professional summary.'
         />
         <Button
+          disabled={summaryInput === summary.data}
           mode="contained"
           onPress={() => {
             dispatch(setSummary({profileid, data: summaryInput}));
@@ -58,11 +55,11 @@ const getStyles = (theme) => ({
   },
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 20,
     backgroundColor: theme.colors.background,
   },
   textInput: {
-    marginBottom: 20,
+    marginVertical: 10,
   }
 });
 

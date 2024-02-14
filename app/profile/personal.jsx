@@ -1,13 +1,13 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button, TextInput } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useTheme } from "react-native-paper";
 import { useRouter, Stack } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { setPersonal } from '../../redux/extraReducers/personalSlice';
+import { SafeAreaView } from "react-native";
 
-import { HeaderBackButton } from '../../components/headerBackButton';
+import { setPersonal } from '../../redux/extraReducers/personalSlice';
+import { HeaderBackButton, TextBox } from '../../components';
 
 const PersonalScreen = () => {
   const personal = useSelector((state) => state.profiles[state.currentProfile].personal);
@@ -35,57 +35,52 @@ const PersonalScreen = () => {
       />
       
       <KeyboardAwareScrollView contentContainerStyle={styles.container}>
-        <TextInput
-          style={styles.textInput}
+        <TextBox
+          style={[styles.textInput, {marginTop: 10}]}
           label='Name'
           value={nameInput}
           onChangeText={setNameInput}
-          mode="outlined"
         />
-        <TextInput
+        <TextBox
           style={styles.textInput}
           label='Email'
           value={emailInput}
           onChangeText={setEmailInput}
-          mode="outlined"
         />
-        <TextInput
+        <TextBox
           style={styles.textInput}
           label='Phone'
           value={phoneInput}
           onChangeText={setPhoneInput}
-          mode="outlined"
         />
-        <TextInput
+        <TextBox
           style={styles.textInput}
           label='Location'
           value={locationInput}
           onChangeText={setLocationInput}
-          mode="outlined"
         />
-        <TextInput
+        <TextBox
           style={styles.textInput}
           label='Website'
           value={websiteInput}
           onChangeText={setWebsiteInput}
-          mode="outlined"
         />
-        <TextInput
+        <TextBox
           style={styles.textInput}
           label='LinkedIn'
           value={linkedInInput}
           onChangeText={setLinkedInInput}
-          mode="outlined"
         />
-        <TextInput
+        <TextBox
           style={styles.textInput}
           label='GitHub'
           value={gitHubInput}
           onChangeText={setGitHubInput}
-          mode="outlined"
         />
         <Button
           mode='contained'
+          style={styles.save}
+          disabled={nameInput === "" || (nameInput === personal.data.Name && emailInput === personal.data.Email && phoneInput === personal.data.Phone && locationInput === personal.data.Location && websiteInput === personal.data.Website && linkedInInput === personal.data.LinkedIn && gitHubInput === personal.data.GitHub)}
           onPress={() => {
             dispatch(setPersonal({profileid, data: {
               Name: nameInput,
@@ -115,8 +110,11 @@ const getStyles = (theme) => ({
     paddingHorizontal: 20,
   },
   textInput: {
-    marginBottom: 10,
-  }
+    marginBottom: 5,
+  },
+  save: {
+    marginTop: 5,
+  },
 });
 
 export default PersonalScreen;
