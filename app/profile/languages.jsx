@@ -3,12 +3,10 @@ import { useState } from 'react';
 import { View, SafeAreaView, Pressable } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, TextInput, Button, Menu, useTheme, Icon } from 'react-native-paper';
+import { Text, Button, useTheme, Icon, Divider, DataTable } from 'react-native-paper';
 
-import { HeaderBackButton } from '../../components/headerBackButton';
-import { DeleteModal } from '../../components/deleteModal';
+import { HeaderBackButton, DeleteModal, TitledModal, TextBox } from '../../components';
 import { addLanguage, removeLanguage, setLanguage } from '../../redux/extraReducers/languageSlice';
-
 
 const LanguageScreen = () => {
   const [languageEditor, setLanguageEditor] = useState(false);
@@ -16,7 +14,7 @@ const LanguageScreen = () => {
   
   const [proficiencyMenuVisible, setProficiencyMenuVisible] = useState(false);
 
-  const [language, setLanguage] = useState("");
+  const [languageName, setLanguageName] = useState("");
   const [proficiency, setProficiency] = useState("");
 
   const [deleteIndex, setDeleteIndex] = useState(-1);
@@ -31,7 +29,7 @@ const LanguageScreen = () => {
 
   const saveLanguageData = () => {
     let data = {
-      Name: language,
+      Name: languageName,
       Proficiency: proficiency,
     };
     if (index === -1) {
@@ -39,7 +37,7 @@ const LanguageScreen = () => {
     } else {
       dispatch(setLanguage({ index: index, data: data }));
     }
-    setLanguage("");
+    setLanguageName("");
     setProficiency("");
     handleLanguageEditor();
   }
@@ -54,132 +52,167 @@ const LanguageScreen = () => {
         headerLeft={() => <HeaderBackButton path="profile" theme={theme} />}
       />
       <KeyboardAwareScrollView style={styles.container}>
-        {languages.map((item, i) => (
-          <View style={{flexDirection: "row", marginVertical: 5}} key={i}>
-            <View
-              style={{
-                flex: 1,
-                backgroundColor: theme.colors.surface,
-                padding: 15,
-                flexDirection: "row",
-                borderRadius: 5,
-                borderColor: theme.colors.primary,
-                borderWidth: 1,
-                justifyContent: "space-between",
-              }}
-            >
-              <Text
-                style={{textAlignVertical: "center"}}
-              >{item.Name}</Text>
-              <Text
-                style={{textAlignVertical: "center"}}
-              >{item.Proficiency}</Text>
-            </View>
-            <Pressable
-              style={{paddingHorizontal: 10, paddingVertical: 15, justifyContent: "center"}}
-              onPress={() => setDeleteIndex(i)}
-            >
-              <Icon source="close" size={16} />
-            </Pressable>
-          </View>
-        ))}
-        { languageEditor && (
-          <View
-            style={{
-              flex: 1,
-            }}
+        { proficiencyMenuVisible && (
+          <TitledModal
+            visible={proficiencyMenuVisible}
+            onDismiss={hideProficiencyMenu}
+            title={"Set Proficiency"}
+            contentContainerStyle={{padding: 20}}
           >
-            <View>
-            <TextInput
-              mode='outlined'
-              label="Language"
-              value={language}
-              onChangeText={text => setLanguage(text)}
-              style={{width: "100%"}}
-            />
-            <Menu
-              visible={proficiencyMenuVisible}
-              onDismiss={hideProficiencyMenu}
-              contentStyle={{backgroundColor: theme.colors.surface}}
-              style={{width: "90%", marginTop: 10, justifyContent: "center"}}
-              anchor={
-                <Button
-                  onPress={showProficiencyMenu}
-                  style={{width: "100%", marginTop: 10, justifyContent: "center"}}
-                >
-                  {proficiency === "" ? "Select Fluency" : proficiency}
-                </Button>
-              }
+            <Button
+              mode="outlined"
+              onPress={() => { setProficiency("Elementary"); hideProficiencyMenu(); }}
+              style={styles.button}
             >
-              <Menu.Item
-                onPress={() => {
-                  setProficiency("Basic");
-                  hideProficiencyMenu();
-                }}
-                title="Basic"
-              />
-              <Menu.Item
-                onPress={() => {
-                  setProficiency("Conversational");
-                  hideProficiencyMenu();
-                }}
-                title="Conversational"
-              />
-              <Menu.Item
-                onPress={() => {
-                  setProficiency("Fluent");
-                  hideProficiencyMenu();
-                }}
-                title="Fluent"
-              />
-              <Menu.Item
-                onPress={() => {
-                  setProficiency("Native");
-                  hideProficiencyMenu();
-                }}
-                title="Native"
-              />
-            </Menu>
-            </View>
+              Elementary
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={() => { setProficiency("Limited Working"); hideProficiencyMenu(); }}
+              style={styles.button}
+            >
+              Limited Working
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={() => { setProficiency("Professional Working"); hideProficiencyMenu(); }}
+              style={styles.button}
+            >
+              Professional Working
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={() => { setProficiency("Full Professional"); hideProficiencyMenu(); }}
+              style={styles.button}
+            >
+              Full Professional
+            </Button>
+            <Button
+              mode="outlined"
+              onPress={() => { setProficiency("Primary/Bilingual"); hideProficiencyMenu(); }}
+              style={styles.button}
+            >
+              Primary/Bilingual
+            </Button>
+          </TitledModal>
+        )}
+
+        { languageEditor ? (
+          <View style={{padding: 10}}>
+            <Text
+              variant='headlineMedium'
+            >
+              { index === -1 ? "Add" : "Edit" } Language
+            </Text>
+            <Divider style={styles.divider} />
+
+            <TextBox
+              label="Language"
+              value={languageName}
+              onChangeText={text => setLanguageName(text)}
+              style={styles.input}
+            />
+
+            <Button
+              mode="outlined"
+              onPress={showProficiencyMenu}
+              style={styles.button}
+            >
+              { proficiency === "" ? "Select Proficiency" : proficiency }
+            </Button>
+
             <Button
               mode="contained"
               onPress={saveLanguageData}
-              style={{marginTop: 10}}
-              disabled={language === "" || proficiency === ""}
+              style={styles.button}
+              disabled={languageName === "" || proficiency === ""}
             >
               Save
             </Button>
             <Button
-              mode="outlined"
-              onPress={handleLanguageEditor}
-              style={{marginTop: 10}}
+              mode='contained'
+              textColor={theme.colors.onError}
+              buttonColor={theme.colors.error}
+              style={styles.button}
+              onPress={() => {
+                setLanguageName("");
+                setProficiency("");
+                setIndex(-1);
+                handleLanguageEditor();
+              }}
             >
               Cancel
             </Button>
           </View>
-        )}
+        ) : (
+          <>
+          { languages.length > 0 && (
+            <DataTable>
+              <DataTable.Header
+                style={styles.tableHeader}
+              >
+                <DataTable.Title style={styles.tableTitle}>
+                  Language
+                </DataTable.Title>
+                <DataTable.Title style={styles.tableTitle}>
+                  Proficiency
+                </DataTable.Title>
+                <View style={{width: 80, height: "100%"}}></View>
+              </DataTable.Header>
 
-        { !languageEditor &&
-          <Button
-            mode="outlined"
-            onPress={() => {
-              setIndex(-1);
-              handleLanguageEditor();
+              { languages.map((item, i) => (
+                <DataTable.Row key={i} style={styles.tableRow}>
+                  <DataTable.Cell>{item.Name}</DataTable.Cell>
+                  <DataTable.Cell>{item.Proficiency}</DataTable.Cell>
+                  <Pressable
+                    style={styles.tableButton}
+                    onPress={() => {
+                      setLanguageName(item.Name);
+                      setProficiency(item.Proficiency);
+                      setIndex(i);
+                      handleLanguageEditor();
+                    }}
+                  >
+                    <Icon source="pencil" size={16} color={theme.colors.onNavbarVariant} />
+                  </Pressable>
+                  <Pressable
+                    style={styles.tableButton}
+                    onPress={() => setDeleteIndex(i)}
+                  >
+                    <Icon source="close" size={16} color={theme.colors.onNavbarVariant} />
+                  </Pressable>
+                </DataTable.Row>
+              ))}
+            </DataTable>
+          )}
+
+          <DeleteModal
+            visible={deleteIndex !== -1}
+            hideModal={() => setDeleteIndex(-1)}
+            content="Are you sure?"
+            deleteItem={() => {
+              dispatch(removeLanguage({ index: deleteIndex }));
+              setDeleteIndex(-1);
             }}
-            style={{marginTop: 10}}
-          >
-            Add Language
-          </Button>
-        }
-        <DeleteModal
-          visible={deleteIndex !== -1}
-          hideModal={() => setDeleteIndex(-1)}
-          deleteItem={() => {
-            dispatch(removeLanguage({ index: deleteIndex }));
-            setDeleteIndex(-1);
-          }}
-        />
+          />
+          </>
+        )}
       </KeyboardAwareScrollView>
+      { !languageEditor && (
+        <Button
+          mode="contained"
+          onPress={() => {
+            setLanguageEditor(true);
+            setLanguageName("");
+            setProficiency("");
+            setIndex(-1);
+          }}
+          style={styles.addButton}
+          contentStyle={styles.addButtonContent}
+        >
+          Add Language
+        </Button>
+      )}
     </SafeAreaView>
   );
 }
@@ -191,8 +224,46 @@ const getStyles = (theme) => ({
   },
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: theme.colors.background,
+  },
+  tableHeader: {
+    paddingRight: 0,
+    backgroundColor: theme.colors.navbar,
+    borderColor: theme.colors.primary,
+    borderBottomWidth: 0.5,
+  },
+  tableTitle: {
+    color: theme.colors.onNavbar,
+    fontFamily: 'Genos-Medium',
+  },
+  tableRow: {
+    paddingRight: 0,
+    borderColor: theme.colors.primary,
+    backgroundColor: theme.colors.surface
+  },
+  tableButton: {
+    width: 40,
+    height: "100%",
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  divider: {
+    marginBottom: 5,
+    backgroundColor: theme.colors.outline,
+  },
+  input: {
+    marginBottom: 10,
+  },
+  button: {
+    marginBottom: 10,
+  },
+  addButton: {
+    borderRadius: 0,
+  },
+  addButtonContent: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 });
 
