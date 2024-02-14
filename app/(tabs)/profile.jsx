@@ -27,7 +27,7 @@ export default ProfileScreen = () => {
       <View style={styles.container}>
         <View style={styles.subcontainer}>
 
-          <Text style={styles.title} variant='titleLarge'>Active</Text>
+          <Text style={styles.title} variant='titleLarge'>Include</Text>
           <View style={styles.categories} ref={activeRef}>
             <Pressable onPress={() => router.navigate('/profile/personal')}>
               <ProfileCard
@@ -51,7 +51,7 @@ export default ProfileScreen = () => {
             )}
           </View>
 
-          <Text style={styles.title} variant='titleLarge'>Inactive</Text>
+          <Text style={styles.title} variant='titleLarge'>Exclude</Text>
           <View style={styles.categories} ref={inactiveRef}>
             { inactiveCategories.map((category) => {
               return (
