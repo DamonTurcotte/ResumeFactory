@@ -1,14 +1,16 @@
 import { Card, Text } from 'react-native-paper';
 import { View } from 'react-native';
+import { useTheme } from 'react-native-paper';
 
 export const JobCard = ({ data, style, children }) => {
+  const theme = useTheme();
   return (
   <Card mode='outlined' style={style}>
     <Card.Content>
       <Text variant='headlineSmall'>{data.Title}</Text>
-      <Text variant='bodyLarge'>{data.Company}</Text>
-      <Text variant='bodyLarge'>{data.Location}</Text>
-      <Text variant='bodyLarge'>{data.Start} {data.Start.length > 0 && data.End.length > 0 && '-'} {data.End}</Text>
+      <Text variant='titleLarge'>{data.Company}</Text>
+      <Text variant='bodyMedium'>{data.Location}</Text>
+      <Text variant='bodyMedium'>{data.Start} {data.Start.length > 0 && data.End.length > 0 && '-'} {data.End}</Text>
       { data.Duties.map((duty, index) => (
         <View key={index} style={{flexDirection: 'row'}}>
           <View>
