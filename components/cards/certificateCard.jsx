@@ -6,10 +6,10 @@ export const CertificateCard = ({ data, style, children }) => {
     <Card mode="outlined" style={style}>
       <Card.Content>
         <Text variant="headlineSmall">{data.Certificate}</Text>
-        <Text variant="bodyLarge">{data.Issuer}</Text>
-        <Text variant="bodyLarge">{data.IssueDate}</Text>
-        <Text variant="bodyLarge">{data.ExpirationDate}</Text>
-        <Text variant="bodyLarge">{data.Description}</Text>
+        <Text variant="bodyLarge">Issuer: {data.Issuer}</Text>
+        <Text variant="bodyLarge">Issued: {data.IssueDate}</Text>
+        <Text variant="bodyLarge">Expires: {data.ExpirationDate}</Text>
+        <Text variant="bodyLarge">ID: {data.CredentialID}</Text>
       </Card.Content>
       <Card.Actions>
         {children}
