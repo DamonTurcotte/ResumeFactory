@@ -93,7 +93,7 @@ export const CombinedDefaultTheme = {
   colors: {
     ...DefaultTheme.colors,
     ...MD3LightTheme.colors,
-    background: '#F5F5F5',
+    background: "#EDE0FF",
     onBackground: '#381e72',
     onBackgroundVariant: '#FFA855',
     navbar: '#4F378B',
@@ -119,6 +119,8 @@ export const CombinedDarkTheme = {
     surface: '#6750A4',
     primaryContainer: "#4F378B",
     overlay: "#00000080",
+    error: "#601410",
+    onError: "#F2B8B5",
   },
   fonts: ThemeFonts,
 };
