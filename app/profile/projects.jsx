@@ -3,15 +3,10 @@ import { useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, Button, useTheme } from 'react-native-paper';
+import { Text, Button, useTheme, Divider } from 'react-native-paper';
 
-import { HeaderBackButton } from '../../components/headerBackButton';
-import { DeleteModal } from '../../components/deleteModal';
-import { ProjectCard } from '../../components/cards/projectCard';
+import { TextBox, TextArea, HeaderBackButton, DeleteModal, ProjectCard } from '../../components';
 import { addProject, removeProject, setProject } from '../../redux/extraReducers/projectSlice';
-
-import { TextBox, TextArea } from '../../components/inputs';
-
 
 const ProjectScreen = () => {
   const [projectEditor, setProjectEditor] = useState(false);
@@ -22,7 +17,7 @@ const ProjectScreen = () => {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [description, setDescription] = useState("");
-  const [achievements, setAchievements] = useState([""]);
+  const [achievements, setAchievements] = useState([]);
   const [links, setLinks] = useState([]);
 
   const [deleteIndex, setDeleteIndex] = useState(-1);
@@ -87,10 +82,14 @@ const ProjectScreen = () => {
         { projectEditor ? (
           <View>
             <Text
+              variant='headlineMedium'
               style={styles.title}
             >
-              Project Editor
+              { index === -1 ? "Add" : "Edit" } Project
             </Text>
+            <Divider
+              style={styles.divider}
+            />
             <TextBox
               label="Title"
               value={title}
@@ -116,81 +115,95 @@ const ProjectScreen = () => {
               value={description}
               onChangeText={setDescription}
             />
-            <Text
-              style={styles.subtitle}
-            >
+            <Text variant='titleLarge'>
               Achievements
             </Text>
             <View
               style={styles.listContainer}
             >
-              <View style={{flex: 1}}>
-              { achievements.map((achievement, index) => (
-                <TextBox
-                  key={index}
-                  label="Achievement"
-                  value={achievement}
-                  style={{marginTop: 3}}
-                  onChangeText={text => {
-                    let temp = [...achievements];
-                    temp[index] = text;
-                    setAchievements(temp);
-                  }}
-                  close={() => {
-                    let temp = [...achievements];
-                    temp.splice(index, 1);
-                    setAchievements(temp);
-                  }}
-                />
-              ))}
+              <View
+                style={[
+                  styles.listRow,
+                  achievements.length === 0 ? {marginBottom: 0} : {marginBottom: 8}]}
+              >
+                <View
+                  style={styles.listDecoration}
+                ></View>
+                <View style={{flex: 1}}>
+                  { achievements.map((achievement, index) => (
+                    <TextBox
+                      key={index}
+                      label="Achievement"
+                      value={achievement}
+                      onChangeText={text => {
+                        let temp = [...achievements];
+                        temp[index] = text;
+                        setAchievements(temp);
+                      }}
+                      close={() => {
+                        let temp = [...achievements];
+                        temp.splice(index, 1);
+                        setAchievements(temp);
+                      }}
+                    />
+                  ))}
+                </View>
+              </View>
               <Button
                 mode="outlined"
                 style={styles.addButton}
                 onPress={() => setAchievements([...achievements, ""])}
               >Add Achievement</Button>
             </View>
-            </View>
-            <Text
-              style={styles.subtitle}
-            >
+            <Text variant='titleLarge'>
               Links
             </Text>
             <View style={styles.listContainer}>
-              <View>
-                { links.map((l, index) => (
-                <>
-                  <TextBox
-                    label="URL"
-                    value={l.URL}
-                    style={{marginTop: 3}}
-                    close={() => {
-                      let temp = [...links];
-                      temp.splice(index, 1);
-                      setLinks(temp);
-                    }}
-                    onChangeText={text => {
-                      let temp = [...links];
-                      temp[index].URL = text;
-                      setLinks(temp);
-                    }}
-                  />
-                  <View style={{flexDirection: 'row'}}>
-                    <View
-                      style={{marginLeft: 15, height: "60%", width: 20, borderBottomWidth: 1, borderLeftWidth: 1, borderBottomLeftRadius: 3, borderColor: theme.colors.outline}}
-                    ></View>
+              <View
+                style={[styles.listRow, links.length === 0 ? {marginBottom: 0} : {marginBottom: 8}]}
+              >
+                <View
+                  style={styles.listDecoration}
+                ></View>
+                <View
+                  style={{flex: 1}}
+                >
+                  { links.map((l, index) => (
+                  <View
+                    key={index}
+                  >
                     <TextBox
-                      label="Display Text"
-                      value={l.Title}
-                      style={{marginTop: 3, flex: 1}}
+                      label="URL"
+                      value={l.URL}
+                      close={() => {
+                        let temp = [...links];
+                        temp.splice(index, 1);
+                        setLinks(temp);
+                      }}
                       onChangeText={text => {
                         let temp = [...links];
-                        temp[index].Title = text;
+                        temp[index].URL = text;
                         setLinks(temp);
                       }}
                     />
+                    <View style={{flexDirection: 'row'}}>
+                      <View
+                        style={styles.linkLine}
+                      ></View>
+                      <TextBox
+                        label="Display Text"
+                        value={l.Title}
+                        style={{marginTop: 3, flex: 1}}
+                        onChangeText={text => {
+                          let temp = [...links];
+                          temp[index].Title = text;
+                          setLinks(temp);
+                        }}
+                      />
+                    </View>
                   </View>
-                </>
-                ))}
+                  ))}
+                </View>
               </View>
               <Button
                 mode="outlined"
@@ -198,7 +211,19 @@ const ProjectScreen = () => {
                 style={styles.addButton}
               >Add Link</Button>
             </View>
-            <Button mode="contained" onPress={saveProjectData} style={styles.addButton}>Save</Button>
+            <Button
+              disabled={title === ""}
+              mode="contained"
+              onPress={saveProjectData}
+              style={styles.addButton}
+            >Save</Button>
+            <Button
+              mode="contained"
+              onPress={handleProjectEditor}
+              style={styles.addButton}
+              textColor={theme.colors.onError}
+              buttonColor={theme.colors.error}
+            >Cancel</Button>
           </View>
         ) : (
           <>
@@ -209,6 +234,7 @@ const ProjectScreen = () => {
               index={index}
               handleEdit={handleEdit}
               setDelete={() => setDeleteIndex(index)}
+              buttonColor={theme.colors.onBackgroundVariant}
               style={{marginTop: 15}}
             />
           ))}
@@ -244,24 +270,38 @@ const getStyles = (theme) => ({
     backgroundColor: theme.colors.background,
   },
   title: {
-    fontSize: 24,
-    fontFamily: "Genos-Medium",
     marginTop: 10,
-    marginBottom: 5,
+    
   },
-  subtitle: {
-    fontSize: 20,
-    fontFamily: "Genos-Medium",
-    marginVertical: 5,
+  divider: {
+    marginBottom: 5,
+    backgroundColor: theme.colors.outline,
   },
   listContainer: {
-    backgroundColor: theme.colors.surface,
-    paddingVertical: 0,
-    paddingHorizontal: 10,
     borderRadius: 8,
   },
+  listRow: {
+    flexDirection: 'row',
+    marginBottom: 0
+  },
+  listDecoration: {
+    width: 3,
+    backgroundColor: theme.colors.primary,
+    marginHorizontal: 10,
+    marginTop: 5,
+    borderRadius: 10
+  },
+  linkLine: {
+    marginLeft: 15,
+    height: "60%",
+    width: 20,
+    borderBottomWidth: 1,
+    borderLeftWidth: 1,
+    borderBottomLeftRadius: 3,
+    borderColor: theme.colors.outline
+  },
   addButton: {
-    margin: 10
+    marginBottom: 10
   },
 });
 
