@@ -3,18 +3,16 @@ import { useState } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, TextInput, Button, useTheme } from 'react-native-paper';
+import { Text, Button, useTheme, Divider } from 'react-native-paper';
 
-import { HeaderBackButton } from '../../components/headerBackButton';
-import { DeleteModal } from '../../components/deleteModal';
-import { CertificateCard } from '../../components/cards/certificateCard';
+import { HeaderBackButton, DeleteModal, CertificateCard, TextBox } from '../../components';
 import { addCertificate, removeCertificate, setCertificate } from '../../redux/extraReducers/certificateSlice'; 
 
 const CertificateScreen = () => {
   const [certificateEditor, setCertificateEditor] = useState(false);
   const [index, setIndex] = useState(-1);
 
-  const [certificate, setCertificate] = useState("");
+  const [certificateName, setCertificateName] = useState("");
   const [issuer, setIssuer] = useState("");
   const [issueDate, setIssueDate] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
@@ -33,7 +31,7 @@ const CertificateScreen = () => {
 
   const saveCertificateData = () => {
     let data = {
-      Certificate: certificate,
+      Certificate: certificateName,
       Issuer: issuer,
       IssueDate: issueDate,
       ExpirationDate: expirationDate,
@@ -45,7 +43,7 @@ const CertificateScreen = () => {
     } else {
       dispatch(setCertificate({ index: index, data: data }));
     }
-    setCertificate("");
+    setCertificateName("");
     setIssuer("");
     setIssueDate("");
     setExpirationDate("");
@@ -55,7 +53,7 @@ const CertificateScreen = () => {
   };
   
   return (
-    <SafeAreaView style={getStyles(theme).safe}>
+    <SafeAreaView style={styles.safe}>
       <Stack.Screen 
         options={{title: "Certificates"}}
         headerLeft={() => <HeaderBackButton path="profile" theme={theme} />}
@@ -63,38 +61,39 @@ const CertificateScreen = () => {
       <KeyboardAwareScrollView style={styles.container}>
         { certificateEditor ? (
           <View>
-            <TextInput
-              mode='outlined'
+            <Text
+              variant='headlineMedium'
+              style={styles.title}
+            >
+              { index === -1 ? "Add" : "Edit" } Certificate
+            </Text>
+            <Divider style={{backgroundColor: theme.colors.outline, marginBottom: 5}} />
+            <TextBox
               label="Certificate"
-              value={certificate}
-              onChangeText={text => setCertificate(text)}
+              value={certificateName}
+              onChangeText={text => setCertificateName(text)}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="Issuer"
               value={issuer}
               onChangeText={text => setIssuer(text)}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="Issue Date"
               value={issueDate}
               onChangeText={text => setIssueDate(text)}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="Expiration Date"
               value={expirationDate}
               onChangeText={text => setExpirationDate(text)}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="Credential ID"
               value={credentialID}
               onChangeText={text => setCredentialID(text)}
             />
-            <TextInput
-              mode='outlined'
+            <TextBox
               label="Credential URL"
               value={credentialURL}
               onChangeText={text => setCredentialURL(text)}
@@ -103,20 +102,34 @@ const CertificateScreen = () => {
               mode="contained"
               style={styles.button}
               onPress={saveCertificateData}
+              disabled={certificateName === "" || issuer === ""}
             >
               Save
+            </Button>
+            <Button
+              mode="text"
+              style={styles.button}
+              onPress={handleCertificateEditor}
+              textColor={theme.colors.onError}
+              buttonColor={theme.colors.error}
+            >
+              Cancel
             </Button>
           </View>
         ) : (
           <>
           { certificates.map((data, i) => (
-            <CertificateCard data={data} key={i}>
+            <CertificateCard
+              key={i}
+              data={data}
+              style={i === 0 ? {marginVertical: 10} : {marginBottom: 10}}
+            >
               <Button
                 mode='text'
                 textColor={theme.colors.onBackgroundVariant}
                 onPress={() => {
                   setIndex(i);
-                  setCertificate(data.Certificate);
+                  setCertificateName(data.Certificate);
                   setIssuer(data.Issuer);
                   setIssueDate(data.IssueDate);
                   setExpirationDate(data.ExpirationDate);
@@ -135,13 +148,6 @@ const CertificateScreen = () => {
               </Button>
             </CertificateCard>
           ))}
-          <Button
-            mode="contained"
-            style={styles.button}
-            onPress={handleCertificateEditor}
-          >
-            Add Certificate
-          </Button>
           { deleteIndex !== -1 && (
             <DeleteModal
               visible={deleteIndex !== -1}
@@ -155,6 +161,16 @@ const CertificateScreen = () => {
           </>
         )}
       </KeyboardAwareScrollView>
+      { !certificateEditor && (
+        <Button
+          mode="contained"
+          style={styles.addButton}
+          contentStyle={styles.addButtonContent}
+          onPress={handleCertificateEditor}
+        >
+          Add Certificate
+        </Button>
+      )}
     </SafeAreaView>
   );
 }
@@ -166,12 +182,23 @@ const getStyles = (theme) => ({
   },
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: theme.colors.background,
+    paddingHorizontal: 20,
+  },
+  title: {
+    marginTop: 10,
   },
   button: {
     marginTop: 10,
-  }
+  },
+  addButton: {
+    borderRadius: 0,
+  },
+  addButtonContent: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });
 
 export default CertificateScreen;
