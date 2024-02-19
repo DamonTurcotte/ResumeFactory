@@ -1,5 +1,5 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Button, TextInput } from "react-native-paper";
+import { Button } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useRouter, Stack } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ const PersonalScreen = () => {
   const profileid = useSelector((state) => state.currentProfile);
 
   const [nameInput, setNameInput] = useState(personal.data.Name);
+  const [positionInput, setPositionInput] = useState(personal.data.Position);
   const [emailInput, setEmailInput] = useState(personal.data.Email);
   const [phoneInput, setPhoneInput] = useState(personal.data.Phone);
   const [locationInput, setLocationInput] = useState(personal.data.Location);
@@ -40,6 +41,12 @@ const PersonalScreen = () => {
           label='Name'
           value={nameInput}
           onChangeText={setNameInput}
+        />
+        <TextBox
+          style={styles.textInput}
+          label='Position'
+          value={positionInput}
+          onChangeText={setPositionInput}
         />
         <TextBox
           style={styles.textInput}
@@ -80,10 +87,11 @@ const PersonalScreen = () => {
         <Button
           mode='contained'
           style={styles.save}
-          disabled={nameInput === "" || (nameInput === personal.data.Name && emailInput === personal.data.Email && phoneInput === personal.data.Phone && locationInput === personal.data.Location && websiteInput === personal.data.Website && linkedInInput === personal.data.LinkedIn && gitHubInput === personal.data.GitHub)}
+          disabled={nameInput === "" || (nameInput === personal.data.Name && positionInput === personal.data.Position && emailInput === personal.data.Email && phoneInput === personal.data.Phone && locationInput === personal.data.Location && websiteInput === personal.data.Website && linkedInInput === personal.data.LinkedIn && gitHubInput === personal.data.GitHub)}
           onPress={() => {
             dispatch(setPersonal({profileid, data: {
               Name: nameInput,
+              Position: positionInput,
               Email: emailInput,
               Phone: phoneInput,
               Location: locationInput,

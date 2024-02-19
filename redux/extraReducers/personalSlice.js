@@ -6,6 +6,7 @@ export const personalSlice = createSlice({
     active: 'N/A',
     data: {
       Name: "",
+      Position: "",
       Email: "",
       Phone: "",
       Location: "",
