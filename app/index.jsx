@@ -1,9 +1,9 @@
 import { ScrollView, View } from "react-native";
 import { Text, TextInput, Button, useTheme, Icon } from "react-native-paper";
-import { Stack, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addProfile, removeProfile, setCurrentProfile } from '../redux/profileSlice';
+import { addProfile, setCurrentProfile } from '../redux/profileSlice';
 import { FontAwesome } from '@expo/vector-icons';
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -15,6 +15,7 @@ export default App = () => {
   const styles = getStyles(theme)
   const dispatch = useDispatch();
   const profiles = useSelector((state) => state.profiles);
+  const profileOrder = useSelector((state) => state.order);
   const [newProfile, setNewProfile] = useState(false);
   const [profileID, setProfileID] = useState("");
 
@@ -39,19 +40,21 @@ export default App = () => {
         </View>
         
         <ScrollView>
-        { Object.keys(profiles).map((id, index) => (
+
+        {profileOrder.map((profile, index) => (
           <Button
             key={index}
+            mode="contained"
             style={styles.button}
             labelStyle={styles.buttonLabel}
-            mode="contained"
             contentStyle={{ justifyContent: "space-between", flexDirection: "row-reverse"}}
             icon={() => <FontAwesome name="user-circle" size={30} color={theme.onPrimary} />}
             onPress={() => {
-              dispatch(setCurrentProfile(id));
+              dispatch(setCurrentProfile(profile));
               router.navigate("profile");
-          }}>
-            {id}
+            }}
+          >
+            {profile}
           </Button>
         ))}
 
