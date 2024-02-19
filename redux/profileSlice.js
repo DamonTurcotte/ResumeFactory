@@ -18,7 +18,8 @@ const profileSlice = createSlice({
   name: 'profile',
   initialState: {
     currentProfile: null,
-    profiles: {}
+    profiles: {},
+    order: []
   },
   reducers: {
     addProfile: (state, action) => {
@@ -34,12 +35,14 @@ const profileSlice = createSlice({
           projects: projectSlice.reducer(undefined, {}),
           publications: publicationSlice.reducer(undefined, {}),
           languages: languageSlice.reducer(undefined, {}),
-          references: referenceSlice.reducer(undefined, {}),
-        }
+          references: referenceSlice.reducer(undefined, {})
+        };
+        state.order.push(action.payload);
       }
     },
     removeProfile: (state, action) => {
       delete state.profiles[action.payload];
+      state.order = state.order.filter((profile) => profile !== action.payload);
       if (state.currentProfile === action.payload) {
         state.currentProfile = null;
       }
@@ -47,10 +50,19 @@ const profileSlice = createSlice({
     setCurrentProfile: (state, action) => {
       state.currentProfile = action.payload;
     },
+    setProfileID: (state, action) => {
+      const index = state.order.indexOf(action.payload.currentID);
+      state.profiles[action.payload.newID] = state.profiles[action.payload.currentID];
+      delete state.profiles[action.payload.currentID];
+      state.order[index] = action.payload.newID;
+      if (state.currentProfile === action.payload.currentID) {
+        state.currentProfile = action.payload.newID;
+      }
+    }
   },
   extraReducers: extraReducers
 });
 
-export const { addProfile, removeProfile, setCurrentProfile } = profileSlice.actions;
+export const { addProfile, removeProfile, setCurrentProfile, setProfileID } = profileSlice.actions;
 
 export default profileSlice.reducer;
