@@ -1,31 +1,31 @@
-import { View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useTheme, Text } from 'react-native-paper';
-import { Stack } from 'expo-router';
+import { View, ScrollView, SafeAreaView } from 'react-native';
+import { useTheme, Button } from 'react-native-paper';
+import { useRouter } from 'expo-router';
 
-export default function TabTwoScreen() {
-  const theme = useTheme().colors;
+export default TemplateScreen = () => {
+  const theme = useTheme();
   const styles = getStyles(theme);
+  const router = useRouter();
 
   return (
-    <SafeAreaView style={styles.container}>
-
+    <SafeAreaView style={styles.safe}>
+      <ScrollView>
+        <View style={{padding: 10}}>
+          <Button
+            mode="contained"
+            onPress={() => router.navigate('/templates/0')}
+          >
+            Select
+          </Button>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
 const getStyles = (theme) => ({
-  container: {
+  safe: {
     flex: 1,
-    backgroundColor: theme.background,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    backgroundColor: theme.colors.background,
   },
 });
