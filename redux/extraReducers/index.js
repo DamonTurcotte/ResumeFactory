@@ -68,6 +68,9 @@ export const extraReducers = (builder) => {
   builder.addCase(skillSlice.actions.setActive, (state, action) => {
     state.profiles[state.currentProfile].skills = skillSlice.reducer(state.profiles[state.currentProfile].skills, action);
   });
+  builder.addCase(skillSlice.actions.setUseProficiency, (state, action) => {
+    state.profiles[state.currentProfile].skills = skillSlice.reducer(state.profiles[state.currentProfile].skills, action);
+  });
   // Certificate Slice Actions
   builder.addCase(certificateSlice.actions.addCertificate, (state, action) => {
     state.profiles[state.currentProfile].certificates = certificateSlice.reducer(state.profiles[state.currentProfile].certificates, action);
