@@ -1,5 +1,5 @@
-import { View, ScrollView, SafeAreaView } from 'react-native';
-import { useTheme, Button } from 'react-native-paper';
+import { View, ScrollView, SafeAreaView, Image, Pressable } from 'react-native';
+import { useTheme, ActivityIndicator } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 
 export default TemplateScreen = () => {
@@ -9,15 +9,35 @@ export default TemplateScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView>
-        <View style={{padding: 10}}>
-          <Button
-            mode="contained"
-            onPress={() => router.navigate('/templates/0')}
-          >
-            Select
-          </Button>
-        </View>
+      <ScrollView
+        contentContainerStyle={{
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          padding: 10,
+          gap: 10,
+        }}
+      >
+        <Pressable
+          onPress={() => router.navigate("/templates/0")}
+          style={{
+            flexGrow: 1,
+            flexBasis: 150,
+            aspectRatio: 8.5 / 11,
+            overflow: "hidden",
+            elevation: 2,
+          }}
+        >
+          <Image
+            source={require("../../assets/thumbnails/0.jpg")}
+            resizeMethod='resize'
+            resizeMode='contain'
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+          />
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
