@@ -3,10 +3,10 @@ import { View, SafeAreaView, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRef } from 'react';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { sliceActivators } from '../../redux/extraReducers';
 import { PressableDragAndDrop } from '../../components';
+import { Icon } from '../../components/icons/icon';
 
 export default ProfileScreen = () => {
   const theme = useTheme().colors;
@@ -23,7 +23,6 @@ export default ProfileScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
-
       <View style={styles.container}>
         <View style={styles.subcontainer}>
 
@@ -78,7 +77,6 @@ export default ProfileScreen = () => {
 const ProfileCard = ({ category, draggable }) => {
   const theme = useTheme().colors;
   const styles = getStyles(theme);
-  const cardIcon = cardIcons(theme)[category];
 
   return (
     <Surface
@@ -87,7 +85,10 @@ const ProfileCard = ({ category, draggable }) => {
       mode='elevated'
     >
       <View style={styles.cardInfo}>
-        {cardIcon}
+        <Icon
+          source={category}
+          style={{height: 24, width: 24, fill: theme.primary, marginBottom: 4}}
+        />
         <Text
           variant='bodyLarge'
         >
@@ -95,30 +96,21 @@ const ProfileCard = ({ category, draggable }) => {
         </Text>
       </View>
       { draggable === true &&
-        <MaterialCommunityIcons
-          name="drag"
-          style={styles.dragIcon}
-          size={32}
-          color={theme.background}
+        <Icon
+          source="drag"
+          style={{
+            position: 'absolute',
+            right: 3,
+            top: 5,
+            height: 20,
+            width: 20,
+            fill: theme.primary
+          }}
         />
       }
     </Surface>
   )
 };
-
-const cardIcons = (theme) => ({
-  personal: (<MaterialCommunityIcons name="account" size={24} color={theme.primary} />),
-  objective: (<MaterialCommunityIcons name="bullhorn" size={24} color={theme.primary} />),
-  summary: (<MaterialCommunityIcons name="note-text" size={24} color={theme.primary} />),
-  experience: (<MaterialCommunityIcons name="briefcase" size={24} color={theme.primary} />),
-  education: (<MaterialCommunityIcons name="school" size={24} color={theme.primary} />),
-  skills: (<MaterialCommunityIcons name="pencil" size={24} color={theme.primary} />),
-  certificates: (<MaterialCommunityIcons name="certificate" size={24} color={theme.primary} />),
-  projects: (<MaterialCommunityIcons name="folder" size={24} color={theme.primary} />),
-  publications: (<MaterialCommunityIcons name="newspaper" size={24} color={theme.primary} />),
-  languages: (<MaterialCommunityIcons name="translate" size={24} color={theme.primary} />),
-  references: (<MaterialCommunityIcons name="account-group" size={24} color={theme.primary} />),
-})
 
 const getStyles = (theme) => ({
   safe: {
