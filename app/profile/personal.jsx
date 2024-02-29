@@ -1,5 +1,5 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Button } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useRouter, Stack } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,46 +41,55 @@ const PersonalScreen = () => {
           label='Name'
           value={nameInput}
           onChangeText={setNameInput}
+          textContentType="name"
         />
         <TextBox
           style={styles.textInput}
           label='Position'
           value={positionInput}
           onChangeText={setPositionInput}
+          textContentType="jobTitle"
         />
         <TextBox
           style={styles.textInput}
           label='Email'
           value={emailInput}
           onChangeText={setEmailInput}
+          textContentType="emailAddress"
+          inputMode={"email"}
         />
         <TextBox
           style={styles.textInput}
           label='Phone'
           value={phoneInput}
           onChangeText={setPhoneInput}
+          textContentType="telephoneNumber"
+          inputMode={"tel"}
         />
         <TextBox
           style={styles.textInput}
           label='Location'
           value={locationInput}
           onChangeText={setLocationInput}
+          textContentType="addressCityAndState"
         />
         <TextBox
           style={styles.textInput}
           label='Website'
           value={websiteInput}
           onChangeText={setWebsiteInput}
+          textContentType="URL"
+          inputMode={"url"}
         />
         <TextBox
           style={styles.textInput}
-          label='LinkedIn'
+          label='LinkedIn ID'
           value={linkedInInput}
           onChangeText={setLinkedInInput}
         />
         <TextBox
           style={styles.textInput}
-          label='GitHub'
+          label='GitHub ID'
           value={gitHubInput}
           onChangeText={setGitHubInput}
         />
