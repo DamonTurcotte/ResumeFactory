@@ -9,6 +9,7 @@ export const skillSlice = createSlice({
   name: "skills",
   initialState: {
     active: false,
+    useProficiency: true,
     data: []
   },
   reducers: {
@@ -25,10 +26,13 @@ export const skillSlice = createSlice({
     },
     setActive: (state, action) => {
       state.active = action.payload;
+    },
+    setUseProficiency: (state, action) => {
+      state.useProficiency = action.payload;
     }
   }
 });
 
-export const { addSkill, removeSkill, setSkill, setActive } = skillSlice.actions;
+export const { addSkill, removeSkill, setSkill, setActive, setUseProficiency } = skillSlice.actions;
 
 export default skillSlice.reducer;
