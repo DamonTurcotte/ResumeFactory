@@ -207,7 +207,7 @@ const ProjectScreen = () => {
               </View>
               <Button
                 mode="outlined"
-                onPress={() => setLinks([...links, ""])}
+                onPress={() => setLinks([...links, {URL: "", Title: ""}])}
                 style={styles.addButton}
               >Add Link</Button>
             </View>
