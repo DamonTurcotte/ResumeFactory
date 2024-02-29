@@ -3,12 +3,14 @@ import { useState } from 'react';
 import { View, SafeAreaView, Pressable } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Text, Button, useTheme, DataTable, Icon, Divider } from 'react-native-paper';
+import { Text, Button, useTheme, DataTable, Icon, Divider, Switch } from 'react-native-paper';
 
 import { HeaderBackButton, DeleteModal, TitledModal, TextBox } from '../../components';
-import { addSkill, removeSkill, setSkill } from '../../redux/extraReducers/skillSlice';
+import { addSkill, removeSkill, setSkill, setUseProficiency } from '../../redux/extraReducers/skillSlice';
 
 const SkillScreen = () => {
+  const slice = useSelector(state => state.profiles[state.currentProfile].skills);
+
   const [skillEditor, setSkillEditor] = useState(false);
   const [index, setIndex] = useState(-1);
 
@@ -19,7 +21,12 @@ const SkillScreen = () => {
 
   const [proficiencyMenuVisible, setProficiencyMenuVisible] = useState(false);
 
-  const skills = useSelector(state => state.profiles[state.currentProfile].skills.data);
+  const skills = slice.data;
+  const useProficiency = slice.useProficiency;
+
+  const toggleProficiency = () => {
+    dispatch(setUseProficiency(!useProficiency));
+  };
 
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -88,9 +95,11 @@ const SkillScreen = () => {
               style={styles.input}
             />
 
-            <Button mode="outlined" onPress={showProficiencyMenu}>
-              Proficiency: {proficiency}
-            </Button>
+            { useProficiency && (
+              <Button mode="outlined" onPress={showProficiencyMenu}>
+                Proficiency: {proficiency}
+              </Button>
+            )}
               
             <Button
               mode="contained"
@@ -113,18 +122,21 @@ const SkillScreen = () => {
           </View>
         ) : (
           <>
-          { skills.length > 0 &&
             <DataTable>
               <DataTable.Header style={styles.tableHeader}>
                 <DataTable.Title textStyle={styles.tableTitle}>Name</DataTable.Title>
-                <DataTable.Title textStyle={styles.tableTitle}>Proficiency</DataTable.Title>
+                { useProficiency && <DataTable.Title textStyle={styles.tableTitle}>Proficiency</DataTable.Title> }
                 <View style={styles.tableHeaderSpacer}></View>
               </DataTable.Header>
+              <View style={styles.proficienyToggle}>
+                <Text>Include proficiency?</Text>
+                <Switch value={useProficiency} onValueChange={toggleProficiency} />
+              </View>
 
-              {skills.map((item, i) => (
+              { skills.length > 0 && skills.map((item, i) => (
                 <DataTable.Row key={i} style={styles.tableRow}>
                   <DataTable.Cell>{item.Name}</DataTable.Cell>
-                  <DataTable.Cell>{item.Proficiency}</DataTable.Cell>
+                  { useProficiency && <DataTable.Cell>{item.Proficiency}</DataTable.Cell> }
                   <Pressable
                     style={styles.tableButton}
                     onPress={() => {
@@ -145,7 +157,6 @@ const SkillScreen = () => {
                 </DataTable.Row>
               ))}
             </DataTable>
-          }
           </>
         )}
 
@@ -190,7 +201,7 @@ const getStyles = (theme) => ({
     paddingRight: 0,
     backgroundColor: theme.colors.navbar,
     borderColor: theme.colors.primary,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.25,
   },
   tableHeaderSpacer: {
     width: 80,
@@ -224,6 +235,15 @@ const getStyles = (theme) => ({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  proficienyToggle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: theme.colors.surface,
+    borderColor: theme.colors.primary,
+    borderBottomWidth: 0.25,
   },
 });
 
