@@ -1,6 +1,6 @@
 import { TextInput } from "react-native-paper";
 
-export const TextBox = ({label, value, onChangeText, style=null, close=null, textContentType="none"}) => (
+export const TextBox = ({label, value, onChangeText, style=null, close=null, textContentType="none", inputMode=null }) => (
   <TextInput
     label={label}
     value={value}
@@ -8,6 +8,7 @@ export const TextBox = ({label, value, onChangeText, style=null, close=null, tex
     mode="outlined"
     style={style}
     textContentType={textContentType}
+    inputMode={inputMode}
     right={close !== null ? <TextInput.Icon
         forceTextInputFocus={false}
         icon="close"
