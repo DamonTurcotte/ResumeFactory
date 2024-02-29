@@ -1,18 +1,17 @@
 import { useRouter } from "expo-router";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon } from "../icons/icon";
 import { useTheme } from "react-native-paper";
+import { Pressable } from "react-native";
 
 export const HeaderBackButton = ({path}) => {
   const theme = useTheme().colors;
   const router = useRouter();
   return (
-    <Icon 
-      name='arrow-left'
-      color={theme.onNavbarVariant}
-      size={30}
-      onPress={() => {
-        router.navigate(path);
-      }}
-    />
+    <Pressable onPress={() => router.navigate(path)}>
+      <Icon 
+        source='arrow-left'
+        style={{ height: 24, width: 24, fill: theme.onNavbarVariant}}
+      />
+    </Pressable>
   )
 }
