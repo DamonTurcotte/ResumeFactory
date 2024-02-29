@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const certificateObj = {
-  Name: "",
+  Certificate: "",
   Issuer: "",
-  Issue_date: "",
-  Expiration_date: "",
-  Credential_ID: "",
-  Credential_URL: ""
+  IssueDate: "",
+  ExpirationDate: "",
+  CredentialID: "",
+  CredentialURL: ""
 };
 
 export const certificateSlice = createSlice({

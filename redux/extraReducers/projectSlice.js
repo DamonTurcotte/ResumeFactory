@@ -6,8 +6,8 @@ export const projectObj = {
   Start: "",
   End: "",
   Description: "",
-  Achievements: [],
-  Links: [],
+  Achievements: [""],
+  Links: [{ URL: "", Title: ""}],
 };
 
 export const projectSlice = createSlice({
