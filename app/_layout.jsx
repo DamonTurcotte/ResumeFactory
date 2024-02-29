@@ -3,7 +3,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as NavigationBar from 'expo-navigation-bar';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
-import { useColorScheme } from 'react-native';
+import { Pressable, useColorScheme } from 'react-native';
 import { PaperProvider, ActivityIndicator, IconButton } from 'react-native-paper';
 
 import { store, persistor } from '../redux/store';
@@ -13,6 +13,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { CombinedDefaultTheme, CombinedDarkTheme } from '../configs';
 import { FONT } from '../constants';
 import { HeaderBackButton } from '../components';
+import { Icon } from '../components/icons/icon';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -49,7 +50,11 @@ export default function RootLayoutNav() {
               options={({ route }) => {
                 const routeName = getFocusedRouteNameFromRoute(route) ?? 'default';
                 let title = routeName[0].toUpperCase() + routeName.slice(1);
-                headerRight = () => <IconButton icon="cog" onPress={() => router.navigate('/settings')} />;
+                headerRight = () => (
+                  <Pressable  onPress={() => router.navigate('/settings')}>
+                    <Icon source="settings" style={{ height: 22, width: 22, fill: theme.colors.outline }} />
+                  </Pressable>
+                );
                 return { title, headerRight };
               }}
             />
