@@ -1,5 +1,5 @@
 import { Text, useTheme, Surface } from 'react-native-paper';
-import { View, SafeAreaView, Pressable } from 'react-native';
+import { View, SafeAreaView, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRef } from 'react';
@@ -23,7 +23,7 @@ export default ProfileScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <View style={styles.subcontainer}>
 
           <Text style={styles.title} variant='titleLarge'>Include</Text>
@@ -69,7 +69,7 @@ export default ProfileScreen = () => {
             })}
           </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -119,7 +119,6 @@ const getStyles = (theme) => ({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
     paddingHorizontal: 6
   },
   subcontainer: {
@@ -145,7 +144,7 @@ const getStyles = (theme) => ({
     paddingHorizontal: 0,
     paddingVertical: 8,
     borderRadius: 8,
-    backgroundColor: theme.inversePrimary,
+    backgroundColor: theme.surface,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
