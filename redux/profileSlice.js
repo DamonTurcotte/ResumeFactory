@@ -4,7 +4,9 @@ import {
   personalSlice,
   objectiveSlice,
   summarySlice,
+  highlightSlice,
   experienceSlice,
+  volunteerSlice,
   educationSlice,
   skillSlice,
   certificateSlice,
@@ -12,6 +14,7 @@ import {
   publicationSlice,
   languageSlice,
   referenceSlice,
+  templateOptionSlice
 } from './extraReducers';
 
 const profileSlice = createSlice({
@@ -28,14 +31,17 @@ const profileSlice = createSlice({
           personal: personalSlice.reducer(undefined, {}),
           objective: objectiveSlice.reducer(undefined, {}),
           summary: summarySlice.reducer(undefined, {}),
+          highlights: highlightSlice.reducer(undefined, {}),
           experience: experienceSlice.reducer(undefined, {}),
+          volunteer: volunteerSlice.reducer(undefined, {}),
           education: educationSlice.reducer(undefined, {}),
           skills: skillSlice.reducer(undefined, {}),
           certificates: certificateSlice.reducer(undefined, {}),
           projects: projectSlice.reducer(undefined, {}),
           publications: publicationSlice.reducer(undefined, {}),
           languages: languageSlice.reducer(undefined, {}),
-          references: referenceSlice.reducer(undefined, {})
+          references: referenceSlice.reducer(undefined, {}),
+          options: templateOptionSlice.reducer(undefined, {}),
         };
         state.order.push(action.payload);
       }
