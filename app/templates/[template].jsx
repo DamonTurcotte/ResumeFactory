@@ -7,18 +7,26 @@ import { useState } from "react";
 import { useTheme, Text, RadioButton } from "react-native-paper";
 import { Slider } from '@react-native-assets/slider';
 
+import * as Print from "expo-print";
+
 export default TemplateDetailScreen = () => {
   const { template } = useLocalSearchParams();
+  const profile = useSelector((state) => state.profiles[state.currentProfile]);
+  const theme = useTheme();
+  const styles = getStyles(theme);
+
+  const [html, setHtml] = useState("");
+  const [pages, setPages] = useState(1);
+  const [print, setPrint] = useState(false);
 
   const [size, setSize] = useState("letter");
   const [fontSize, setFontSize] = useState(14);
   const [margin, setMargin] = useState(1.00);
 
-  const profile = useSelector((state) => state.profiles[state.currentProfile]);
-  const theme = useTheme();
-  const styles = getStyles(theme);
-
   const fonts = templateFonts[template];
+
+  const options = useSelector((state) => state.profiles[state.currentProfile].options);
+  console.log(options);
 
   const toggleSize = () => {
     setSize(size === "letter" ? "A4" : "letter");
@@ -46,6 +54,11 @@ export default TemplateDetailScreen = () => {
           size={size}
           fontSize={fontSize}
           margin={margin}
+          pages={pages}
+          setPages={setPages}
+          setHtml={setHtml}
+          print={print}
+          setPrint={setPrint}
           style={{
             flex: 1,
             width: "100%",
