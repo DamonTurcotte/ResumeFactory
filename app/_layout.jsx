@@ -4,7 +4,7 @@ import * as NavigationBar from 'expo-navigation-bar';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 import { Pressable, useColorScheme } from 'react-native';
-import { PaperProvider, ActivityIndicator, IconButton } from 'react-native-paper';
+import { PaperProvider, ActivityIndicator } from 'react-native-paper';
 
 import { store, persistor } from '../redux/store';
 import { Provider } from 'react-redux';
