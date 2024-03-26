@@ -1,8 +1,21 @@
 import { icons } from "../icons";
-import { renderSummary, renderObjective, renderExperience, renderEducation, renderCertificates, renderSkills, renderLanguages, renderProjects, renderPublications, renderReferences } from "./sections";
 import templateDecorations from "../decorations";
+import {
+  renderSummary,
+  renderObjective,
+  renderHighlights,
+  renderExperience,
+  renderVolunteer,
+  renderEducation,
+  renderCertificates,
+  renderSkills,
+  renderLanguages,
+  renderProjects,
+  renderPublications,
+  renderReferences
+} from "./sections";
 
-export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryOrder, setCategoryOrder) => {
+export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryOrder, setCategoryOrder, pages, setPages) => {
   if (categoryOrder.includes("personal")) {
     const newOrder = [];
     for (let i = 0; i < categoryOrder.length; i++) {
@@ -34,7 +47,9 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
   const sections = {
     summary: renderSummary(profile),
     objective: renderObjective(profile),
+    highlights: renderHighlights(profile),
     experience: renderExperience(profile),
+    volunteer: renderVolunteer(profile),
     education: renderEducation(profile),
     certificates: renderCertificates(profile),
     projects: renderProjects(profile),
@@ -47,55 +62,58 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
   return {
     html: (`
     <body>
-      <header>
-        <div class="header-1">
-          <h1>${personal.Name}</h1>
-          ${ personal.Position.trim().length > 0 ? `<h2>${personal.Position}</h2>` : "" }
-          ${ summary.active ? `<p>${summary.data}</p>` : objective.active ? `<p>${objective.data}</p>` : "" }
-        </div>
-        ${ contact.length === 6 ? (`
-          <div style="display: flex; justify-content: center; align-items: center; background-color: #283143">
-            <div style="position: absolute; height: 2px; width: ${dimensions.width}in; background-color: #384163"></div>
-            <div style="display: flex; flex-direction: column; margin-right: 50px">
-              <span style="padding: 6px 0 7px;">${contact[0]}</span>
-              <span style="padding: 7px 0 6px;">${contact[3]}</span>
-            </div>
-            <div style="display: flex; flex-direction: column; margin-right: 50px">
-              <span style="padding: 6px 0 7px;">${contact[1]}</span>
-              <span style="padding: 7px 0 6px;">${contact[4]}</span>
-            </div>
-            <div style="display: flex; flex-direction: column">
-              <span style="padding: 6px 0 7px;">${contact[2]}</span>
-              <span style="padding: 7px 0 6px;">${contact[5]}</span>
-            </div>
-          </div>
-        `) : contact.length === 5 ? (`
-          <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0">
-            <span style="margin-right: 40px">${contact[0]}</span>
-            <span style="margin-right: 40px">${contact[1]}</span>
-            <span style="margin-right: 40px">${contact[2]}</span>
-          </div>
-          <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0; margin-top: 2px">
-            <span style="margin-right: 40px">${contact[3]}</span>
-            <span style="margin-right: 40px">${contact[4]}</span>
-          </div>
-        `) : (`
-          <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0">
-            ${contact.map((c, i) => `<span style="margin-right: ${i < contact.length - 1 ? "25px" : "0"}">${c}</span>`).join("")}
-          </div>
-        `)}
-      </header>
       <main>
-        ${categoryOrder.map((category) => sections[category]).join("")}
+        <header>
+          <div class="header-1">
+            <h1>${personal.Name}</h1>
+            ${ personal.Position.trim().length > 0 ? `<h2>${personal.Position}</h2>` : "" }
+            ${ summary.active ? `<p>${summary.data}</p>` : objective.active ? `<p>${objective.data}</p>` : "" }
+          </div>
+          ${ contact.length === 6 ? (`
+            <div style="display: flex; justify-content: center; align-items: center; background-color: #283143">
+              <div style="position: absolute; height: 2px; width: ${dimensions.width}in; background-color: #384163"></div>
+              <div style="display: flex; flex-direction: column; margin-right: 50px">
+                <span style="padding: 6px 0 7px;">${contact[0]}</span>
+                <span style="padding: 7px 0 6px;">${contact[3]}</span>
+              </div>
+              <div style="display: flex; flex-direction: column; margin-right: 50px">
+                <span style="padding: 6px 0 7px;">${contact[1]}</span>
+                <span style="padding: 7px 0 6px;">${contact[4]}</span>
+              </div>
+              <div style="display: flex; flex-direction: column">
+                <span style="padding: 6px 0 7px;">${contact[2]}</span>
+                <span style="padding: 7px 0 6px;">${contact[5]}</span>
+              </div>
+            </div>
+          `) : contact.length === 5 ? (`
+            <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0">
+              <span style="margin-right: 40px">${contact[0]}</span>
+              <span style="margin-right: 40px">${contact[1]}</span>
+              <span style="margin-right: 40px">${contact[2]}</span>
+            </div>
+            <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0; margin-top: 2px">
+              <span style="margin-right: 40px">${contact[3]}</span>
+              <span style="margin-right: 40px">${contact[4]}</span>
+            </div>
+          `) : (`
+            <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0">
+              ${contact.map((c, i) => `<span style="margin-right: ${i < contact.length - 1 ? "25px" : "0"}">${c}</span>`).join("")}
+            </div>
+          `)}
+        </header>
+        <article>
+          ${categoryOrder.map((category) => sections[category]).join("")}
+        </article>
+        <aside class="decoration-container">
+        ${ templateDecorations[0] }
+        </aside>
       </main>
-      ${ templateDecorations[0] }
     </body>
     `),
     css: (`
+
     body {
       font-family: '${fonts[0]}';
-      width: ${dimensions.width}in;
-      height: ${dimensions.height}in;
       margin: 0;
       padding: 0;
       background-color: #ffffff;
@@ -103,6 +121,28 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
       display: flex;
       flex-direction: column;
       font-size: ${fontSize}px;
+    }
+    main {
+      width: ${dimensions.width}in;
+      height: ${dimensions.height}in;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .decoration-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: ${dimensions.width}in;
+      height: ${dimensions.height}in;
+    }
+    .decoration {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 7in;
+      fill: #38416320;
     }
     header {
       background-color: #384163;
@@ -139,7 +179,7 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
       display: flex;
       align-items: center;
     }
-    main {
+    article {
       padding: ${margin * 1.5}rem ${margin * 2}rem;
       display: flex;
       flex-direction: column;
@@ -160,7 +200,7 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
     section > div:first-of-type {
       margin-top: 0;
     }
-    main h3 {
+    article h3 {
       font-size: 1.4rem;
       color: #FFC150;
       text-transform: uppercase;
@@ -170,18 +210,18 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
       width: fit-content;
       line-height: 1;
     }
-    main h4 {
+    article h4 {
       font-size: 1.15rem;
       margin-bottom: 4px;
       line-height: 1;
     }
-    main h5 {
+    article h5 {
       font-size: 1.15rem;
       font-weight: 400;
       margin-bottom: 4px;
       line-height: 1;
     }
-    main h6 {
+    article h6 {
       font-size: 1rem;
       margin-bottom: 4px;
       line-height: 1;
@@ -189,12 +229,12 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
       font-style: italic;
       color: #666666;
     }
-    main p {
+    article p {
       font-size: 1rem;
       line-height: 1.2;
       margin-bottom: 3px;
     }
-    main ul {
+    article ul {
       margin-bottom: 0.15rem;
       list-style-type: disc;
       padding-left: 0.6rem;
@@ -202,14 +242,14 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
     ::marker {
       color: #FFB150;
     }
-    main li {
+    article li {
       font-size: 1rem;
       margin-bottom: 0.3rem;
     }
     header a {
       color: unset;
     }
-    main a {
+    article a {
       color: #384163;
     }
     #skills ul {
