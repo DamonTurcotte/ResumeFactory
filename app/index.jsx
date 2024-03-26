@@ -11,7 +11,7 @@ import { FONT } from "../constants";
 
 export default App = () => {
   const router = useRouter();
-  const theme = useTheme().colors;
+  const theme = useTheme();
   const styles = getStyles(theme)
   const dispatch = useDispatch();
   const profiles = useSelector((state) => state.profiles);
@@ -36,10 +36,13 @@ export default App = () => {
       <View style={styles.container}>
         <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
           <Text style={styles.title}>Resume</Text>
-          <Text style={[styles.title, {color: theme.onBackgroundVariant}]}>IO</Text>
+          <Text style={[styles.title, {color: theme.colors.logo}]}>IO</Text>
         </View>
         
-        <ScrollView>
+        <ScrollView
+          style={{width: "100%", elevation: 5, borderRadius: 20}}
+          contentContainerStyle={{backgroundColor: theme.colors.surface, padding: 20, borderRadius: 20}}
+        >
 
         {profileOrder.map((profile, index) => (
           <Button
@@ -48,7 +51,7 @@ export default App = () => {
             style={styles.button}
             labelStyle={styles.buttonLabel}
             contentStyle={{ justifyContent: "space-between", flexDirection: "row-reverse"}}
-            icon={() => <FontAwesome name="user-circle" size={30} color={theme.onPrimary} />}
+            icon={() => <FontAwesome name="user-circle" size={30} color={theme.colors.onPrimary} />}
             onPress={() => {
               dispatch(setCurrentProfile(profile));
               router.navigate("profile");
@@ -91,7 +94,7 @@ const getStyles = (theme) => ({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.background,
+    backgroundColor: theme.colors.background,
   },
   container: {
     marginTop: 20,
@@ -105,7 +108,7 @@ const getStyles = (theme) => ({
     fontSize: 50,
     textAlign: "center",
     marginVertical: 10,
-    color: theme.onBackground,
+    color: theme.colors.onBackground,
   },
   button: {
     marginVertical: 5,
@@ -120,7 +123,7 @@ const getStyles = (theme) => ({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: theme.onPrimary,
+    backgroundColor: theme.colors.onPrimary,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
   },
