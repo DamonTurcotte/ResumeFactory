@@ -151,7 +151,6 @@ const ProjectScreen = () => {
               </View>
               <Button
                 mode="outlined"
-                style={styles.addButton}
                 onPress={() => setAchievements([...achievements, ""])}
               >Add Achievement</Button>
             </View>
@@ -208,19 +207,18 @@ const ProjectScreen = () => {
               <Button
                 mode="outlined"
                 onPress={() => setLinks([...links, {URL: "", Title: ""}])}
-                style={styles.addButton}
               >Add Link</Button>
             </View>
             <Button
               disabled={title === ""}
               mode="contained"
               onPress={saveProjectData}
-              style={styles.addButton}
+              style={styles.button}
             >Save</Button>
             <Button
               mode="contained"
               onPress={handleProjectEditor}
-              style={styles.addButton}
+              style={styles.button}
               textColor={theme.colors.onError}
               buttonColor={theme.colors.error}
             >Cancel</Button>
@@ -238,13 +236,6 @@ const ProjectScreen = () => {
               style={{marginTop: 15}}
             />
           ))}
-          <Button
-            mode="contained"
-            onPress={handleProjectEditor}
-            style={{ marginTop: 15 }}
-          >
-            Add Project
-          </Button>
           { deleteIndex !== -1 && (
             <DeleteModal 
               visible={deleteIndex !== -1}
@@ -255,6 +246,16 @@ const ProjectScreen = () => {
           </>
         )}
       </KeyboardAwareScrollView>
+      { !projectEditor &&
+        <Button
+          mode="contained"
+          onPress={handleProjectEditor}
+          style={styles.addButton}
+          contentStyle={styles.addButtonContent}
+        >
+          Add Project
+        </Button>
+      }
     </SafeAreaView>
   );
 }
@@ -301,7 +302,15 @@ const getStyles = (theme) => ({
     borderColor: theme.colors.outline
   },
   addButton: {
-    marginBottom: 10
+    borderRadius: 0,
+  },
+  addButtonContent: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  button: {
+    marginTop: 10,
   },
 });
 
