@@ -71,14 +71,14 @@ const EducationScreen = () => {
               style={styles.divider}
             />
             <TextBox
-              label="School"
-              value={school}
-              onChangeText={setSchool}
-            />
-            <TextBox
               label="Credential"
               value={credential}
               onChangeText={setCredential}
+            />
+            <TextBox
+              label="School"
+              value={school}
+              onChangeText={setSchool}
             />
             <TextBox
               label="Start Date"
