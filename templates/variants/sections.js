@@ -12,6 +12,14 @@ export const renderSummary = (profile) => (`
   </section>
 `)
 
+export const renderHighlights = (profile) => {
+  const highlights = profile.highlights.data;
+  let html = '<section id="highlights"><h3>Highlights</h3>';
+  html += `<ul>${highlights.map((highlight) => `<li>${highlight}</li>`).join("")}</ul>`;
+  html += "</section>";
+  return html;
+}
+
 export const renderExperience = (profile) => {
   const experience = profile.experience.data;
   let html = '<section id="experience"><h3>Experience</h3>';
@@ -33,6 +41,34 @@ export const renderExperience = (profile) => {
           </div>
         ` : ""}
         ${ experience[i].Duties.length > 0 ? `<ul>${experience[i].Duties.map((duty) => `<li>${duty}</li>`).join("")}</ul>` : "" }
+      </div>
+    `;
+  }
+  html += "</section>";
+  return html;
+}
+
+export const renderVolunteer = (profile) => {
+  const volunteer = profile.volunteer.data;
+  let html = '<section id="volunteer"><h3>Volunteer</h3>';
+  for (let i = 0; i < volunteer.length; i++) {
+    html += `
+      <div id="volunteer-${i}">
+        <h4>${volunteer[i].Title}</h4>
+        <h5>${volunteer[i].Company}</h5>
+        ${ volunteer[i].Start.length > 0 || volunteer[i].End.length > 0 || volunteer[i].Location.length > 0 ? `
+          <div style="display: flex; justify-content: space-between">
+            ${ volunteer[i].Start.length > 0 && volunteer[i].End.length > 0 ?
+              `<h6>${volunteer[i].Start} - ${volunteer[i].End}</h6>`
+            : volunteer[i].Start.length > 0 ?
+              `<h6>${volunteer[i].Start}</h6>`
+            : volunteer[i].End.length > 0 ?
+              `<h6>${volunteer[i].End}</h6>`
+            : "" }
+            ${ volunteer[i].Location.length > 0 ? `<h6>${volunteer[i].Location}</h6>` : "" }
+          </div>
+        ` : ""}
+        ${ volunteer[i].Duties.length > 0 ? `<ul>${volunteer[i].Duties.map((duty) => `<li>${duty}</li>`).join("")}</ul>` : "" }
       </div>
     `;
   }
