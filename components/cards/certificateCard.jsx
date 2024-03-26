@@ -7,9 +7,15 @@ export const CertificateCard = ({ data, style, children }) => {
       <Card.Content>
         <Text variant="headlineSmall">{data.Certificate}</Text>
         <Text variant="bodyLarge">Issuer: {data.Issuer}</Text>
-        <Text variant="bodyLarge">Issued: {data.IssueDate}</Text>
-        <Text variant="bodyLarge">Expires: {data.ExpirationDate}</Text>
-        <Text variant="bodyLarge">ID: {data.CredentialID}</Text>
+        { data.IssueDate.length > 0 &&
+          <Text variant="bodyLarge">Issued: {data.IssueDate}</Text>
+        }
+        { data.ExpirationDate.length > 0 &&
+          <Text variant="bodyLarge">Expires: {data.ExpirationDate}</Text>
+        }
+        { data.CredentialID.length > 0 &&
+          <Text variant="bodyLarge">ID: {data.CredentialID}</Text>
+        }
       </Card.Content>
       <Card.Actions>
         {children}
