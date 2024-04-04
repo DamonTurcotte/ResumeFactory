@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const templateOptionObj = {
   size: 'letter',
   templateOptions: {
-    templateName: {
+    template: {
       color: 'default',
       font: 'default',
       margin: 'default',
@@ -20,18 +20,18 @@ export const templateOptionSlice = createSlice({
     templateOptions: {},
   },
   reducers: {
-    setOptions: (state, action) => {
-      state.size = action.payload.options.size;
-      state.templateOptions = Object.entries(action.payload.options).reduce((acc, [key, value]) => {
-        if (key !== 'size') {
-          acc[key] = value;
-        }
-        return acc;
-      }, {});
+    setSize: (state, action) => {
+      state.size = action.payload.size;
     },
-  }
+    setOptions: (state, action) => {
+      state.templateOptions = {
+        ...state.templateOptions,
+        [action.payload.template]: action.payload.options,
+      };
+    }
+  },
 });
 
-export const { setOptions } = templateOptionSlice.actions;
+export const { setSize, setOptions } = templateOptionSlice.actions;
 
 export default templateOptionSlice.reducer;
