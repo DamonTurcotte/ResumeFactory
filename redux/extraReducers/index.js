@@ -180,9 +180,12 @@ export const extraReducers = (builder) => {
   });
 
   // Template Options Actions
+  builder.addCase(templateOptionSlice.actions.setSize, (state, action) => {
+    state.profiles[state.currentProfile].options = templateOptionSlice.reducer(state.profiles[state.currentProfile].options, action);
+  });
   builder.addCase(templateOptionSlice.actions.setOptions, (state, action) => {
     state.profiles[state.currentProfile].options = templateOptionSlice.reducer(state.profiles[state.currentProfile].options, action);
-  })
+  });
 }
 
 
