@@ -1,5 +1,5 @@
 import { useLocalSearchParams, Stack } from "expo-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SafeAreaView, View, ScrollView } from "react-native";
 import { TemplateView } from "../../templates/templateView";
 import { templateFonts } from "../../templates/fontHooks";
@@ -7,29 +7,37 @@ import { useState } from "react";
 import { useTheme, Text, RadioButton } from "react-native-paper";
 import { Slider } from '@react-native-assets/slider';
 
+import { setSize } from "../../redux/extraReducers/templateOptionSlice";
+
 import * as Print from "expo-print";
 
 export default TemplateDetailScreen = () => {
   const { template } = useLocalSearchParams();
   const profile = useSelector((state) => state.profiles[state.currentProfile]);
+  const options = useSelector((state) => state.profiles[state.currentProfile].options);
   const theme = useTheme();
   const styles = getStyles(theme);
+  const dispatch = useDispatch();
 
   const [html, setHtml] = useState("");
   const [pages, setPages] = useState(1);
   const [print, setPrint] = useState(false);
 
-  const [size, setSize] = useState("letter");
   const [fontSize, setFontSize] = useState(14);
   const [margin, setMargin] = useState(1.00);
 
   const fonts = templateFonts[template];
 
-  const options = useSelector((state) => state.profiles[state.currentProfile].options);
-  console.log(options);
+  const setSizeLetter = () => {
+    dispatch(setSize({
+      size: "letter"
+    }));
+  };
 
-  const toggleSize = () => {
-    setSize(size === "letter" ? "A4" : "letter");
+  const setSizeA4 = () => {
+    dispatch(setSize({
+      size: "A4"
+    }));
   };
 
   return (
@@ -48,10 +56,9 @@ export default TemplateDetailScreen = () => {
         }}
       >
         <TemplateView
+          key={options.size}
           variant={template}
-          profile={profile}
           fonts={fonts}
-          size={size}
           fontSize={fontSize}
           margin={margin}
           pages={pages}
@@ -113,14 +120,14 @@ export default TemplateDetailScreen = () => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-              backgroundColor: size === "letter" ? theme.colors.surfaceVariant : theme.colors.surface,
+              backgroundColor: options.size === "letter" ? theme.colors.surfaceVariant : theme.colors.surface,
             }}
           >
             <Text>Letter</Text>
             <RadioButton
               value="letter"
-              status={size === "letter" ? "checked" : "unchecked"}
-              onPress={toggleSize}
+              status={options.size === "letter" ? "checked" : "unchecked"}
+              onPress={setSizeLetter}
               color={theme.colors.primary}
             />
           </View>
@@ -134,8 +141,8 @@ export default TemplateDetailScreen = () => {
             <Text>A4</Text>
             <RadioButton
               value="A4"
-              status={size === "A4" ? "checked" : "unchecked"}
-              onPress={toggleSize}
+              status={options.size === "A4" ? "checked" : "unchecked"}
+              onPress={setSizeA4}
               color={theme.colors.primary}
             />
           </View>
