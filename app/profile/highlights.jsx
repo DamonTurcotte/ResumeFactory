@@ -6,7 +6,7 @@ import { Button, Text, useTheme, Divider } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { addHighlight, removeHighlight, setHighlight } from "../../redux/extraReducers/highlightSlice";
-import { HeaderBackButton, TextBox, DeleteModal, TitledModal } from "../../components";
+import { HeaderBackButton, TextBox, DeleteModal } from "../../components";
 
 const HighlightScreen = () => {
   const highlights = useSelector((state) => state.profiles[state.currentProfile].highlights.data);
@@ -43,14 +43,34 @@ const HighlightScreen = () => {
       />
       <KeyboardAwareScrollView style={styles.container}>
         <TextBox
+          style={styles.textBox}
           label="Highlight"
           value={highlightInput}
           onChangeText={setHighlightInput}
           placeholder="Enter highlight or qualification."
         />
-        <Button mode="contained" onPress={handleHighlight}>
-          Save
+        <Button
+          style={styles.button}
+          mode="contained"
+          onPress={handleHighlight}
+          compact={true}
+        >
+          { index === -1 ? 'Save' : 'Update' }
         </Button>
+        { index !== -1 && (
+          <Button
+            mode="contained"
+            theme={{ colors: { primary: theme.colors.error } }}
+            style={styles.button}
+            onPress={() => {
+              setHighlightInput("");
+              setIndex(-1);
+            }}
+            compact={true}
+          >
+            Cancel
+          </Button>
+        )}
         <Divider style={styles.divider} />
         {highlights.map((highlight, i) => (
           <View style={styles.highlight} key={i}>
@@ -69,7 +89,7 @@ const HighlightScreen = () => {
       </KeyboardAwareScrollView>
       <DeleteModal
         visible={deleteIndex !== -1}
-        hideModal={setDeleteIndex}
+        hideModal={() => setDeleteIndex(-1)}
         deleteItem={handleDelete}
       />
     </SafeAreaView>
@@ -99,5 +119,11 @@ const getStyles = (theme) => ({
   },
   highlightText: {
     flex: 1,
+  },
+  button: {
+    marginTop: 10
+  },
+  textBox: {
+    marginTop: 10,
   },
 });
