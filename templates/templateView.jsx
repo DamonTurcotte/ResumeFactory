@@ -1,16 +1,20 @@
 import { useRef, useState, useCallback } from "react";
 import { View } from "react-native";
 import WebView from "react-native-webview";
+import { useSelector } from "react-redux";
 
 import { getFont, getFontFaces } from "./fontHooks";
 import { templateVariants } from "./variants";
 
 import templateDecorations from "./decorations";
 
-export const TemplateView = ({ variant, profile, fonts, size, fontSize, margin, style, pages, setPages, setHtml, print, setPrint }) => {
+export const TemplateView = ({ variant, fonts, fontSize, margin, style, pages, setPages, setHtml, print, setPrint }) => {
   const [font1] = getFont(fonts[0]);
   const [font2] = fonts.length > 1 ? getFont(fonts[1]) : [null];
   const [font3] = fonts.length > 2 ? getFont(fonts[2]) : [null];
+
+  const profile = useSelector((state) => state.profiles[state.currentProfile]);
+  const options = useSelector((state) => state.profiles[state.currentProfile].options);
 
   const [categoryOrder, setCategoryOrder] = useState(Object.entries(profile).filter(([key, value]) => value.active).map(([key, value]) => key));
   const [webViewDimensions, setWebViewDimensions] = useState({ width: 0, height: 0 });
@@ -24,14 +28,14 @@ export const TemplateView = ({ variant, profile, fonts, size, fontSize, margin, 
 
   const onLayout = useCallback(event => {
     viewRef.current.measure((x, y, width, height, pageX, pageY) => {
-      const aspectRatio = templateViewDimensions[size].width / templateViewDimensions[size].height;
+      const aspectRatio = templateViewDimensions[options.size].width / templateViewDimensions[options.size].height;
       const newWidth = Math.min(width, height * aspectRatio);
       const newHeight = newWidth / aspectRatio;
       setWebViewDimensions({ width: newWidth, height: newHeight });
     }
-  )}, [size]);
+  )}, [options.size]);
 
-  const templateData = templateVariants[variant](profile, fonts, fontSize, margin, templateViewDimensions[size], categoryOrder, setCategoryOrder, pages, setPages);
+  const templateData = templateVariants[variant](profile, fonts, fontSize, margin, templateViewDimensions[options.size], categoryOrder, setCategoryOrder, pages, setPages);
 
   const buildTemplateHtml = () => `
     <!DOCTYPE html>
@@ -48,7 +52,7 @@ export const TemplateView = ({ variant, profile, fonts, size, fontSize, margin, 
             margin: 0;
           }
           html { font-family: '${fonts[0]}'; font-size: ${fontSize}px; }
-          body { width: ${templateViewDimensions[size].width}in; height: ${templateViewDimensions[size].height * pages}in; }
+          body { width: ${templateViewDimensions[options.size].width}in; height: ${templateViewDimensions[options.size].height * pages}in; }
           ${templateData.css}
         </style>
       </head>
@@ -86,10 +90,10 @@ export const TemplateView = ({ variant, profile, fonts, size, fontSize, margin, 
                 page.appendChild(aside);
                 aside.innerHTML = ${JSON.stringify(templateDecorations[variant])};
                 aside.style.position = "absolute";
-                aside.style.top = \`calc(${templateViewDimensions[size].height}in * \$\{i\})\`;
+                aside.style.top = \`calc(${templateViewDimensions[options.size].height}in * \$\{i\})\`;
                 aside.style.left = "0";
-                aside.style.width = "${templateViewDimensions[size].width}in";
-                aside.style.height = "${templateViewDimensions[size].height}in";
+                aside.style.width = "${templateViewDimensions[options.size].width}in";
+                aside.style.height = "${templateViewDimensions[options.size].height}in";
                 aside.style.zIndex = "-1";
                 aside.style.pointerEvents = "none";
               }
