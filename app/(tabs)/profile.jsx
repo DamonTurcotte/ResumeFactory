@@ -28,6 +28,9 @@ export default ProfileScreen = () => {
 
           <Text style={styles.title} variant='titleLarge'>Include</Text>
           <View style={styles.categories} ref={activeRef}>
+            <View
+              style={styles.categoriesBackground}
+            />
             <Pressable onPress={() => router.navigate('/profile/personal')}>
               <ProfileCard
                 category={"personal"}
@@ -52,6 +55,26 @@ export default ProfileScreen = () => {
 
           <Text style={styles.title} variant='titleLarge'>Exclude</Text>
           <View style={styles.categories} ref={inactiveRef}>
+            { inactiveCategories.length === 0 &&
+              <Text
+                variant='bodyMedium'
+                style={{
+                  opacity: 0.75,
+                  textAlign: 'center',
+                  textAlignVertical: 'center',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                }}
+              >
+                No categories excluded
+              </Text>
+            }
+            <View
+              style={styles.categoriesBackground}
+            />
             { inactiveCategories.map((category) => {
               return (
                 <PressableDragAndDrop
@@ -123,6 +146,7 @@ const getStyles = (theme) => ({
   },
   subcontainer: {
     width: "100%",
+    paddingBottom: 10,
   },
   categories: {
     padding: 3,
@@ -132,9 +156,20 @@ const getStyles = (theme) => ({
     flexWrap: 'wrap',
     width: "100%",
     minHeight: 84,
-    borderColor: theme.outline,
+    borderColor: 'transparent',
     borderWidth: 1,
     justifyContent: 'space-evenly',
+  },
+  categoriesBackground: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    borderRadius: 8,
+    backgroundColor: theme.secondary,
+    opacity: 0.05,
+    zIndex: -1,
   },
   title: {
     fontSize: 20,
