@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, Button, useTheme, Divider } from 'react-native-paper';
 
-import { HeaderBackButton, DeleteModal, CertificateCard, TextBox } from '../../components';
-import { addCertificate, removeCertificate, setCertificate } from '../../redux/extraReducers/certificateSlice'; 
+import { HeaderBackButton, DeleteModal, CertificateCard, TextBox, EmptyCard } from '../../components';
+import { addCertificate, removeCertificate, setCertificate } from '../../redux/extraReducers/certificateSlice';
 
 const CertificateScreen = () => {
   const [certificateEditor, setCertificateEditor] = useState(false);
@@ -118,6 +118,14 @@ const CertificateScreen = () => {
           </View>
         ) : (
           <>
+          { certificates.length === 0 && (
+            <EmptyCard
+              text={[
+                'No certificates added yet.',
+                'Add certificates to showcase your achievements.'
+              ]}
+            />
+          )}
           { certificates.map((data, i) => (
             <CertificateCard
               key={i}

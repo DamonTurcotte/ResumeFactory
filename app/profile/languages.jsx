@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, Button, useTheme, Icon, Divider, DataTable } from 'react-native-paper';
 
-import { HeaderBackButton, DeleteModal, TitledModal, TextBox } from '../../components';
+import { HeaderBackButton, DeleteModal, TitledModal, TextBox, EmptyCard } from '../../components';
 import { addLanguage, removeLanguage, setLanguage } from '../../redux/extraReducers/languageSlice';
 
 const LanguageScreen = () => {
@@ -185,6 +185,15 @@ const LanguageScreen = () => {
               ))}
             </DataTable>
           )}
+          { languages.length === 0 && (
+            <EmptyCard
+              text={[
+                'No languages added yet.',
+                'Add languages you speak or have some level of technical proficiency in.'
+              ]}
+              style={styles.emptyCard}
+            />
+          )}
 
           <DeleteModal
             visible={deleteIndex !== -1}
@@ -264,6 +273,9 @@ const getStyles = (theme) => ({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  emptyCard: {
+    margin: 15,
   },
 });
 

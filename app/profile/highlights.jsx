@@ -6,7 +6,7 @@ import { Button, Text, useTheme, Divider } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { addHighlight, removeHighlight, setHighlight } from "../../redux/extraReducers/highlightSlice";
-import { HeaderBackButton, TextBox, DeleteModal } from "../../components";
+import { HeaderBackButton, TextBox, DeleteModal, EmptyCard } from "../../components";
 
 const HighlightScreen = () => {
   const highlights = useSelector((state) => state.profiles[state.currentProfile].highlights.data);
@@ -72,6 +72,16 @@ const HighlightScreen = () => {
           </Button>
         )}
         <Divider style={styles.divider} />
+        { highlights.length === 0 && (
+          <EmptyCard
+            text={[
+              'No highlights added yet.',
+              'Highlight your key achievements, skills, or qualifications as bullet points in your resume.'
+            ]}
+            style={styles.emptyCard}
+          />
+        )}
+
         {highlights.map((highlight, i) => (
           <View style={styles.highlight} key={i}>
             <Text style={styles.highlightText}>{highlight}</Text>
@@ -125,5 +135,8 @@ const getStyles = (theme) => ({
   },
   textBox: {
     marginTop: 10,
+  },
+  emptyCard: {
+    marginTop: 5,
   },
 });

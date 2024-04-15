@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, Button, useTheme, Divider } from 'react-native-paper';
 
-import { HeaderBackButton, DeleteModal, SchoolCard, TextArea, TextBox } from '../../components';
+import { HeaderBackButton, DeleteModal, SchoolCard, TextArea, TextBox, EmptyCard } from '../../components';
 import { addEducation, removeEducation, setEducation } from '../../redux/extraReducers/educationSlice';
 
 const EducationScreen = () => {
@@ -120,6 +120,14 @@ const EducationScreen = () => {
           </>
         ) : (
           <>
+          { education.length === 0 && (
+            <EmptyCard
+              text={[
+                'No education added yet.',
+                'Add your academic history in chronological order starting with the most recent school.'
+              ]}
+            />
+          )}
           { education.map((school, i) => (
             <SchoolCard
               key={i}

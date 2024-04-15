@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, Button, useTheme, Divider } from 'react-native-paper';
 
-import { HeaderBackButton, DeleteModal, TextBox, ReferenceCard } from '../../components';
+import { HeaderBackButton, DeleteModal, TextBox, ReferenceCard, EmptyCard } from '../../components';
 import { addReference, removeReference, setReference } from '../../redux/extraReducers/referenceSlice';
 
 const ReferenceScreen = () => {
@@ -111,6 +111,14 @@ const ReferenceScreen = () => {
           <View
             style={styles.subcontainer}
           >
+            { references.length === 0 && (
+              <EmptyCard
+                text={[
+                  'No references added yet.',
+                  'Add people who can vouch for your work.'
+                ]}
+              />
+            )}
             { references.map((reference, i) => (
               <ReferenceCard key={i} data={reference} style={styles.card}>
                 <Button

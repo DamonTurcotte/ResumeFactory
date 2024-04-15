@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, Button, useTheme, DataTable, Icon, Divider, Switch } from 'react-native-paper';
 
-import { HeaderBackButton, DeleteModal, TitledModal, TextBox } from '../../components';
+import { HeaderBackButton, DeleteModal, TitledModal, TextBox, EmptyCard } from '../../components';
 import { addSkill, removeSkill, setSkill, setUseProficiency } from '../../redux/extraReducers/skillSlice';
 
 const SkillScreen = () => {
@@ -157,6 +157,15 @@ const SkillScreen = () => {
                 </DataTable.Row>
               ))}
             </DataTable>
+            { skills.length === 0 && (
+              <EmptyCard
+                text={[
+                  'No skills added yet.',
+                  'Add tools, technologies, or other proficiencies you\'ve acquired.'
+                ]}
+                style={styles.emptyCard}
+              />
+            )}
           </>
         )}
 
@@ -244,6 +253,9 @@ const getStyles = (theme) => ({
     backgroundColor: theme.colors.surface,
     borderColor: theme.colors.primary,
     borderBottomWidth: 0.25,
+  },
+  emptyCard: {
+    margin: 15,
   },
 });
 

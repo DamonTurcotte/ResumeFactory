@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, Button, useTheme, Divider } from 'react-native-paper';
 
-import { HeaderBackButton, DeleteModal, TextBox, TextArea, PublicationCard } from '../../components';
+import { HeaderBackButton, DeleteModal, TextBox, TextArea, PublicationCard, EmptyCard } from '../../components';
 import { addPublication, removePublication, setPublication } from '../../redux/extraReducers/publicationSlice';
 
 const PublicationScreen = () => {
@@ -111,6 +111,14 @@ const PublicationScreen = () => {
           <View
             style={styles.subcontainer}
           >
+            { publications.length === 0 && (
+              <EmptyCard
+                text={[
+                  'No publications added yet.',
+                  'Add articles or papers you\'ve published or contributed to.'
+                ]}
+              />
+            )}
             {publications.map((data, i) => (
               <PublicationCard
                 key={i}
@@ -202,7 +210,7 @@ const getStyles = (theme) => ({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center'
-  }
+  },
 });
 
 export default PublicationScreen;

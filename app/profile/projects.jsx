@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Text, Button, useTheme, Divider } from 'react-native-paper';
 
-import { TextBox, TextArea, HeaderBackButton, DeleteModal, ProjectCard } from '../../components';
+import { TextBox, TextArea, HeaderBackButton, DeleteModal, ProjectCard, EmptyCard } from '../../components';
 import { addProject, removeProject, setProject } from '../../redux/extraReducers/projectSlice';
 
 const ProjectScreen = () => {
@@ -225,6 +225,14 @@ const ProjectScreen = () => {
           </View>
         ) : (
           <>
+          { projects.length === 0 && (
+            <EmptyCard
+              text={[
+                'No projects added yet.',
+                'Projects are a great way to showcase your hands-on experience in a field.'
+              ]}
+            />
+          )}
           { projects.map((project, index) => (
             <ProjectCard 
               key={index}

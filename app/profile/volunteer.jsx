@@ -6,7 +6,7 @@ import { Button, Text, useTheme, Divider } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { addPosition, removePosition, setPosition } from '../../redux/extraReducers/volunteerSlice';
-import { JobCard, HeaderBackButton, DeleteModal, TextBox } from '../../components';
+import { JobCard, HeaderBackButton, DeleteModal, TextBox, EmptyCard } from '../../components';
 
 const VolunteerScreen = () => {
   const [positionEditor, setPositionEditor] = useState(false);
@@ -154,6 +154,14 @@ const VolunteerScreen = () => {
         </>
         ) : (
         <>
+          { volunteer.length === 0 && (
+            <EmptyCard
+              text={[
+                'No positions added yet.',
+                'Add volunteer positions in chronological order starting with the most recent.'
+              ]}
+            />
+          )}
           { volunteer.map((position, i) => (
             <JobCard
               key={i}

@@ -6,7 +6,7 @@ import { Button, Text, useTheme, Divider } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { addJob, removeJob, setJob } from '../../redux/extraReducers/experienceSlice';
-import { JobCard, HeaderBackButton, DeleteModal, TextBox } from '../../components';
+import { JobCard, HeaderBackButton, DeleteModal, TextBox, EmptyCard } from '../../components';
 
 const ExperienceScreen = () => {
   const [jobEditor, setJobEditor] = useState(false);
@@ -154,6 +154,16 @@ const ExperienceScreen = () => {
         </>
         ) : (
         <>
+          {
+            experience.length === 0 && (
+              <EmptyCard
+                text={[
+                  'No jobs added yet.',
+                  'Add your employment history in chronological order starting with your most recent job.'
+                ]}
+              />
+            )
+          }
           { experience.map((job, i) => (
             <JobCard
               key={i}
