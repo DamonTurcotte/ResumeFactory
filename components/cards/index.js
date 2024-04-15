@@ -5,6 +5,8 @@ import { SchoolCard } from './schoolCard';
 import { PublicationCard } from './publicationCard';
 import { ReferenceCard } from './referenceCard';
 
+import { EmptyCard } from './emptyCard';
+
 export {
   CertificateCard,
   JobCard,
@@ -12,4 +14,5 @@ export {
   SchoolCard,
   PublicationCard,
   ReferenceCard,
+  EmptyCard,
 };
