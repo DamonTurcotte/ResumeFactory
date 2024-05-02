@@ -35,7 +35,23 @@ export const TemplateView = ({ variant, fonts, fontSize, margin, style, pages, s
     }
   )}, [options.size]);
 
-  const templateData = templateVariants[variant](profile, fonts, fontSize, margin, templateViewDimensions[options.size], categoryOrder, setCategoryOrder, pages, setPages);
+  // templateData = { html, css, columns }
+  const { html, css, columns, extraPageHtml } = templateVariants[variant](profile, fonts, fontSize, margin, templateViewDimensions[options.size], categoryOrder, setCategoryOrder, pages, setPages);
+
+  const compactMode = {
+    summary: false,
+    objective: false,
+    highlights: false,
+    experience: false,
+    volunteer: false,
+    education: false,
+    certificates: false,
+    projects: false,
+    publications: false,
+    skills: false,
+    languages: false,
+    references: false,
+  };
 
   const buildTemplateHtml = () => `
     <!DOCTYPE html>
@@ -53,52 +69,65 @@ export const TemplateView = ({ variant, fonts, fontSize, margin, style, pages, s
           }
           html { font-family: '${fonts[0]}'; font-size: ${fontSize}px; }
           body { width: ${templateViewDimensions[options.size].width}in; height: ${templateViewDimensions[options.size].height * pages}in; }
-          ${templateData.css}
+          ${css}
         </style>
       </head>
-      ${templateData.html}
+      <body>
+        ${html}
+      </body>
 
       <script>
         window.onload = function() {
           const handlePages = () => {
-            const sectionSets = [[]];
-            sections = document.querySelectorAll("section");
-            for (let section of sections) {
-              const windowWidth = window.innerWidth;
-              const sectionRect = section.getBoundingClientRect();
-              const sectionBoundary = sectionRect.left + sectionRect.width;
-              const page = Math.floor(sectionBoundary / windowWidth);
-              if (page > sectionSets.length - 1) {
-                sectionSets.push([]);
-              }
-              sectionSets[page].push(section);
-            }
-            for (let i = 0; i < sectionSets.length; i++) {
-              if (i > 0) {
-                const body = document.querySelector("body");
-                const page = document.createElement("main");
-                const article = document.createElement("article");
-                body.appendChild(page);
-                page.appendChild(article);
+            const sections = document.querySelectorAll("section");
+            const compactMode = ${JSON.stringify(compactMode)};
+            const extraPageHtml = ${JSON.stringify(extraPageHtml)};
+            const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
-                sectionSets[i].forEach(section => {
-                  article.appendChild(section);
-                });
+            const sectionArray = [];
 
-                const aside = document.createElement("aside");
-                aside.classList.add("decoration-container");
-                page.appendChild(aside);
-                aside.innerHTML = ${JSON.stringify(templateDecorations[variant])};
+            sections.forEach(section => {
+              sectionArray.push({ element: section, height: section.getBoundingClientRect().height });
+              section.remove();
+            });
+
+            let currentPage = document.querySelectorAll("article")[0];
+            let pagePaddingY = parseFloat(getComputedStyle(currentPage).paddingTop) + parseFloat(getComputedStyle(currentPage).paddingBottom);
+            let pageUsableHeight = currentPage.getBoundingClientRect().height - pagePaddingY;
+            let page = 1
+            let column = 1;
+            let columnContentHeight = 0;
+
+            sectionArray.forEach(section => {
+              if (pageUsableHeight >= section.height + rem + columnContentHeight) {
+                currentPage.appendChild(section.element);
+                columnContentHeight += section.height + rem;
+              } else if (${columns} > column) {
+                column++;
+                columnContentHeight = section.height;
+                currentPage.appendChild(section.element);
+              } else {
+                document.body.innerHTML += extraPageHtml;
+                const aside = document.querySelectorAll("aside")[page];
                 aside.style.position = "absolute";
-                aside.style.top = \`calc(${templateViewDimensions[options.size].height}in * \$\{i\})\`;
+                aside.style.top = \`calc(${templateViewDimensions[options.size].height}in * \$\{page\})\`;
                 aside.style.left = "0";
                 aside.style.width = "${templateViewDimensions[options.size].width}in";
                 aside.style.height = "${templateViewDimensions[options.size].height}in";
                 aside.style.zIndex = "-1";
                 aside.style.pointerEvents = "none";
+
+                page++;
+                column = 1;
+                columnContentHeight = section.height;
+                currentPage = document.querySelectorAll("article")[page - 1];
+                pagePaddingY = parseFloat(getComputedStyle(currentPage).paddingTop) + parseFloat(getComputedStyle(currentPage).paddingBottom);
+                pageUsableHeight = currentPage.getBoundingClientRect().height - pagePaddingY;
+                currentPage.appendChild(section.element);
               }
-            }
-          }
+            });
+          };
+          
           handlePages();
         }
       </script>
