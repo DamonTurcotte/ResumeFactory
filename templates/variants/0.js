@@ -60,8 +60,8 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
   };
   
   return {
+    columns: 2,
     html: (`
-    <body>
       <main>
         <header>
           <div class="header-1">
@@ -108,7 +108,15 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
         ${ templateDecorations[0] }
         </aside>
       </main>
-    </body>
+    `),
+    extraPageHtml: (`
+    <main>
+      <article>
+      </article>
+      <aside class="decoration-container">
+      ${ templateDecorations[0] }
+      </aside>
+    </main>
     `),
     css: (`
 
@@ -186,18 +194,18 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
       flex-wrap: wrap;
       overflow: hidden;
       align-content: space-between;
+      gap: 1rem;
+      flex-grow: 1;
     }
-    section {
-      margin-bottom: 1rem;
-      width: calc(${ dimensions.width / 2 }in - ${margin * 3}rem);
+    article > * {
+      width: calc(${ dimensions.width / 2 }in - ${margin * 4}rem);
     }
-    section:last-of-type {
-      margin-bottom: 0;
-    }
-    section > div {
+    section > div,
+    article > div {
       margin-top: 1rem;
     }
-    section > div:first-of-type {
+    section > div:first-of-type,
+    article > div:first-of-type {
       margin-top: 0;
     }
     article h3 {
