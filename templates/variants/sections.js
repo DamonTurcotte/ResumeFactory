@@ -15,17 +15,18 @@ export const renderSummary = (profile) => (`
 export const renderHighlights = (profile) => {
   const highlights = profile.highlights.data;
   let html = '<section id="highlights"><h3>Highlights</h3>';
-  html += `<ul>${highlights.map((highlight) => `<li>${highlight}</li>`).join("")}</ul>`;
+  html += `${highlights.map((highlight) => `<ul><li>${highlight}</li></ul>`).join("")}`;
   html += "</section>";
   return html;
 }
 
 export const renderExperience = (profile) => {
   const experience = profile.experience.data;
-  let html = '<section id="experience"><h3>Experience</h3>';
+  let html = '<section id="experience">';
   for (let i = 0; i < experience.length; i++) {
     html += `
       <div id="experience-${i}">
+        ${i === 0 ? '<h3>Experience</h3>' : ""}
         <h4>${experience[i].Title}</h4>
         <h5>${experience[i].Company}</h5>
         ${ experience[i].Start.length > 0 || experience[i].End.length > 0 || experience[i].Location.length > 0 ? `
@@ -50,10 +51,11 @@ export const renderExperience = (profile) => {
 
 export const renderVolunteer = (profile) => {
   const volunteer = profile.volunteer.data;
-  let html = '<section id="volunteer"><h3>Volunteer</h3>';
+  let html = '<section id="volunteer">';
   for (let i = 0; i < volunteer.length; i++) {
     html += `
       <div id="volunteer-${i}">
+        ${i === 0 ? '<h3>Volunteer</h3>' : ""}
         <h4>${volunteer[i].Title}</h4>
         <h5>${volunteer[i].Company}</h5>
         ${ volunteer[i].Start.length > 0 || volunteer[i].End.length > 0 || volunteer[i].Location.length > 0 ? `
@@ -78,10 +80,11 @@ export const renderVolunteer = (profile) => {
 
 export const renderEducation = (profile) => {
   const education = profile.education.data;
-  let html = '<section id="education"><h3>Education</h3>';
+  let html = '<section id="education">';
   for (let i = 0; i < education.length; i++) {
     html += `
       <div id="education-${i}">
+        ${i === 0 ? '<h3>Education</h3>' : ""}
         <h4>${education[i].Credential}</h4>
         <h5>${education[i].School}</h5>
         ${ education[i].Start.length > 0 || education[i].End.length > 0 || education[i].GPA.length > 0 ? `
@@ -106,10 +109,11 @@ export const renderEducation = (profile) => {
 
 export const renderCertificates = (profile) => {
   const certificates = profile.certificates.data;
-  let html = '<section id="certificates"><h3>Certificates</h3>';
+  let html = '<section id="certificates">';
   for (let i = 0; i < certificates.length; i++) {
     html += `
       <div id="certificate-${i}">
+        ${i === 0 ? '<h3>Certificates</h3>' : ""}
         ${certificates[i].CredentialURL.length > 0 ? `<a href="${certificates[i].CredentialURL}" target="_blank">` : ''}
         <h4>${certificates[i].Certificate}</h4>
         ${certificates[i].CredentialURL.length > 0 ? '</a>' : ''}
@@ -134,10 +138,11 @@ export const renderCertificates = (profile) => {
 
 export const renderProjects = (profile) => {
   const projects = profile.projects.data;
-  let html = '<section id="projects"><h3>Projects</h3>';
+  let html = '<section id="projects">';
   for (let i = 0; i < projects.length; i++) {
     html += `
       <div id="project-${i}">
+        ${i === 0 ? '<h3>Projects</h3>' : ""}
         <h4>${projects[i].Title}</h4>
         <h5>${projects[i].Category}</h5>
         ${ projects[i].Start.length > 0 || projects[i].End.length > 0 ? `
@@ -163,10 +168,11 @@ export const renderProjects = (profile) => {
 
 export const renderPublications = (profile) => {
   const publications = profile.publications.data;
-  let html = '<section id="publications"><h3>Publications</h3>';
+  let html = '<section id="publications">';
   for (let i = 0; i < publications.length; i++) {
     html += `
       <div id="publication-${i}">
+        ${i === 0 ? '<h3>Publications</h3>' : ""}
         ${publications[i].URL.length > 0 ? `<a href="${publications[i].URL}" target="_blank">` : ''}
         <h4>${publications[i].Title}</h4>
         ${publications[i].URL.length > 0 ? '</a>' : ''}
@@ -190,7 +196,7 @@ export const renderSkills = (profile) => {
   } else {
     const skills = profile.skills.data;
     let html = '<section id="skills"><h3>Skills</h3>';
-    html += `<ul>${skills.map((skill) => `<li>${skill.Name}</li>`).join("")}</ul>`;
+    html += `${skills.map((skill) => `<ul><li>${skill.Name}</li></ul>`).join("")}`;
     html += "</section>";
     return html;
   }
@@ -199,17 +205,18 @@ export const renderSkills = (profile) => {
 export const renderLanguages = (profile) => {
   const languages = profile.languages.data;
   let html = '<section id="languages"><h3>Languages</h3>';
-  html += `<ul>${languages.map((language) => `<li>${language.Name} - ${language.Proficiency}</li>`).join("")}</ul>`;
+  html += `${languages.map((language) => `<ul><li>${language.Name} - ${language.Proficiency}</li></ul>`).join("")}`;
   html += "</section>";
   return html;
 };
 
 export const renderReferences = (profile) => {
   const references = profile.references.data;
-  let html = '<section id="references"><h3>References</h3>';
+  let html = '<section id="references">';
   for (let i = 0; i < references.length; i++) {
     html += `
       <div id="reference-${i}">
+        ${i === 0 ? '<h3>References</h3>' : ""}
         <h4>${references[i].Name}</h4>
         <h5>${references[i].Position}</h5>
         <h6>${references[i].Company}</h6>
