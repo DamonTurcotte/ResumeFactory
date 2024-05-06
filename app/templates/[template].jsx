@@ -4,29 +4,27 @@ import { SafeAreaView, View, ScrollView } from "react-native";
 import { TemplateView } from "../../templates/templateView";
 import { templateFonts } from "../../templates/fontHooks";
 import { useState } from "react";
-import { useTheme, Text, RadioButton } from "react-native-paper";
-import { Slider } from '@react-native-assets/slider';
+import { useTheme, Text } from "react-native-paper";
 
-import { setSize } from "../../redux/extraReducers/templateOptionSlice";
+import { LayoutTab, SectionsTab, ColorsTab } from "../../components/tabs";
+import { templateColors, templateReorders } from "../../templates/variants";
 
-import * as Print from "expo-print";
+import { setSize, setOptions } from "../../redux/extraReducers/templateOptionSlice";
 
 export default TemplateDetailScreen = () => {
   const { template } = useLocalSearchParams();
   const profile = useSelector((state) => state.profiles[state.currentProfile]);
-  const options = useSelector((state) => state.profiles[state.currentProfile].options);
   const theme = useTheme();
   const styles = getStyles(theme);
   const dispatch = useDispatch();
 
-  const [html, setHtml] = useState("");
-  const [pages, setPages] = useState(1);
-  const [print, setPrint] = useState(false);
-
-  const [fontSize, setFontSize] = useState(14);
-  const [margin, setMargin] = useState(1.00);
+  const [tab, setTab] = useState("Layout");
 
   const fonts = templateFonts[template];
+
+  const tabLabels = ["Layout", "Sections", "Colors"];
+
+  const colors = templateColors[template];
 
   const setSizeLetter = () => {
     dispatch(setSize({
@@ -40,6 +38,25 @@ export default TemplateDetailScreen = () => {
     }));
   };
 
+  const setTemplateOptions = (newOptions) => {
+    dispatch(setOptions({
+      template: template,
+      options: newOptions,
+    }));
+  };
+
+  if (profile.options.templateOptions[template] === undefined) {
+    const order = Object.entries(profile).filter(([key, value]) => value.active).map(([key, value]) => key);
+    const reorder = templateReorders[template](order, profile);
+
+    setTemplateOptions({
+      colorIndex: 0,
+      margin: 1.00,
+      fontSize: 14,
+      order: reorder ? reorder : order,
+    });
+  };
+
   return (
     <SafeAreaView
       style={styles.safe}
@@ -49,139 +66,64 @@ export default TemplateDetailScreen = () => {
         headerLeft={() => <HeaderBackButton path="templates" theme={theme} />}
       />
       <View
-        style={{
-          flex: 2,
-          width: "100%",
-          padding: 10,
-        }}
+        style={styles.templateContainer}
       >
         <TemplateView
-          key={options.size}
+          key={profile.options.size}
           variant={template}
           fonts={fonts}
-          fontSize={fontSize}
-          margin={margin}
-          pages={pages}
-          setPages={setPages}
-          setHtml={setHtml}
-          print={print}
-          setPrint={setPrint}
-          style={{
-            flex: 1,
-            width: "100%",
-            alignItems: "center",
-            backgroundColor: theme.colors.background,
-          }}
+          style={styles.templateView}
         />
       </View>
       <View
-        style={{
-          width: "100%",
-          flex: 1,
-          backgroundColor: theme.colors.surface,
-          borderTopLeftRadius: 5,
-          borderTopRightRadius: 5,
-        }}
+        style={styles.optionsContainer}
       >
         <View
-          style={{
-            width: "100%",
-            padding: 10,
-            backgroundColor: theme.colors.primary,
-            borderRadius: 5,
-          }}
+          style={styles.optionsTabsContainer}
         >
-          <Text
-            style={{
-              color: theme.colors.onPrimary,
-              fontSize: 20,
-              textAlign: "center",
-              fontFamily: "Genos-SemiBold",
-            }}
-          >
-            Page Layout
-          </Text>
+          {tabLabels.map((label, index) => (
+            <View
+              key={index}
+              style={[styles.optionsTab, {
+                backgroundColor: tab === label ? theme.colors.surface : theme.colors.background,
+              }]}
+              onTouchEnd={() => setTab(label)}
+            >
+              <Text
+                style={[styles.optionsTabText, {
+                  color: tab === label ? theme.colors.onNavbarVariant : theme.colors.text
+                }]}
+              >{label}</Text>
+            </View>
+          ))}
         </View>
-      <ScrollView
-        style={{
-          width: "100%",
-        }}
-      >
-        <View
-          style={{
-            paddingVertical: 10,
-            paddingHorizontal: 20,
-            width: "100%",
-          }}
+
+        <ScrollView
+          style={styles.optionsScrollView}
         >
-          <Text>Paper Size</Text>
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              backgroundColor: options.size === "letter" ? theme.colors.surfaceVariant : theme.colors.surface,
-            }}
+            style={styles.optionsBodyContainer}
           >
-            <Text>Letter</Text>
-            <RadioButton
-              value="letter"
-              status={options.size === "letter" ? "checked" : "unchecked"}
-              onPress={setSizeLetter}
-              color={theme.colors.primary}
+          {tab === "Layout" && (
+            <LayoutTab
+              template={template}
+              setSizeLetter={setSizeLetter}
+              setSizeA4={setSizeA4}
+              setTemplateOptions={setTemplateOptions}
             />
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Text>A4</Text>
-            <RadioButton
-              value="A4"
-              status={options.size === "A4" ? "checked" : "unchecked"}
-              onPress={setSizeA4}
-              color={theme.colors.primary}
+          )}
+          { tab === "Sections" && (
+            <SectionsTab />
+          )}
+          { tab === "Colors" && (
+            <ColorsTab
+              template={template}
+              colors={colors}
+              setTemplateOptions={setTemplateOptions}
             />
+          )}
           </View>
-          <Text>Font Size</Text>
-          <Slider
-            value={fontSize}
-            onValueChange={setFontSize}
-            minimumValue={12}
-            maximumValue={16}
-            step={0.5}
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            CustomThumb={({ value }) => (
-              <View style={{ backgroundColor: theme.colors.primary, width: 40, height: 20, borderRadius: 10 }}>
-                <Text style={{ color: theme.colors.background, textAlign: "center", lineHeight: 20 }}>{value}</Text>
-              </View>
-            )}
-          />
-          <Text>Margin</Text>
-          <Slider
-            value={margin}
-            onValueChange={setMargin}
-            minimumValue={0.75}
-            maximumValue={1.5}
-            step={0.125}
-            style={{
-              width: "100%",
-              height: 40,
-            }}
-            CustomThumb={({ value }) => (
-              <View style={{ backgroundColor: theme.colors.primary, width: 40, height: 20, borderRadius: 10 }}>
-                <Text style={{ color: theme.colors.background, textAlign: "center", lineHeight: 20 }}>{value}</Text>
-              </View>
-            )}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -191,5 +133,50 @@ const getStyles = (theme) => ({
   safe: {
     flex: 1,
     backgroundColor: theme.colors.background,
+  },
+  templateContainer: {
+    flex: 3,
+    width: "100%",
+    padding: 10,
+  },
+  templateView: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: theme.colors.background,
+  },
+  optionsContainer: {
+    width: "100%",
+    flex: 2,
+    backgroundColor: theme.colors.surface,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+  },
+  optionsTabsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: theme.colors.background,
+    gap: 1,
+  },
+  optionsTab: {
+    paddingVertical: 10,
+    flexGrow: 1,
+    backgroundColor: theme.colors.surface,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+  },
+  optionsTabText: {
+    color: theme.colors.text,
+    textAlign: "center",
+  },
+  optionsScrollView: {
+    marginTop: 1,
+    width: "100%",
+    flex: 1,
+  },
+  optionsBodyContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    width: "100%",
   },
 });
