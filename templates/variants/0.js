@@ -15,22 +15,41 @@ import {
   renderReferences
 } from "./sections";
 
-export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryOrder, setCategoryOrder, pages, setPages) => {
-  if (categoryOrder.includes("personal")) {
+export const colorScheme0 = [
+  // Black
+  { primary: "#2E2E2E", secondary: "#1E1E1E", tertiary: "#FFC150" },
+  // Blue
+  { primary: "#384163", secondary: "#283143", tertiary: "#FFC150" },
+  // Green
+  { primary: "#3A4D3C", secondary: "#2A3D2C", tertiary: "#FFC150" },
+  // Red
+  { primary: "#4A282A", secondary: "#35181A", tertiary: "#FFC150" },
+  // Purple
+  { primary: "#3B3A4D", secondary: "#2B2A3D", tertiary: "#FFC150" },
+  // Teal
+  { primary: "#2F4F4F", secondary: "#1F3F3F", tertiary: "#FFC150" },
+];
+
+export const editSectionOrder0 = (sectionOrder, profile) => {
+  if (sectionOrder.includes("personal")) {
     const newOrder = [];
-    for (let i = 0; i < categoryOrder.length; i++) {
-      if (categoryOrder[i] !== "personal") {
-        if (categoryOrder[i] === "summary" && profile.summary.active) {
+    for (let i = 0; i < sectionOrder.length; i++) {
+      if (sectionOrder[i] !== "personal") {
+        if (sectionOrder[i] === "summary" && profile.summary.active) {
           continue;
         }
-        if (categoryOrder[i] === "objective" && profile.objective.active && !profile.summary.active) {
+        if (sectionOrder[i] === "objective" && profile.objective.active && !profile.summary.active) {
           continue;
         }
-        newOrder.push(categoryOrder[i]);
+        newOrder.push(sectionOrder[i]);
       }
     }
-    setCategoryOrder(newOrder);
+    return newOrder;
   }
+};
+
+export const variant0 = (profile, fonts, dimensions) => {
+  const { colorIndex, fontSize, margin, order } = profile.options.templateOptions["0"];
 
   const personal = profile.personal.data;
   const objective = profile.objective;
@@ -70,8 +89,8 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
             ${ summary.active ? `<p>${summary.data}</p>` : objective.active ? `<p>${objective.data}</p>` : "" }
           </div>
           ${ contact.length === 6 ? (`
-            <div style="display: flex; justify-content: center; align-items: center; background-color: #283143">
-              <div style="position: absolute; height: 2px; width: ${dimensions.width}in; background-color: #384163"></div>
+            <div style="display: flex; justify-content: center; align-items: center; background-color: ${colorScheme0[colorIndex].secondary}">
+              <div style="position: absolute; height: 2px; width: ${dimensions.width}in; background-color: ${colorScheme0[colorIndex].primary}"></div>
               <div style="display: flex; flex-direction: column; margin-right: 50px">
                 <span style="padding: 6px 0 7px;">${contact[0]}</span>
                 <span style="padding: 7px 0 6px;">${contact[3]}</span>
@@ -86,23 +105,23 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
               </div>
             </div>
           `) : contact.length === 5 ? (`
-            <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0">
+            <div style="display: flex; justify-content: center; background-color: ${colorScheme0[colorIndex].secondary}; padding: 6px 0">
               <span style="margin-right: 40px">${contact[0]}</span>
               <span style="margin-right: 40px">${contact[1]}</span>
               <span style="margin-right: 40px">${contact[2]}</span>
             </div>
-            <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0; margin-top: 2px">
+            <div style="display: flex; justify-content: center; background-color: ${colorScheme0[colorIndex].secondary}; padding: 6px 0; margin-top: 2px">
               <span style="margin-right: 40px">${contact[3]}</span>
               <span style="margin-right: 40px">${contact[4]}</span>
             </div>
           `) : (`
-            <div style="display: flex; justify-content: center; background-color: #283143; padding: 6px 0">
+            <div style="display: flex; justify-content: center; background-color: ${colorScheme0[colorIndex].secondary}; padding: 6px 0">
               ${contact.map((c, i) => `<span style="margin-right: ${i < contact.length - 1 ? "25px" : "0"}">${c}</span>`).join("")}
             </div>
           `)}
         </header>
         <article>
-          ${categoryOrder.map((category) => sections[category]).join("")}
+          ${order.map((category) => sections[category]).join("")}
         </article>
         <aside class="decoration-container">
         ${ templateDecorations[0] }
@@ -119,7 +138,6 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
     </main>
     `),
     css: (`
-
     body {
       font-family: '${fonts[0]}';
       margin: 0;
@@ -150,17 +168,17 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
       bottom: 0;
       right: 0;
       width: 7in;
-      fill: #38416320;
+      fill: ${colorScheme0[colorIndex].primary}20;
     }
     header {
-      background-color: #384163;
+      background-color: ${colorScheme0[colorIndex].primary};
       color: #ffffff;
     }
     header .header-1 {
       padding: ${margin * 1.5}rem ${margin * 2}rem;
     }
     header svg {
-      fill: #FFC150;
+      fill: ${colorScheme0[colorIndex].tertiary};
       width: 1rem;
       height: 1rem;
       vertical-align: -0.1rem;
@@ -174,7 +192,7 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
     header h2 {
       line-height: 1;
       font-size: 1.5rem;
-      color: #FFC150;
+      color: ${colorScheme0[colorIndex].tertiary};
       margin-top: 0.15rem;
       font-weight: 400;
     }
@@ -210,11 +228,11 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
     }
     article h3 {
       font-size: 1.4rem;
-      color: #FFC150;
+      color: ${colorScheme0[colorIndex].tertiary};
       text-transform: uppercase;
       margin-bottom: 0.625rem;
       padding-bottom: 0.15rem;
-      border-bottom: 0.15rem solid #FFC150;
+      border-bottom: 0.15rem solid ${colorScheme0[colorIndex].tertiary};
       width: fit-content;
       line-height: 1;
     }
@@ -272,11 +290,11 @@ export const variant0 = (profile, fonts, fontSize, margin, dimensions, categoryO
       font-size: 1rem;
     }
     meter::-webkit-meter-optimum-value {
-      background: #384163;
+      background: ${colorScheme0[colorIndex].primary};
     }
     meter::-webkit-meter-bar {
       background-color: #E1E1E1;
-      border: 0.1rem solid #FFC150;
+      border: 0.1rem solid ${colorScheme0[colorIndex].tertiary};
       height: 0.625rem;
     }
   `)
