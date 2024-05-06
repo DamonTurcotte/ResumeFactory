@@ -4,10 +4,9 @@ export const templateOptionObj = {
   size: 'letter',
   templateOptions: {
     template: {
-      color: 'default',
-      font: 'default',
-      margin: 'default',
-      padding: 'default',
+      colorIndex: 0,
+      margin: 1.00,
+      fontSize: 14,
       order: [],
     }
   },
@@ -26,7 +25,10 @@ export const templateOptionSlice = createSlice({
     setOptions: (state, action) => {
       state.templateOptions = {
         ...state.templateOptions,
-        [action.payload.template]: action.payload.options,
+        [action.payload.template]: {
+          ...state.templateOptions[action.payload.template],
+          ...action.payload.options,
+        }
       };
     }
   },
