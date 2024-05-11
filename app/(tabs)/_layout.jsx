@@ -2,7 +2,6 @@ import { Tabs } from 'expo-router';
 
 import { useTheme } from 'react-native-paper';
 import { HeaderBackButton } from '../../components';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { Icon } from '../../components/icons/icon';
 
@@ -25,8 +24,8 @@ export default function TabLayout() {
         options={{
           title: 'Profile',
           tabBarIcon: ({ color, focused }) => {
-            const name = focused ? "account-circle" : "account-circle-outline";
-            return <MaterialCommunityIcons name={name} color={color} size={30} />;
+            const source = focused ? "profile" : "profileOutline";
+            return <Icon source={source} style={{fill: color, height: 30, width: 30}} />;
           },
           headerLeft: () => <HeaderBackButton path="/" theme={theme} />,
         }}
@@ -36,8 +35,8 @@ export default function TabLayout() {
         options={{
           title: 'Templates',
           tabBarIcon: ({ color, focused }) => {
-            const name = focused ? "file-document" : "file-document-outline";
-            return <MaterialCommunityIcons name={name} color={color} size={30} />;
+            const source = focused ? "templates" : "templatesOutline";
+            return <Icon source={source} style={{fill: color, height: 28, width: 30}} />;
           },
           headerLeft: () => <HeaderBackButton path="/" theme={theme} />,
         }}
