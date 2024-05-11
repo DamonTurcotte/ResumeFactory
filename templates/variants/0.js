@@ -15,6 +15,8 @@ import {
   renderReferences
 } from "./sections";
 
+import { useSelector } from "react-redux";
+
 export const colorScheme0 = [
   // Black
   { primary: "#2E2E2E", secondary: "#1E1E1E", tertiary: "#FFC150" },
@@ -48,7 +50,8 @@ export const editSectionOrder0 = (sectionOrder, profile) => {
   }
 };
 
-export const variant0 = (profile, fonts, dimensions) => {
+export const variant0 = (fonts, dimensions) => {
+  const profile = useSelector((state) => state.profiles[state.currentProfile]);
   const { colorIndex, fontSize, margin, order } = profile.options.templateOptions["0"];
 
   const personal = profile.personal.data;
