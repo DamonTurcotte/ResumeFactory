@@ -13,18 +13,25 @@ import { setSize, setOptions } from "../../redux/extraReducers/templateOptionSli
 
 export default TemplateDetailScreen = () => {
   const { template } = useLocalSearchParams();
-  const profile = useSelector((state) => state.profiles[state.currentProfile]);
   const theme = useTheme();
   const styles = getStyles(theme);
   const dispatch = useDispatch();
 
-  const [tab, setTab] = useState("Layout");
+  const profile = useSelector((state) => state.profiles[state.currentProfile]);
+  const currentOptions = profile.options.templateOptions[template];
 
   const fonts = templateFonts[template];
+  const colors = templateColors[template];
 
+  const [tab, setTab] = useState("Layout");
   const tabLabels = ["Layout", "Sections", "Colors"];
 
-  const colors = templateColors[template];
+  // Set default section order based on active sections in profile, including reordering if defined by the current template
+  const defaultSectionOrder = (() => {
+    const order = Object.entries(profile).filter(([key, value]) => value.active).map(([key, value]) => key);
+    const reorder = templateReorders[template](order, profile);
+    return reorder ? reorder : order;
+  })();
 
   const setSizeLetter = () => {
     dispatch(setSize({
@@ -45,19 +52,29 @@ export default TemplateDetailScreen = () => {
     }));
   };
 
-  if (profile.options.templateOptions[template] === undefined) {
-    const order = Object.entries(profile).filter(([key, value]) => value.active).map(([key, value]) => key);
-    const reorder = templateReorders[template](order, profile);
+  // Set default template options if they are not defined
+  if (!currentOptions) {
+    const order = defaultSectionOrder;
 
     setTemplateOptions({
       colorIndex: 0,
       margin: 1.00,
       fontSize: 14,
-      order: reorder ? reorder : order,
+      order: order,
     });
-  };
 
-  return (
+    return null;
+  }
+  // Reset section order if any profile sections are activated or deactivated
+  else if (currentOptions.order.length !== defaultSectionOrder.length || [...currentOptions.order].sort().toString() !== [...defaultSectionOrder].sort().toString()) {
+    setTemplateOptions({
+      order: defaultSectionOrder,
+    });
+
+    return null;
+  }
+
+  else return (
     <SafeAreaView
       style={styles.safe}
     >
@@ -113,7 +130,10 @@ export default TemplateDetailScreen = () => {
             />
           )}
           { tab === "Sections" && (
-            <SectionsTab />
+            <SectionsTab
+              template={template}
+              setTemplateOptions={setTemplateOptions}
+            />
           )}
           { tab === "Colors" && (
             <ColorsTab
