@@ -24,7 +24,7 @@ export const TemplateView = ({ variant, fonts, style }) => {
     A4: { width: 8.27, height: 11.69 },
   };
   
-  const { html, css, columns, extraPageHtml } = templateVariants[variant](profile, fonts, templateViewDimensions[profile.options.size]);
+  const { html, css, columns, extraPageHtml } = templateVariants[variant](fonts, templateViewDimensions[profile.options.size]);
 
   const onLayout = useCallback(event => {
     viewRef.current.measure((x, y, width, height, pageX, pageY) => {
@@ -69,7 +69,7 @@ export const TemplateView = ({ variant, fonts, style }) => {
           ${css}
         </style>
       </head>
-      <body>
+      <body style="opacity: 0">
         ${html}
       </body>
 
@@ -123,6 +123,7 @@ export const TemplateView = ({ variant, fonts, style }) => {
                 currentPage.appendChild(section.element);
               }
             });
+            document.body.style.opacity = 1;
           };
           
           handlePages();
