@@ -1,5 +1,5 @@
-import { View, ScrollView, SafeAreaView, Image, Pressable } from 'react-native';
-import { useTheme, ActivityIndicator } from 'react-native-paper';
+import { ScrollView, SafeAreaView, Image, Pressable } from 'react-native';
+import { useTheme } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 
 export default TemplateScreen = () => {

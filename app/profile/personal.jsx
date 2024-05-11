@@ -1,5 +1,5 @@
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { Button, Text } from "react-native-paper";
+import { Button } from "react-native-paper";
 import { useTheme } from "react-native-paper";
 import { useRouter, Stack } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";

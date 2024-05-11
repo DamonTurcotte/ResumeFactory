@@ -1,4 +1,4 @@
-import { useTheme, TextInput, Button } from 'react-native-paper';
+import { useTheme, Button } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Stack, useRouter } from 'expo-router';
 import { useState } from 'react';

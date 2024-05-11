@@ -1,5 +1,5 @@
 import { ScrollView, View } from "react-native";
-import { Text, TextInput, Button, useTheme, Icon } from "react-native-paper";
+import { Text, TextInput, Button, useTheme } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
