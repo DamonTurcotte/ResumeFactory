@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { SafeAreaView, View, ScrollView } from "react-native";
 import { TemplateView } from "../../templates/templateView";
 import { templateFonts } from "../../templates/fontHooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTheme, Text } from "react-native-paper";
 
 import { LayoutTab, SectionsTab, ColorsTab } from "../../components/tabs";
@@ -26,13 +26,6 @@ export default TemplateDetailScreen = () => {
   const [tab, setTab] = useState("Layout");
   const tabLabels = ["Layout", "Sections", "Colors"];
 
-  // Set default section order based on active sections in profile, including reordering if defined by the current template
-  const defaultSectionOrder = (() => {
-    const order = Object.entries(profile).filter(([key, value]) => value.active).map(([key, value]) => key);
-    const reorder = templateReorders[template](order, profile);
-    return reorder ? reorder : order;
-  })();
-
   const setSizeLetter = () => {
     dispatch(setSize({
       size: "letter"
@@ -52,29 +45,33 @@ export default TemplateDetailScreen = () => {
     }));
   };
 
-  // Set default template options if they are not defined
-  if (!currentOptions) {
-    const order = defaultSectionOrder;
+  // Set default section order based on active sections in profile, including reordering if defined by the current template
+  const defaultSectionOrder = (() => {
+    const order = Object.entries(profile).filter(([key, value]) => value.active).map(([key, value]) => key);
+    const reorder = templateReorders[template](order, profile);
+    return reorder ? reorder : order;
+  })();
 
-    setTemplateOptions({
-      colorIndex: 0,
-      margin: 1.00,
-      fontSize: 14,
-      order: order,
-    });
+  useEffect(() => {
+    // Set default template options if they are not defined
+    if (!currentOptions) {
+      const order = defaultSectionOrder;
+      setTemplateOptions({
+        colorIndex: 0,
+        margin: 1.00,
+        fontSize: 14,
+        order: order,
+      });
+    }
+    // Reset section order if any profile sections are activated or deactivated
+    else if (currentOptions.order.length !== defaultSectionOrder.length || [...currentOptions.order].sort().toString() !== [...defaultSectionOrder].sort().toString()) {
+      setTemplateOptions({
+        order: defaultSectionOrder,
+      });
+    }
+  }, []);
 
-    return null;
-  }
-  // Reset section order if any profile sections are activated or deactivated
-  else if (currentOptions.order.length !== defaultSectionOrder.length || [...currentOptions.order].sort().toString() !== [...defaultSectionOrder].sort().toString()) {
-    setTemplateOptions({
-      order: defaultSectionOrder,
-    });
-
-    return null;
-  }
-
-  else return (
+  return (
     <SafeAreaView
       style={styles.safe}
     >
