@@ -1,49 +1,92 @@
-import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import { View, Pressable } from "react-native";
+import { Text, useTheme, Icon } from "react-native-paper";
 import { useSelector } from "react-redux";
-import { PressableDragAndDrop } from "../buttons/draggable";
-import { useRef } from "react";
 
 export const SectionsTab = ({ template, setTemplateOptions }) => {
   const options = useSelector((state) => state.profiles[state.currentProfile].options.templateOptions[template]);
   const theme = useTheme();
   const styles = getStyles(theme);
 
-  const draggableAreaRef = useRef(null);
+  const handleMoveSection = (direction, index) => {
+    const newOrder = [...options.order];
+    const temp = newOrder[index];
+    newOrder[index] = newOrder[index + direction];
+    newOrder[index + direction] = temp;
+
+    setTemplateOptions({
+      order: newOrder,
+    });
+  }
 
   return (
     <View
-      ref={draggableAreaRef}
-      style={{
-        backgroundColor: "#fff1",
-        borderRadius: 5,
-      }}
+      style={styles.container}
     >
       {options.order.map((section, index) => (
-        <PressableDragAndDrop
+        <View
           key={section}
-          onPress={() => null}
-          onRelease={() => setTemplateOptions({
-            order: options.order.filter((s) => s !== section).slice(0, index).concat([section]).concat(options.order.filter((s) => s !== section).slice(index)),
-          })}
-          targetRef={index === 0 ? null : options.order[index - 1]}
+          style={styles.section}
         >
+          <Text>
+            {section.slice(0, 1).toUpperCase() + section.slice(1)}
+          </Text>
           <View
-            style={{
-              padding: 10,
-              margin: 5,
-              borderRadius: 5,
-              backgroundColor: theme.colors.surface,
-            }}
+            style={styles.sectionButtonContainer}
           >
-            <Text>{section}</Text>
+            <Pressable
+              onPress={() => handleMoveSection(-1, index)}
+              disabled={index === 0}
+            >
+              <View
+                style={styles.sectionButton}
+              >
+                <Icon
+                  source="arrow-up"
+                  size={20}
+                  color={index === 0 ? theme.colors.onSurfaceDisabled : theme.colors.onSurface}
+                />
+              </View>
+            </Pressable>
+            <Pressable
+              onPress={() => handleMoveSection(1, index)}
+              disabled={index === options.order.length - 1}
+            >
+              <View
+                style={styles.sectionButton}
+              >
+                <Icon
+                  source="arrow-down"
+                  size={20}
+                  color={index === options.order.length - 1 ? theme.colors.onSurfaceDisabled : theme.colors.onSurface}
+                />
+              </View>
+            </Pressable>
           </View>
-        </PressableDragAndDrop>
+        </View>
       ))}
     </View>
   );
 };
 
 const getStyles = (theme) => ({
-
+  container: {
+    gap: 8,
+  },
+  section: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderRadius: 10,
+    backgroundColor: theme.colors.surfaceVariant,
+    paddingLeft: 15,
+    paddingRight: 10,
+    paddingVertical: 12,
+  },
+  sectionButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  sectionButton: {
+    paddingHorizontal: 5,
+  },
 });
