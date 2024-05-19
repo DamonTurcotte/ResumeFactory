@@ -12,8 +12,7 @@ export const TextBox = ({label, value, onChangeText, style=null, close=null, tex
     textContentType={textContentType}
     inputMode={inputMode}
     placeholder={placeholder}
-    contentStyle={{backgroundColor: theme.colors.backdrop}}
-    style={style}
+    style={[style, { fontSize: 14 }]}
     right={close !== null ? <TextInput.Icon
       forceTextInputFocus={false}
       icon="close"

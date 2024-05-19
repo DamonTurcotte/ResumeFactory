@@ -11,7 +11,7 @@ export const TextArea = ({label, value, onChangeText, style={}, placeholder=null
       mode="outlined"
       multiline={true}
       numberOfLines={4}
-      style={[{ marginVertical: 3, backgroundColor: theme.colors.backdrop }, style]}
+      style={[{ marginVertical: 3, fontSize: 14 }, style]}
       placeholder={placeholder}
     />
   );
