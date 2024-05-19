@@ -8,12 +8,16 @@ import { sliceActivators } from '../../redux/extraReducers';
 import { PressableDragAndDrop } from '../../components';
 import { Icon } from '../../components/icons/icon';
 
+import { useState } from 'react';
+
 export default ProfileScreen = () => {
   const theme = useTheme().colors;
   const styles = getStyles(theme);
   const router = useRouter();
   const profile = useSelector((state) => state.profiles[state.currentProfile]);
   const dispatch = useDispatch();
+
+  const [isDragging, setIsDragging] = useState(false);
 
   const activeRef = useRef(null);
   const inactiveRef = useRef(null);
@@ -23,7 +27,11 @@ export default ProfileScreen = () => {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView style={styles.container}>
+      <ScrollView
+        scrollEnabled={!isDragging}
+        pointerEvents={isDragging ? 'none' : 'auto'}
+        style={styles.container}
+      >
         <View style={styles.subcontainer}>
 
           <Text style={styles.title} variant='titleLarge'>Include</Text>
@@ -43,6 +51,7 @@ export default ProfileScreen = () => {
                   onPress={() => router.navigate(`/profile/${category}`)}
                   onRelease={() => dispatch(sliceActivators[category](false))}
                   targetRef={inactiveRef}
+                  setIsDragging={setIsDragging}
                 >
                   <ProfileCard
                     category={category}
@@ -82,6 +91,7 @@ export default ProfileScreen = () => {
                   onPress={() => router.navigate(`/profile/${category}`)}
                   onRelease={() => dispatch(sliceActivators[category](true))}
                   targetRef={activeRef}
+                  setIsDragging={setIsDragging}
                 >
                   <ProfileCard
                     category={category}
@@ -172,7 +182,6 @@ const getStyles = (theme) => ({
     zIndex: -1,
   },
   title: {
-    fontSize: 20,
     textAlign: 'center',
   },
   cardContainer: {
