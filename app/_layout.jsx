@@ -38,7 +38,7 @@ export default function RootLayoutNav() {
               contentStyle: { backgroundColor: theme.colors.inverseOnSurface },
               headerStyle: { backgroundColor: theme.colors.navbar},
               headerTintColor: theme.colors.onNavbarVariant,
-              headerTitleStyle: { color: theme.colors.onNavbar, fontFamily: FONT.OrbitronB },
+              headerTitleStyle: { color: theme.colors.onNavbar, fontFamily: FONT.SairaB, fontSize: 22},
               animation: "fade_from_bottom",
             }}
           >
