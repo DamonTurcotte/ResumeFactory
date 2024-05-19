@@ -5,83 +5,85 @@ import { FONT } from '../constants';
 const ThemeFonts = configureFonts({
   config: {
     "displaySmall": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 36,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 30,
       "letterSpacing": 0,
     },
     "displayMedium": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 45,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 36,
       "letterSpacing": 0,
     },
     "displayLarge": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 57,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 42,
       "letterSpacing": 0,
     },
     "headlineSmall": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 24,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 18,
       "letterSpacing": 0,
     },
     "headlineMedium": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 28,
-      "letterSpacing": 0,
-    },
-    "headlineLarge": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 32,
-      "letterSpacing": 0,
-    },
-    "titleSmall": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 16,
-      "letterSpacing": 0.1,
-    },
-    "titleMedium": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 18,
-      "letterSpacing": 0.15,
-    },
-    "titleLarge": {
-      "fontFamily": FONT.GenosM,
+      "fontFamily": FONT.SairaM,
       "fontSize": 20,
       "letterSpacing": 0,
     },
-    "labelSmall": {
-      "fontFamily": FONT.GenosM,
+    "headlineLarge": {
+      "fontFamily": FONT.SairaM,
+      "fontSize": 22,
+      "letterSpacing": 0,
+    },
+    "titleSmall": {
+      "fontFamily": FONT.SairaM,
+      "fontSize": 14,
+      "letterSpacing": 0.1,
+    },
+    "titleMedium": {
+      "fontFamily": FONT.SairaM,
       "fontSize": 15,
+      "letterSpacing": 0.15,
+    },
+    "titleLarge": {
+      "fontFamily": FONT.SairaM,
+      "fontSize": 16,
+      "letterSpacing": 0,
+    },
+    "labelSmall": {
+      "fontFamily": FONT.SairaM,
+      "fontSize": 12,
       "letterSpacing": 0.5,
     },
     "labelMedium": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 16,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 13,
       "letterSpacing": 0.5,
     },
     "labelLarge": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 18,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 15,
       "letterSpacing": 0.1,
+      "lineHeight": 22
     },
     "bodySmall": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 14,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 12,
       "letterSpacing": 0.4,
     },
     "bodyMedium": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 16,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 13,
       "letterSpacing": 0.25,
     },
     "bodyLarge": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 18,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 14,
       "letterSpacing": 0.15,
+      "lineHeight": 22
     },
     "default": {
-      "fontFamily": FONT.GenosM,
-      "fontSize": 16,
+      "fontFamily": FONT.SairaM,
+      "fontSize": 13,
       "letterSpacing": 0,
     }
   }
@@ -118,15 +120,21 @@ export const CombinedDarkTheme = {
   //   background: '#4F378B',
   //   onBackground: '#FFFFFF',
     onBackgroundVariant: '#FFD835',
-    navbar: '#29282A',
+    navbar: '#252525',
     onNavbar: '#FFFFFF',
     onNavbarVariant: '#FFD845',
   //   primaryContainer: "#4F378B",
   //   error: "#601410",
   //   onError: "#F2B8B5",
-    surface: '#2D2B31',
+    surface: '#252525',
+    surfaceVariant: '#3b3b3b',
     logo: "#DF7040",
     overlay: "#00000080",
+    primary: "#aa87f7",
+    secondaryContainer: "#6a47d7",
+    onPrimary: '#FEFFFF',
+    onSecondaryContainer: '#FEFFFF',
+    background: "#131313",
   },
   fonts: ThemeFonts,
 };
