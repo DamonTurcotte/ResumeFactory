@@ -34,23 +34,27 @@ export default App = () => {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
-        <View style={{flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
-          <Text style={styles.title}>Resume</Text>
-          <Text style={[styles.title, {color: theme.colors.logo}]}>IO</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>
+            Resume
+          </Text>
+          <Text style={[styles.title, {color: theme.colors.logo}]}>
+            IO
+          </Text>
         </View>
         
         <ScrollView
-          style={{width: "100%", elevation: 5, borderRadius: 20}}
-          contentContainerStyle={{backgroundColor: theme.colors.surface, padding: 20, borderRadius: 20}}
+          style={styles.scroll}
+          contentContainerStyle={styles.scrollContent}
         >
 
         {profileOrder.map((profile, index) => (
           <Button
             key={index}
-            mode="contained"
+            mode="contained-tonal"
             style={styles.button}
             labelStyle={styles.buttonLabel}
-            contentStyle={{ justifyContent: "space-between", flexDirection: "row-reverse"}}
+            contentStyle={styles.buttonContent}
             icon={() => <FontAwesome name="user-circle" size={30} color={theme.colors.onPrimary} />}
             onPress={() => {
               dispatch(setCurrentProfile(profile));
@@ -103,12 +107,27 @@ const getStyles = (theme) => ({
     borderRadius: 20,
     paddingBottom: 20,
   },
+  titleContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   title: {
     fontFamily: FONT.OrbitronM,
     fontSize: 50,
     textAlign: "center",
     marginVertical: 10,
     color: theme.colors.onBackground,
+  },
+  scroll: {
+    width: "100%",
+    elevation: 5,
+    borderRadius: 20
+  },
+  scrollContent: {
+    backgroundColor: theme.colors.surface,
+    padding: 20,
+    borderRadius: 20
   },
   button: {
     marginVertical: 5,
@@ -117,6 +136,11 @@ const getStyles = (theme) => ({
   buttonLabel: {
     height: 30,
     textAlignVertical: "center",
+    lineHeight: 30,
+  },
+  buttonContent: {
+    justifyContent: "space-between",
+    flexDirection: "row-reverse"
   },
   iconContainer: {
     width: 50,
