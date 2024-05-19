@@ -1,14 +1,16 @@
 import React, { useRef } from 'react';
 import { Animated, PanResponder } from 'react-native';
 
-export const PressableDragAndDrop = ({ children, onPress, onRelease, targetRef }) => {
+export const PressableDragAndDrop = ({ children, onPress, onRelease, targetRef, setIsDragging }) => {
   const pan = useRef(new Animated.ValueXY()).current;
   const initialPos = useRef({x: 0, y: 0});
 
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: (e, gesture) => {
+        setIsDragging(true);
         pan.setOffset({
           x: pan.x._value,
           y: pan.y._value,
@@ -22,6 +24,7 @@ export const PressableDragAndDrop = ({ children, onPress, onRelease, targetRef }
         { useNativeDriver: false }
       ),
       onPanResponderRelease: (e, gesture) => {
+        setIsDragging(false);
         const moveThreshold = 5;
       
         if (Math.abs(gesture.dx) < moveThreshold && Math.abs(gesture.dy) < moveThreshold) {
@@ -45,6 +48,12 @@ export const PressableDragAndDrop = ({ children, onPress, onRelease, targetRef }
             }
           });
         }
+        pan.flattenOffset();
+      },
+      onPanResponderTerminationRequest: () => false,
+      onPanResponderTerminate: () => {
+        setIsDragging(false);
+        pan.setValue({ x: 0, y: 0 });
         pan.flattenOffset();
       },
     })
