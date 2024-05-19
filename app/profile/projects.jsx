@@ -211,16 +211,14 @@ const ProjectScreen = () => {
             </View>
             <Button
               disabled={title === ""}
-              mode="contained"
+              mode="contained-tonal"
               onPress={saveProjectData}
               style={styles.button}
             >Save</Button>
             <Button
-              mode="contained"
+              mode="outlined"
               onPress={handleProjectEditor}
               style={styles.button}
-              textColor={theme.colors.onError}
-              buttonColor={theme.colors.error}
             >Cancel</Button>
           </View>
         ) : (
@@ -256,7 +254,7 @@ const ProjectScreen = () => {
       </KeyboardAwareScrollView>
       { !projectEditor &&
         <Button
-          mode="contained"
+          mode="contained-tonal"
           onPress={handleProjectEditor}
           style={styles.addButton}
           contentStyle={styles.addButtonContent}

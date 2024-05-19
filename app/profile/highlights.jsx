@@ -51,7 +51,7 @@ const HighlightScreen = () => {
         />
         <Button
           style={styles.button}
-          mode="contained"
+          mode="contained-tonal"
           onPress={handleHighlight}
           compact={true}
         >
@@ -59,8 +59,7 @@ const HighlightScreen = () => {
         </Button>
         { index !== -1 && (
           <Button
-            mode="contained"
-            theme={{ colors: { primary: theme.colors.error } }}
+            mode="outlined"
             style={styles.button}
             onPress={() => {
               setHighlightInput("");

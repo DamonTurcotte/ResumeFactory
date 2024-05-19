@@ -122,7 +122,7 @@ const LanguageScreen = () => {
             </Button>
 
             <Button
-              mode="contained"
+              mode="contained-tonal"
               onPress={saveLanguageData}
               style={styles.button}
               disabled={languageName === "" || proficiency === ""}
@@ -130,9 +130,7 @@ const LanguageScreen = () => {
               Save
             </Button>
             <Button
-              mode='contained'
-              textColor={theme.colors.onError}
-              buttonColor={theme.colors.error}
+              mode="outlined"
               style={styles.button}
               onPress={() => {
                 setLanguageName("");
@@ -151,10 +149,10 @@ const LanguageScreen = () => {
               <DataTable.Header
                 style={styles.tableHeader}
               >
-                <DataTable.Title style={styles.tableTitle}>
+                <DataTable.Title textStyle={styles.tableTitle}>
                   Language
                 </DataTable.Title>
-                <DataTable.Title style={styles.tableTitle}>
+                <DataTable.Title textStyle={styles.tableTitle}>
                   Proficiency
                 </DataTable.Title>
                 <View style={{width: 80, height: "100%"}}></View>
@@ -209,7 +207,7 @@ const LanguageScreen = () => {
       </KeyboardAwareScrollView>
       { !languageEditor && (
         <Button
-          mode="contained"
+          mode="contained-tonal"
           onPress={() => {
             setLanguageEditor(true);
             setLanguageName("");
@@ -239,11 +237,11 @@ const getStyles = (theme) => ({
     paddingRight: 0,
     backgroundColor: theme.colors.navbar,
     borderColor: theme.colors.primary,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.25,
   },
   tableTitle: {
     color: theme.colors.onNavbar,
-    fontFamily: 'Genos-Medium',
+    fontSize: 11,
   },
   tableRow: {
     paddingRight: 0,

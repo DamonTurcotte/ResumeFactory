@@ -101,7 +101,7 @@ const EducationScreen = () => {
               onChangeText={setDescription}
             />
             <Button
-              mode="contained"
+              mode="contained-tonal"
               onPress={saveSchoolData}
               style={styles.button}
               disabled={school === "" || credential === ""}
@@ -164,7 +164,7 @@ const EducationScreen = () => {
       </KeyboardAwareScrollView>
         { !schoolEditor && (
           <Button
-            mode="contained"
+            mode="contained-tonal"
             onPress={handleSchoolEditor}
             style={styles.addButton}
             contentStyle={styles.addButtonContent}

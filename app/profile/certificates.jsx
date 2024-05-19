@@ -99,7 +99,7 @@ const CertificateScreen = () => {
               onChangeText={text => setCredentialURL(text)}
             />
             <Button
-              mode="contained"
+              mode="contained-tonal"
               style={styles.button}
               onPress={saveCertificateData}
               disabled={certificateName === "" || issuer === ""}
@@ -171,7 +171,7 @@ const CertificateScreen = () => {
       </KeyboardAwareScrollView>
       { !certificateEditor && (
         <Button
-          mode="contained"
+          mode="contained-tonal"
           style={styles.addButton}
           contentStyle={styles.addButtonContent}
           onPress={handleCertificateEditor}

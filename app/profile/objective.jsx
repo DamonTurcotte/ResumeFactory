@@ -34,7 +34,7 @@ const ObjectiveScreen = () => {
           placeholder='Enter your employment objective.'
         />
         <Button
-          mode="contained"
+          mode="contained-tonal"
           disabled={objectiveInput === objective.data}
           onPress={() => {
             dispatch(setObjective({profileid, data: objectiveInput}));

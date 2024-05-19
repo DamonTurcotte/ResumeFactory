@@ -135,7 +135,7 @@ const ExperienceScreen = () => {
           </View>
 
           <Button
-            mode="contained"
+            mode="contained-tonal"
             onPress={saveJobData}
             style={styles.button}
             disabled={title === "" || company === ""}
@@ -200,7 +200,7 @@ const ExperienceScreen = () => {
       </KeyboardAwareScrollView>
       { !jobEditor && (
         <Button
-          mode="contained"
+          mode="contained-tonal"
           style={styles.addButton}
           contentStyle={styles.addButtonContent}
           onPress={() => {

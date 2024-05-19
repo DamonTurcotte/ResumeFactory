@@ -69,7 +69,7 @@ const SkillScreen = () => {
             { [1, 2, 3, 4, 5].map((item, i) => (
               <Button
                 key={i}
-                mode="contained"
+                mode="contained-tonal"
                 style={i === 0 ? null : styles.button}
                 onPress={() => {
                   setProficiency(item);
@@ -102,15 +102,13 @@ const SkillScreen = () => {
             )}
               
             <Button
-              mode="contained"
+              mode="contained-tonal"
               onPress={saveSkillData}
               style={styles.button}
               disabled={skillInput === ""}
             >Save</Button>
             <Button
-              mode='contained'
-              textColor={theme.colors.onError}
-              buttonColor={theme.colors.error}
+              mode='outlined'
               style={styles.button}
               onPress={() => {
                 setSkillInput("");
@@ -180,7 +178,7 @@ const SkillScreen = () => {
       </KeyboardAwareScrollView>
       { !skillEditor && (
           <Button
-            mode="contained"
+            mode="contained-tonal"
             onPress={handleSkillEditor}
             style={styles.addButton}
             contentStyle={styles.addButtonContent}
@@ -218,7 +216,7 @@ const getStyles = (theme) => ({
 },
   tableTitle: {
     color: theme.colors.onNavbar,
-    fontFamily: 'Genos-Medium',
+    fontSize: 11,
   },
   tableRow: {
     paddingRight: 0,

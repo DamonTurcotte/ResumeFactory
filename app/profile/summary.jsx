@@ -35,7 +35,7 @@ const SummaryScreen = () => {
         />
         <Button
           disabled={summaryInput === summary.data}
-          mode="contained"
+          mode="contained-tonal"
           onPress={() => {
             dispatch(setSummary({profileid, data: summaryInput}));
             router.navigate('profile');

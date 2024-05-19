@@ -94,7 +94,7 @@ const PersonalScreen = () => {
           onChangeText={setGitHubInput}
         />
         <Button
-          mode='contained'
+          mode='contained-tonal'
           style={styles.save}
           disabled={nameInput === "" || (nameInput === personal.data.Name && positionInput === personal.data.Position && emailInput === personal.data.Email && phoneInput === personal.data.Phone && locationInput === personal.data.Location && websiteInput === personal.data.Website && linkedInInput === personal.data.LinkedIn && gitHubInput === personal.data.GitHub)}
           onPress={() => {

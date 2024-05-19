@@ -90,7 +90,7 @@ const PublicationScreen = () => {
               onChangeText={setDescription}
             />
             <Button
-              mode="contained"
+              mode="contained-tonal"
               onPress={savePublicationData}
               disabled={title === "" || publisher === "" || date === ""}
               style={styles.button}
@@ -98,10 +98,8 @@ const PublicationScreen = () => {
               Save
             </Button>
             <Button
-              mode="contained"
+              mode="outlined"
               onPress={() => setPublicationEditor(false)}
-              textColor={theme.colors.onError}
-              buttonColor={theme.colors.error}
               style={styles.button}
             >
               Cancel
@@ -154,7 +152,7 @@ const PublicationScreen = () => {
       </KeyboardAwareScrollView>
         { !publicationEditor &&
           <Button
-            mode="contained"
+            mode="contained-tonal"
             onPress={() => setPublicationEditor(true)}
             style={styles.addButton}
             contentStyle={styles.addButtonContent}

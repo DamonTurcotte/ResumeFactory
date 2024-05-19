@@ -91,18 +91,16 @@ const ReferenceScreen = () => {
             />
             <Button
               disabled={name === ""}
-              mode="contained"
+              mode="contained-tonal"
               onPress={saveReferenceData}
               style={styles.button}
             >
               Save
             </Button>
             <Button
-              mode="contained"
+              mode="outlined"
               onPress={() => setReferenceEditor(false)}
               style={styles.button}
-              textColor={theme.colors.onError}
-              buttonColor={theme.colors.error}
             >
               Cancel
             </Button>
@@ -150,7 +148,7 @@ const ReferenceScreen = () => {
       </KeyboardAwareScrollView>
       { !referenceEditor && (
         <Button
-          mode="contained"
+          mode="contained-tonal"
           onPress={() => setReferenceEditor(true)}
           style={styles.addButton}
           contentStyle={styles.addButtonContent}

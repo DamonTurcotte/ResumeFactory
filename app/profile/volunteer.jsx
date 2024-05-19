@@ -135,7 +135,7 @@ const VolunteerScreen = () => {
           </View>
 
           <Button
-            mode="contained"
+            mode="contained-tonal"
             onPress={savePositionData}
             style={styles.button}
             disabled={title === "" || company === ""}
@@ -143,11 +143,9 @@ const VolunteerScreen = () => {
             Save
           </Button>
           <Button
-            mode="text"
+            mode="outlined"
             onPress={handlePositionEditor}
             style={styles.button}
-            textColor={theme.colors.onError}
-            buttonColor={theme.colors.error}
           >
             Cancel
           </Button>
@@ -198,7 +196,7 @@ const VolunteerScreen = () => {
       </KeyboardAwareScrollView>
       { !positionEditor && (
         <Button
-          mode="contained"
+          mode="contained-tonal"
           style={styles.addButton}
           contentStyle={styles.addButtonContent}
           onPress={() => {
