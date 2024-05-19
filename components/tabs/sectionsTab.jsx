@@ -2,6 +2,8 @@ import { View, Pressable } from "react-native";
 import { Text, useTheme, Icon } from "react-native-paper";
 import { useSelector } from "react-redux";
 
+import { Ionicons } from "@expo/vector-icons";
+
 export const SectionsTab = ({ template, setTemplateOptions }) => {
   const options = useSelector((state) => state.profiles[state.currentProfile].options.templateOptions[template]);
   const theme = useTheme();
@@ -27,9 +29,13 @@ export const SectionsTab = ({ template, setTemplateOptions }) => {
           key={section}
           style={styles.section}
         >
-          <Text>
-            {section.slice(0, 1).toUpperCase() + section.slice(1)}
-          </Text>
+          <View
+            style={styles.sectionTitleContainer}
+          >
+            <Text>
+              {section.slice(0, 1).toUpperCase() + section.slice(1)}
+            </Text>
+          </View>
           <View
             style={styles.sectionButtonContainer}
           >
@@ -40,11 +46,7 @@ export const SectionsTab = ({ template, setTemplateOptions }) => {
               <View
                 style={styles.sectionButton}
               >
-                <Icon
-                  source="arrow-up"
-                  size={20}
-                  color={index === 0 ? theme.colors.onSurfaceDisabled : theme.colors.onSurface}
-                />
+                <Ionicons name="caret-up" size={20} color={index === 0 ? theme.colors.onSurfaceDisabled : theme.colors.onNavbarVariant} />
               </View>
             </Pressable>
             <Pressable
@@ -54,11 +56,7 @@ export const SectionsTab = ({ template, setTemplateOptions }) => {
               <View
                 style={styles.sectionButton}
               >
-                <Icon
-                  source="arrow-down"
-                  size={20}
-                  color={index === options.order.length - 1 ? theme.colors.onSurfaceDisabled : theme.colors.onSurface}
-                />
+                <Ionicons name="caret-down" size={20} color={index === options.order.length - 1 ? theme.colors.onSurfaceDisabled : theme.colors.onNavbarVariant} />
               </View>
             </Pressable>
           </View>
@@ -79,14 +77,40 @@ const getStyles = (theme) => ({
     borderRadius: 10,
     backgroundColor: theme.colors.surfaceVariant,
     paddingLeft: 15,
-    paddingRight: 10,
-    paddingVertical: 12,
+    paddingRight: 5,
+  },
+  sectionTitleContainer: {
+    flex: 1,
+    justifyContent: "center",
+    paddingVertical: 15,
   },
   sectionButtonContainer: {
     flexDirection: "row",
     alignItems: "center",
   },
   sectionButton: {
-    paddingHorizontal: 5,
+    flex: 1,
+    justifyContent: "center",
+    paddingHorizontal: 10,
+  },
+  arrowUp: {
+    width: 0,
+    height: 0,
+    borderBottomWidth: 9,
+    borderRightWidth: 6,
+    borderLeftWidth: 6,
+    borderRightColor: "transparent",
+    borderLeftColor: "transparent",
+    marginBottom: 0,
+  },
+  arrowDown: {
+    width: 0,
+    height: 0,
+    borderTopWidth: 9,
+    borderRightWidth: 6,
+    borderLeftWidth: 6,
+    borderRightColor: "transparent",
+    borderLeftColor: "transparent",
+    marginTop: 0,
   },
 });
