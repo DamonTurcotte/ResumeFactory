@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ResumeIO",
-    "slug": "ResumeIO",
+    "name": "ResumeFactory",
+    "slug": "ResumeFactory",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -18,11 +18,11 @@
     "ios": {
       "supportsTablet": true,
       "requireFullScreen": true,
-      "bundleIdentifier": "tech.turcotte.resumeio"
+      "bundleIdentifier": "tech.turcotte.resumefactory"
     },
     "android": {
       "versionCode": 1,
-      "package": "tech.turcotte.resumeio",
+      "package": "tech.turcotte.resumefactory",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#4F378B"
@@ -31,8 +31,8 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "description": "A dynamic resume constructor built with React Native and Expo. This application is built to help users to easily customize the design of their resume while storing multiple profiles to optimize for different job positions. Ad-free and fully offline, ResumeIO makes resume construction as quick and painless as possible, with seemless navigation and a simple and intuitive interface to craft your ticket to your next job position with its selection of professional and modern template designs.",
-    "githubUrl": "https://github.com/Altagrave-Git/ResumeIO",
+    "description": "A dynamic resume constructor built with React Native and Expo. This application is built to help users to easily customize the design of their resume while storing multiple profiles to optimize for different job positions. Ad-free and fully offline, Resume Factory makes resume construction as quick and painless as possible, with seemless navigation and a simple and intuitive interface to craft your ticket to your next job position with its selection of professional and modern template designs.",
+    "githubUrl": "https://github.com/Altagrave-Git/ResumeFactory",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -97,9 +97,6 @@
     "extra": {
       "router": {
         "origin": false
-      },
-      "eas": {
-        "projectId": "eb44f659-8260-431f-864a-7b5345da55d2"
       }
     }
   }
