@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ResumeFactory",
-    "slug": "ResumeFactory",
+    "name": "Resume Factory",
+    "slug": "Resume-Factory",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
