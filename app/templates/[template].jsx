@@ -4,7 +4,7 @@ import { SafeAreaView, View, ScrollView } from "react-native";
 import { TemplateView } from "../../templates/templateView";
 import { templateFonts } from "../../templates/fontHooks";
 import { useEffect, useState } from "react";
-import { useTheme, Text } from "react-native-paper";
+import { useTheme, Text, ActivityIndicator } from "react-native-paper";
 
 import { LayoutTab, SectionsTab, ColorsTab } from "../../components/tabs";
 import { templateColors, templateReorders } from "../../templates/variants";
@@ -79,6 +79,8 @@ export default TemplateDetailScreen = () => {
         options={{title: "Template"}}
         headerLeft={() => <HeaderBackButton path="templates" theme={theme} />}
       />
+      { currentOptions ? (
+      <>
       <View
         style={styles.templateContainer}
       >
@@ -142,6 +144,13 @@ export default TemplateDetailScreen = () => {
           </View>
         </ScrollView>
       </View>
+      </>
+      ) : (
+        <ActivityIndicator
+          color={theme.colors.primary}
+          size="large"
+        />
+      )}
     </SafeAreaView>
   );
 };
