@@ -1,26 +1,38 @@
-import { configureStore } from '@reduxjs/toolkit';
-import ExpoFileSystemStorage from 'redux-persist-expo-filesystem';
-import profileReducer from './profileSlice';
 import {
+  configureStore,
+  combineReducers,
+} from "@reduxjs/toolkit";
+import {
+  getStoredState,
+  purgeStoredState,
   persistStore,
   persistReducer,
-  FLUSH,
+  REGISTER,
   REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER
-} from 'redux-persist';
+  FLUSH,
+} from "redux-persist";
+import ExpoFileSystemStorage from "redux-persist-expo-filesystem";
+import { metaDataSlice } from "./meta";
+import { profileSlice, initProfile } from "./profile";
 
-const persistConfig = {
-  key: 'root',
+const rootPersistConfig = {
+  key: "root",
   storage: ExpoFileSystemStorage,
+  blacklist: ["profile"],
 };
 
-const rootReducer = persistReducer(persistConfig, profileReducer);
+const rootReducer = (injectedReducers = {}) => combineReducers({
+  meta: metaDataSlice.reducer,
+  ...injectedReducers,
+});
 
-export const store = configureStore({
-  reducer: rootReducer,
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer());
+
+const store = configureStore({
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -29,4 +41,31 @@ export const store = configureStore({
     }),
 });
 
-export const persistor = persistStore(store);
+const persistor = persistStore(store);
+
+export { store, persistor };
+
+const createProfilePersistConfig = (id) => ({
+  key: id,
+  keyPrefix: "profile:",
+  storage: ExpoFileSystemStorage,
+  blacklist: [],
+});
+
+export const injectProfile = async (id) => {
+ const profileConfig = createProfilePersistConfig(id);
+  const profileData = await getStoredState(profileConfig).catch(() => Object());
+
+  store.replaceReducer(persistReducer(
+    rootPersistConfig,
+    rootReducer({
+      profile: persistReducer(profileConfig, profileSlice.reducer),
+    })
+  ));
+
+  store.dispatch(initProfile(profileData || {}));
+
+  persistor.persist();
+
+  return store.getState();
+};
