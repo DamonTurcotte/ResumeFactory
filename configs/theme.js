@@ -8,16 +8,19 @@ const ThemeFonts = configureFonts({
       "fontFamily": FONT.SairaM,
       "fontSize": 30,
       "letterSpacing": 0,
+      "lineHeight": 36,
     },
     "displayMedium": {
       "fontFamily": FONT.SairaM,
       "fontSize": 36,
       "letterSpacing": 0,
+      "lineHeight": 42,
     },
     "displayLarge": {
       "fontFamily": FONT.SairaM,
       "fontSize": 42,
       "letterSpacing": 0,
+      "lineHeight": 48,
     },
     "headlineSmall": {
       "fontFamily": FONT.SairaM,
@@ -31,8 +34,9 @@ const ThemeFonts = configureFonts({
     },
     "headlineLarge": {
       "fontFamily": FONT.SairaM,
-      "fontSize": 22,
+      "fontSize": 24,
       "letterSpacing": 0,
+      "lineHeight": 32
     },
     "titleSmall": {
       "fontFamily": FONT.SairaM,
@@ -63,7 +67,7 @@ const ThemeFonts = configureFonts({
       "fontFamily": FONT.SairaM,
       "fontSize": 15,
       "letterSpacing": 0.1,
-      "lineHeight": 22
+      "lineHeight": 21
     },
     "bodySmall": {
       "fontFamily": FONT.SairaM,
@@ -95,9 +99,10 @@ export const CombinedDefaultTheme = {
   colors: {
     ...DefaultTheme.colors,
     ...MD3LightTheme.colors,
+    textDisabled: "#6C6C6C",
     background: "#F5F5F5",
-    navbar: '#4F378B',
-    onNavbar: '#FFFFFF',
+    navbar: '#F5F5F5',
+    onNavbar: "#000",
     onNavbarVariant: '#FFA855',
     surface: '#FFF',
     surfaceVariant: "#F0F0F0",
@@ -127,8 +132,9 @@ export const CombinedDarkTheme = {
   colors: {
     ...DarkTheme.colors,
     ...MD3DarkTheme.colors,
+    textDisabled: "#8C8C8C",
     background: "#131313",
-    navbar: '#252525',
+    navbar: '#131313',
     onNavbar: '#FFFFFF',
     onNavbarVariant: '#FFD845',
     surface: '#25232A',
