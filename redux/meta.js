@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const makeMetaData = (title) => {
+const makeMetaData = (title, description) => {
   const timestamp = Date.now().toString();
   return {
     id: timestamp,
     title,
+    description,
     lastUpdate: timestamp,
   };
 };
@@ -18,8 +19,9 @@ export const metaDataSlice = createSlice({
   reducers: {
     createResumeMetaData: (state, action) => {
       const title = action.payload.title;
+      const description = action.payload.description;
       if (!title || title.trim().length === 0) return state;
-      const meta = makeMetaData(title);
+      const meta = makeMetaData(title, description);
       return {
         ...state,
         resumes: {
@@ -30,8 +32,9 @@ export const metaDataSlice = createSlice({
     },
     createLetterMetaData: (state, action) => {
       const title = action.payload.title;
+      const description = action.payload.description;
       if (!title || title.trim().length === 0) return state;
-      const meta = makeMetaData(title);
+      const meta = makeMetaData(title, description);
       return {
         ...state,
         letters: {
