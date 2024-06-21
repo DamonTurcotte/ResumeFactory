@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import { Text, useTheme, Button } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { useState } from "react";
@@ -12,8 +12,10 @@ export const FileSelect = () => {
   const [fileType, setFileType] = useState("resumes");
 
   const files = meta[fileType];
+  const orderedFileKeys = Object.keys(files).sort((a, b) => files[b].lastUpdate - files[a].lastUpdate);
 
-  console.log(Object.keys(files).length);
+  const today = new Date();
+
 
   return (
     <View
@@ -100,18 +102,77 @@ export const FileSelect = () => {
             </Text>
           </View>
         ) : (
-          Object.keys(files).map((id) => (
-            <Text
+          orderedFileKeys.map((id) => (
+            <View
               key={id}
               style={{
-                fontFamily: FONT.Saira,
-                fontSize: 14,
-                lineHeight: 18,
-                color: theme.colors.onSurface,
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                paddingVertical: 5,
+                paddingHorizontal: 10,
+                borderRadius: 10,
+                backgroundColor: theme.colors.surface,
+                marginBottom: 5,
               }}
             >
-              {files[id].title}
-            </Text>
+              <Image
+                source={ require("../../assets/thumbnails/blank.png") }
+                style={{
+                  width: 34,
+                  height: 44,
+                  borderRadius: 1,
+                }}
+              />
+              <View
+                style={{
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  flexGrow: 1,
+                  marginLeft: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontFamily: FONT.SairaM,
+                    fontSize: 16,
+                    lineHeight: 24,
+                  }}
+                >
+                  {files[id].title}
+                </Text>
+                { files[id].description.trim().length > 0
+                ?
+                  <Text
+                    style={{
+                      fontFamily: FONT.Saira,
+                      fontSize: 14,
+                      lineHeight: 18,
+                      color: theme.colors.onSurfaceDisabled,
+                    }}
+                  >
+                    {files[id].description}
+                  </Text>
+                :
+                  <Text
+                    style={{
+                      fontFamily: FONT.Saira,
+                      fontSize: 14,
+                      lineHeight: 18,
+                      color: theme.colors.onSurfaceDisabled,
+                    }}
+                  >
+                    { today.toLocaleDateString() === new Date(Number(files[id].lastUpdate)).toLocaleDateString()
+                      ? new Date(Number(files[id].lastUpdate)).toLocaleTimeString("en-US", { hour: "numeric", minute: "numeric", hour12: true })
+                      : new Date(Number(files[id].lastUpdate)).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                    }
+                  </Text>
+                }
+              </View>
+              <View>
+                <Icon source="ellipse" style={{stroke: theme.colors.onSurfaceDisabled, fill: theme.colors.onSurfaceDisabled, width: 21, height: 21}} />
+              </View>
+            </View>
           ))
         )}
       </View>
