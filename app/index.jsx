@@ -19,7 +19,7 @@ export default App = () => {
     <SafeAreaView style={styles.safe}>
       <ScrollView
         contentContainerStyle={{
-          marginTop: 10,
+          paddingTop: 10,
         }}
       >
         <Logo />
@@ -28,13 +28,13 @@ export default App = () => {
             title1="Build a"
             title2="New Resume"
             icon="resume"
-            onPress={() => console.log("Build a new resume")}
+            onPress={() => router.navigate("create/resume")}
           />
           <CreateFileButton
             title1="Write a"
             title2="Cover Letter"
             icon="letter"
-            onPress={() => console.log("Write a cover letter")}
+            onPress={() => router.navigate("create/letter")}
           />
           <FileSelect />
         </View>
@@ -49,8 +49,8 @@ const getStyles = (theme) => ({
     backgroundColor: theme.colors.background,
   },
   container: {
-    marginHorizontal: 20,
-    marginBottom: 20,
+    paddingHorizontal: 15,
+    paddingBottom: 20,
     gap: 10,
   },
 })
