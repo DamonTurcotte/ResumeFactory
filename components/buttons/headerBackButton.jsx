@@ -4,13 +4,18 @@ import { useTheme } from "react-native-paper";
 import { Pressable } from "react-native";
 
 export const HeaderBackButton = ({path}) => {
-  const theme = useTheme().colors;
+  const theme = useTheme();
   const router = useRouter();
   return (
     <Pressable onPress={() => router.navigate(path)}>
       <Icon 
-        source='arrow-left'
-        style={{ height: 24, width: 24, fill: theme.onNavbarVariant}}
+        source="back"
+        style={{
+          height: 24,
+          width: 24,
+          marginRight: 10,
+          fill: theme.colors.onNavbar,
+        }}
       />
     </Pressable>
   )
