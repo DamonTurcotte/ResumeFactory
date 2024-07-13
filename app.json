@@ -41,6 +41,7 @@
     "primaryColor": "#6750A4",
     "plugins": [
       "expo-router",
+      "expo-asset",
       [
         "expo-font",
         {
