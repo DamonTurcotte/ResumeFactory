@@ -1,8 +1,6 @@
 {
   "build": {
-    "production": {
-      "node": "20.14.0"
-    },
+    "production": {},
     "development": {
       "extends": "production",
       "developmentClient": true,
